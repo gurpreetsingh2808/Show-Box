@@ -1,6 +1,7 @@
 package com.popular_movies.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,10 +10,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.transition.ChangeClipBounds;
 import android.transition.Explode;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 
 import com.popular_movies.BuildConfig;
 import com.popular_movies.R;
@@ -20,13 +24,12 @@ import com.popular_movies.framework.UriBuilder;
 import com.popular_movies.ui.fragment.FavoritesFragment;
 import com.popular_movies.ui.fragment.ListFragment;
 import com.popular_movies.util.AppUtils;
-
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String KEY_MENU_ITEM = "MENU_ITEM";
+public class MainActivity extends AppCompatActivity  {
+    private static final String TAG = MainActivity.class.getSimpleName();
     public static boolean mIsDualPane;
-    private int menuitem;
+    Toolbar toolbar;
 
     public void setupWindowAnimations() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -51,15 +54,15 @@ public class MainActivity extends AppCompatActivity {
 
         View detailView = findViewById(R.id.movie_detail);
         mIsDualPane = detailView != null && detailView.getVisibility() == View.VISIBLE;
-        if (savedInstanceState != null && savedInstanceState.getInt(KEY_MENU_ITEM) != 0)
-            menuitem = savedInstanceState.getInt(KEY_MENU_ITEM);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_content, ListFragment.getInstance(UriBuilder.POPULAR))
                     .commit();
         }
+
 
         final BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
@@ -94,32 +97,12 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_search:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.main_content, ListFragment.getInstance(BuildConfig.MOVIE_TYPE_POPULAR))
-                        .commit();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(KEY_MENU_ITEM, menuitem);
     }
+
 }
 
 
