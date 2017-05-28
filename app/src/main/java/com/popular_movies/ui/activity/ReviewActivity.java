@@ -15,9 +15,9 @@ import android.widget.ProgressBar;
 import com.popular_movies.R;
 import com.popular_movies.domain.Review;
 import com.popular_movies.domain.ReviewResponse;
-import com.popular_movies.ui.movie_details.ReviewPresenter;
-import com.popular_movies.ui.movie_details.ReviewPresenterImpl;
-import com.popular_movies.ui.movie_details.ReviewsAdapter;
+import com.popular_movies.ui.content_details.movie.ReviewPresenter;
+import com.popular_movies.ui.content_details.movie.ReviewPresenterImpl;
+import com.popular_movies.ui.content_details.movie.ReviewsAdapter;
 import com.popular_movies.util.AppUtils;
 
 import java.util.ArrayList;

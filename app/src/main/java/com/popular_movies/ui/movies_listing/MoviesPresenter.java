@@ -1,11 +1,7 @@
 package com.popular_movies.ui.movies_listing;
 
-import com.popular_movies.domain.Genre;
 import com.popular_movies.domain.GenreResponse;
-import com.popular_movies.domain.MovieData;
 import com.popular_movies.domain.MovieResponse;
-
-import java.util.List;
 
 /**
  * Created by Gurpreet on 21-01-2017.

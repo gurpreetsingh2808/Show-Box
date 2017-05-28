@@ -21,7 +21,8 @@
     <string name="play_movie_trailer">Play movie trailer</string>
     <string name="movie_icon">Movie icon</string>
     <string name="movie_video">Movie trailer</string>
-    <string name="key_movie">KEY_MOVIE</string>
+    <string name="key_detail_content">KEY_DETAIL_CONTENT</string>
+    <string name="key_detail_content_type">KEY_DETAIL_CONTENT_TYPE</string>
     <string name="trailer_error">Trailer for this movie is not available</string>
     <string name="removed">Removed</string>
     <string name="from_favourite">from Favorites!</string>
@@ -36,6 +37,7 @@
 
 
     <string name="Menu.Movies">MOVIES</string>
+    <string name="Menu.Favourites">FAVOURITES</string>
     <string name="Menu.TvShows">TV SHOWS</string>
     <string name="Menu.People">PEOPLE</string>
     <string name="Menu.Discover">DISCOVER</string>
@@ -47,10 +49,13 @@
     <string name="Collection.Latest">LATEST</string>
     <string name="Collection.NowPlaying">NOW PLAYING</string>
     <string name="Collection.Upcoming">UPCOMING</string>
+    <string name="Collection.AiringToday">AIRING TODAY</string>
+    <string name="Collection.OnTheAir">ON THE AIR</string>
+
+
     <string name="inTheaters">In theaters</string>
     <string name="trailer">Trailers</string>
     <string name="key_movie_type">KEY_MOVIE_TYPE</string>
-    <string name="Menu.Favourites">FAVOURITES</string>
     <string name="Trailer.NotAvailable">No trailers available</string>
     <string name="Review.NotAvailable">No reviews available</string>
 

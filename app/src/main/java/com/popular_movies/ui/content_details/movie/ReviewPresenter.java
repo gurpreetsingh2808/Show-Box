@@ -1,4 +1,4 @@
-package com.popular_movies.ui.movie_details;
+package com.popular_movies.ui.content_details.movie;
 
 import com.popular_movies.domain.ReviewResponse;
 

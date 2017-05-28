@@ -1,4 +1,4 @@
-package com.popular_movies.ui.movie_details;
+package com.popular_movies.ui.content_details.movie;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -29,20 +29,18 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.popular_movies.BuildConfig;
 import com.popular_movies.R;
 import com.popular_movies.database.MovieProviderHelper;
-import com.popular_movies.domain.MovieData;
+import com.popular_movies.domain.Movie;
 import com.popular_movies.domain.Review;
 import com.popular_movies.domain.ReviewResponse;
 import com.popular_movies.domain.Trailer;
 import com.popular_movies.domain.TrailerResponse;
+import com.popular_movies.framework.ImageLoader;
+import com.popular_movies.ui.activity.ReviewActivity;
+import com.popular_movies.ui.content_details.TrailerAdapter;
 import com.popular_movies.util.AppUtils;
 import com.popular_movies.util.DateConvert;
-import com.popular_movies.framework.ImageLoader;
-import com.popular_movies.ui.main.MainActivity;
-import com.popular_movies.ui.activity.ReviewActivity;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +50,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.relex.circleindicator.CircleIndicator;
 
-public class MovieDetailFragment extends Fragment implements MovieDetailPresenter.View, ReviewsAdapter.NavigateReviewListener, TrailerAdapter.TrailerClickListener {
+public class MovieDetailFragment extends Fragment implements MovieDetailPresenter.View, ReviewsAdapter.NavigateReviewListener,
+        TrailerAdapter.TrailerClickListener {
 
     private static final String TAG = MovieDetailFragment.class.getSimpleName();
     //  toolbar
@@ -105,7 +104,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
     DiscreteScrollView dsvTrailers;
 
     private static final String KEY_MOVIE = "KEY_MOVIE";
-    MovieData movieData;
+    Movie movieData;
     private InterstitialAd mInterstitialAd;
     private View view;
     private ReviewsAdapter reviewsAdapter;
@@ -134,7 +133,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
 
         initializeAd();
         diagonalLayout.setVisibility(View.VISIBLE);
-        movieData = getArguments().getParcelable(getString(R.string.key_movie));
+        movieData = getArguments().getParcelable(getString(R.string.key_detail_content));
         layoutManagerReview = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvReviews.setLayoutManager(layoutManagerReview);
 

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.popular_movies.R;
 import com.popular_movies.ui.favourites.FavoritesFragment;
+import com.popular_movies.ui.tv_shows.TvShowsFragment;
 import com.popular_movies.util.AppUtils;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 import com.yalantis.guillotine.interfaces.GuillotineListener;
@@ -143,6 +144,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.llFavourites :
                 setFragment(new FavoritesFragment());
+                break;
+            case R.id.llTvShows :
+                setFragment(new TvShowsFragment());
                 break;
         }
     }

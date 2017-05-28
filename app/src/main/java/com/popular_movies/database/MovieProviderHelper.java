@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.popular_movies.MyApplication;
-import com.popular_movies.domain.MovieData;
-import com.popular_movies.domain.MovieDataTable;
+import com.popular_movies.domain.Movie;
+import com.popular_movies.domain.MovieTable;
 
 import java.util.List;
 
@@ -47,36 +47,36 @@ public class MovieProviderHelper {
         if (contentResolver == null) {
             getInstance();
         }
-        return contentResolver.query(MovieDataTable.CONTENT_URI, null, null, null, null);
+        return contentResolver.query(MovieTable.CONTENT_URI, null, null, null, null);
     }
 
     public Cursor getFilledCursor() {
         if (contentResolver == null) {
             getInstance();
         }
-        return contentResolver.query(MovieDataTable.CONTENT_URI,
-                new String[]{MovieDataTable.FIELD_COL_POSTER_PATH, MovieDataTable.FIELD_COL_TITLE,
-                        MovieDataTable.FIELD_COL_RELEASE_DATE},
+        return contentResolver.query(MovieTable.CONTENT_URI,
+                new String[]{MovieTable.FIELD_COL_POSTER_PATH, MovieTable.FIELD_COL_TITLE,
+                        MovieTable.FIELD_COL_RELEASE_DATE},
                 null,
                 null,
                 null);
     }
 
 
-    public void insert(MovieData movieData) {
-        contentResolver.insert(MovieDataTable.CONTENT_URI,
-                MovieDataTable.getContentValues(movieData, false));
+    public void insert(Movie movieData) {
+        contentResolver.insert(MovieTable.CONTENT_URI,
+                MovieTable.getContentValues(movieData, false));
     }
 
 
     public void delete(int id) {
-        contentResolver.delete(MovieDataTable.CONTENT_URI,
-                MovieDataTable.FIELD_COL_ID + "=?", new String[]{String.valueOf(id)});
+        contentResolver.delete(MovieTable.CONTENT_URI,
+                MovieTable.FIELD_COL_ID + "=?", new String[]{String.valueOf(id)});
     }
 
     public Boolean doesMovieExist(int id) {
-        List<MovieData> listMovies = MovieDataTable.getRows(getCursor(), false);
-        for (MovieData movieData : listMovies) {
+        List<Movie> listMovies = MovieTable.getRows(getCursor(), false);
+        for (Movie movieData : listMovies) {
             Log.d(TAG, "doesMovieExist: movie id "+movieData.getId());
             if(movieData.getId() == id) {
                 return true;
@@ -85,7 +85,7 @@ public class MovieProviderHelper {
         return false;
     }
 
-    public List<MovieData> getAllFavouriteMovies() {
-        return MovieDataTable.getRows(getCursor(), true);
+    public List<Movie> getAllFavouriteMovies() {
+        return MovieTable.getRows(getCursor(), true);
     }
 }

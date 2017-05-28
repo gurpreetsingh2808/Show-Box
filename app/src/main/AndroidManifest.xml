@@ -16,18 +16,28 @@
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.movie_details.MovieDetailActivity"
+            android:name=".ui.content_details.MovieDetailActivity"
             android:label="@string/title_activity_movie_detail"
             android:theme="@style/AppTheme.ActionBar.Transparent" />
         <activity
             android:name=".ui.activity.ReviewActivity"
             android:label="@string/title_activity_review"
-            android:parentActivityName=".ui.movie_details.MovieDetailActivity"
+            android:parentActivityName=".ui.content_details.MovieDetailActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.popular_movies.ui.movie_details.MovieDetailActivity" />
+                android:value="com.popular_movies.ui.content_details.MovieDetailActivity" />
         </activity>
+
+        <activity android:name=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.movies_listing.MoviesListingActivity" />
 
         <receiver
             android:name=".widget.MovieWidgetProvider"
@@ -48,14 +58,6 @@
 
         <service android:name=".widget.FavouritesWidgetService" />
 
-        <activity android:name=".SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ui.movies_listing.MoviesListingActivity"></activity>
     </application>
 
 </manifest>

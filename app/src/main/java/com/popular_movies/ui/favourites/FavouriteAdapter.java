@@ -13,12 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.MovieData;
-import com.popular_movies.domain.MovieDataTable;
+import com.popular_movies.domain.Movie;
+import com.popular_movies.domain.MovieTable;
 import com.popular_movies.framework.ImageLoader;
-import com.popular_movies.ui.main.MainActivity;
-import com.popular_movies.ui.movie_details.MovieDetailActivity;
-import com.popular_movies.ui.movie_details.MovieDetailFragment;
+import com.popular_movies.ui.content_details.MovieDetailActivity;
+import com.popular_movies.ui.content_details.movie.MovieDetailFragment;
 import com.popular_movies.util.AppUtils;
 
 import java.util.List;
@@ -32,7 +31,7 @@ import butterknife.ButterKnife;
 public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyViewHolder> {
 
     private static String TAG = FavouriteAdapter.class.getSimpleName();
-    private List<MovieData> movieItemArrayList;
+    private List<Movie> movieItemArrayList;
     private LayoutInflater inflater;
     private Context context;
     private Cursor dataCursor;
@@ -59,19 +58,19 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyVi
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         dataCursor.moveToPosition(position);
-        String title = dataCursor.getString(dataCursor.getColumnIndex(MovieDataTable.FIELD_COL_TITLE));
-        String description = dataCursor.getString(dataCursor.getColumnIndex(MovieDataTable.FIELD_COL_OVERVIEW));
-        String posterPath = dataCursor.getString(dataCursor.getColumnIndex(MovieDataTable.FIELD_COL_POSTER_PATH));
-        String backdrop = dataCursor.getString(dataCursor.getColumnIndex(MovieDataTable.FIELD_COL_BACKDROP));
-        String voteAverage = dataCursor.getString(dataCursor.getColumnIndex(MovieDataTable.FIELD_COL_VOTE_AVERAGE));
-        String releaseDate = dataCursor.getString(dataCursor.getColumnIndex(MovieDataTable.FIELD_COL_RELEASE_DATE));
+        String title = dataCursor.getString(dataCursor.getColumnIndex(MovieTable.FIELD_COL_TITLE));
+        String description = dataCursor.getString(dataCursor.getColumnIndex(MovieTable.FIELD_COL_OVERVIEW));
+        String posterPath = dataCursor.getString(dataCursor.getColumnIndex(MovieTable.FIELD_COL_POSTER_PATH));
+        String backdrop = dataCursor.getString(dataCursor.getColumnIndex(MovieTable.FIELD_COL_BACKDROP));
+        String voteAverage = dataCursor.getString(dataCursor.getColumnIndex(MovieTable.FIELD_COL_VOTE_AVERAGE));
+        String releaseDate = dataCursor.getString(dataCursor.getColumnIndex(MovieTable.FIELD_COL_RELEASE_DATE));
         Log.d(TAG, "onBindViewHolder: release date "+releaseDate);
-        String id = dataCursor.getString(dataCursor.getColumnIndex(MovieDataTable.FIELD_COL_ID));
+        String id = dataCursor.getString(dataCursor.getColumnIndex(MovieTable.FIELD_COL_ID));
 
         holder.title.setText(title);
         ImageLoader.loadPosterImage(context, posterPath, holder.thumbnail);
 
-        final MovieData movieData = new MovieData(title, description, posterPath, backdrop, voteAverage, new java.sql.Date(Long.valueOf(releaseDate)), Integer.valueOf(id));
+        final Movie movieData = new Movie(title, description, posterPath, backdrop, voteAverage, new java.sql.Date(Long.valueOf(releaseDate)), Integer.valueOf(id));
 
         if (AppUtils.isTablet(context) && AppUtils.isLandscape(context)) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +87,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyVi
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, MovieDetailActivity.class);
-                    intent.putExtra(context.getString(R.string.key_movie), movieData);
+                    intent.putExtra(context.getString(R.string.key_detail_content), movieData);
                     context.startActivity(intent);
                 }
             });

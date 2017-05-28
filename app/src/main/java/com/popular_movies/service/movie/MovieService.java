@@ -25,7 +25,6 @@ public interface MovieService {
     public interface MovieResource {
         @GET("movie/{movieType}?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<MovieResponse> getMovies(@Path("movieType") String movieType, @Query("page") String page);
-        //Call<MovieResponse> getMovies(@Path("movieType") String movieType);
 
         @GET("movie/popular?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<MovieResponse> getPopularMovies();
@@ -58,7 +57,7 @@ public interface MovieService {
     /**
      * Get movies model
      */
-    void getMovies(String movieType, String pageNumber, Activity activity, GetMoviesCallback getMoviesCardCalback);
+    void getMovies(String movieType, String pageNumber, Activity activity, GetMoviesCallback getMoviesCalback);
 
     interface GetMoviesCallback {
         void onSuccess(MovieResponse movieResponse);
@@ -66,15 +65,15 @@ public interface MovieService {
         void onFailure(Throwable throwable);
     }
 
-    void getPopularMovies(Activity activity, GetMoviesCallback getMoviesCardCalback);
+    void getPopularMovies(Activity activity, GetMoviesCallback getMoviesCalback);
 
-    void getTopRatedMovies(Activity activity, GetMoviesCallback getMoviesCardCalback);
+    void getTopRatedMovies(Activity activity, GetMoviesCallback getMoviesCalback);
 
-    void getUpcomingMovies(Activity activity, GetMoviesCallback getUpcomingMoviesCardCalback);
+    void getUpcomingMovies(Activity activity, GetMoviesCallback getUpcomingMoviesCalback);
 
-    void getNowPlayingMovies(Activity activity, GetMoviesCallback getNowPlayingMoviesCardCalback);
+    void getNowPlayingMovies(Activity activity, GetMoviesCallback getNowPlayingMoviesCalback);
 
-    void getLatestMovies(Activity activity, GetMoviesCallback getNowPlayingMoviesCardCalback);
+    void getLatestMovies(Activity activity, GetMoviesCallback getNowPlayingMoviesCalback);
 
 
     /**
@@ -101,7 +100,7 @@ public interface MovieService {
     /**
      * search model
      */
-    void getSearchResults(String query, Activity activity, GetMoviesCallback getMoviesCardCalback);
+    void getSearchResults(String query, Activity activity, GetMoviesCallback getMoviesCalback);
 
     /**
      * genre model

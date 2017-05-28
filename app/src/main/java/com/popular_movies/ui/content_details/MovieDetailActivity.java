@@ -1,8 +1,9 @@
-package com.popular_movies.ui.movie_details;
+package com.popular_movies.ui.content_details;
 
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Slide;
 import android.util.Log;
@@ -10,6 +11,9 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import com.popular_movies.R;
+import com.popular_movies.domain.dictionary.DetailContentType;
+import com.popular_movies.ui.content_details.movie.MovieDetailFragment;
+import com.popular_movies.ui.content_details.tv_series.TvShowDetailFragment;
 import com.popular_movies.util.AppUtils;
 
 import butterknife.ButterKnife;
@@ -52,16 +56,36 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         if(getSupportActionBar() != null) {
             Log.d("moviedetail", "action bar not null");
-            getSupportActionBar().setTitle(MovieDetailFragment.getInstance(getIntent().
-                    getParcelableExtra(getString(R.string.key_movie))).getTitle().toString());
+//            getSupportActionBar().setTitle(MovieDetailFragment.getInstance(getIntent().
+//                    getParcelableExtra(getString(R.string.key_detail_content))).getTitle().toString());
         }
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.detailFragment, MovieDetailFragment.getInstance(getIntent()
-                            .getParcelableExtra(getString(R.string.key_movie))), getString(R.string.tag))
-                    .commit();
+            String type = getIntent().getExtras().getString(getString(R.string.key_detail_content_type));
+            if(type != null) {
+                switch (type) {
+                    case DetailContentType.MOVIE :
+                        Fragment fragment =  MovieDetailFragment.getInstance(getIntent()
+                                .getParcelableExtra(getString(R.string.key_detail_content)));
+                        setFragment(fragment);
+                        break;
+                    case DetailContentType.TV_SERIES :
+                        fragment =  TvShowDetailFragment.getInstance(getIntent()
+                                .getParcelableExtra(getString(R.string.key_detail_content)));
+                        setFragment(fragment);
+                        break;
+
+
+                }
+            }
+
         }
+    }
+
+    private void setFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.detailFragment, fragment, getString(R.string.tag))
+                .commit();
     }
 
     @Override

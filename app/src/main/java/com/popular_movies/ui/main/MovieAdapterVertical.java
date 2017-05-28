@@ -1,7 +1,6 @@
 package com.popular_movies.ui.main;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,10 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.MovieData;
+import com.popular_movies.domain.Movie;
 import com.popular_movies.framework.ImageLoader;
 import com.popular_movies.ui.MovieItemClickListener;
-import com.popular_movies.ui.movie_details.MovieDetailFragment;
 
 import java.util.List;
 
@@ -27,12 +25,12 @@ import butterknife.ButterKnife;
 public class MovieAdapterVertical extends RecyclerView.Adapter<MovieAdapterVertical.ViewHolder> {
 
     private static String TAG = MovieAdapterVertical.class.getSimpleName();
-    private List<MovieData> movieItemArrayList;
+    private List<Movie> movieItemArrayList;
     private LayoutInflater inflater;
     private Context context;
     private MovieItemClickListener clickListener;
 
-    public MovieAdapterVertical(Context context, List<MovieData> movieDataList) {
+    public MovieAdapterVertical(Context context, List<Movie> movieDataList) {
         if (context != null) {
             this.context = context;
             inflater = LayoutInflater.from(context);
@@ -50,7 +48,7 @@ public class MovieAdapterVertical extends RecyclerView.Adapter<MovieAdapterVerti
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final MovieData movieData = movieItemArrayList.get(position);
+        final Movie movieData = movieItemArrayList.get(position);
         holder.setData(movieData);
     }
 
@@ -75,7 +73,7 @@ public class MovieAdapterVertical extends RecyclerView.Adapter<MovieAdapterVerti
             }
         }
 
-        private void setData(final MovieData movieData) {
+        private void setData(final Movie movieData) {
             title.setText(movieData.getOriginal_title());
             ImageLoader.loadPosterImage(context, movieData.getPoster_path(), thumbnail);
             synopsis.setText(movieData.getOverview());

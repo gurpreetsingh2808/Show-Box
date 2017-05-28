@@ -1,4 +1,4 @@
-package com.popular_movies.ui.main;
+package com.popular_movies.ui.tv_shows;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,9 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.Movie;
+import com.popular_movies.domain.TvShow;
 import com.popular_movies.framework.ImageLoader;
-import com.popular_movies.ui.MovieItemClickListener;
 
 import java.util.List;
 
@@ -22,21 +21,21 @@ import butterknife.ButterKnife;
 /**
  * Created by Gurpreet on 1/17/2016.
  */
-public class MovieAdapterHorizontal extends RecyclerView.Adapter<MovieAdapterHorizontal.ViewHolder> {
+public class TvShowAdapterHorizontal extends RecyclerView.Adapter<TvShowAdapterHorizontal.ViewHolder> {
 
-    private static String TAG = MovieAdapterHorizontal.class.getSimpleName();
-    private List<Movie> movieItemArrayList;
+    private static String TAG = TvShowAdapterHorizontal.class.getSimpleName();
+    private List<TvShow> tvShowItemArrayList;
     private LayoutInflater inflater;
     private Context context;
-    MovieItemClickListener clickListener;
+    TvShowItemClickListener clickListener;
 
-    public MovieAdapterHorizontal(Context context, List<Movie> movieDataList) {
+    public TvShowAdapterHorizontal(Context context, List<TvShow> movieDataList) {
         if (context != null) {
             this.context = context;
             inflater = LayoutInflater.from(context);
-            this.movieItemArrayList = movieDataList;
+            this.tvShowItemArrayList = movieDataList;
         } else {
-            Log.e(TAG, "MovieAdapterHorizontal: context is null");
+            Log.e(TAG, "TvShowAdapterHorizontal: context is null");
         }
     }
 
@@ -48,7 +47,7 @@ public class MovieAdapterHorizontal extends RecyclerView.Adapter<MovieAdapterHor
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Movie movieData = movieItemArrayList.get(position);
+        final TvShow movieData = tvShowItemArrayList.get(position);
         holder.setData(movieData);
     }
 
@@ -58,7 +57,7 @@ public class MovieAdapterHorizontal extends RecyclerView.Adapter<MovieAdapterHor
         TextView title;
         @BindView(R.id.movie_thumbnail)
         ImageView thumbnail;
-        //public MovieAdapterHorizontal.ClickListener clickListener;
+        //public TvShowAdapterHorizontal.ClickListener clickListener;
 
 
         ViewHolder(View itemView) {
@@ -70,23 +69,23 @@ public class MovieAdapterHorizontal extends RecyclerView.Adapter<MovieAdapterHor
         @Override
         public void onClick(View v) {
             if (clickListener != null) {
-                clickListener.itemClicked(v, getPosition(), movieItemArrayList.get(getAdapterPosition()));
+                clickListener.itemClicked(v, getPosition(), tvShowItemArrayList.get(getAdapterPosition()));
             }
         }
 
-        private void setData(final Movie movieData) {
-            title.setText(movieData.getOriginal_title());
+        private void setData(final TvShow movieData) {
+            title.setText(movieData.getOriginal_name());
             ImageLoader.loadPosterImage(context, movieData.getPoster_path(), thumbnail);
         }
     }
 
-    public void setClickListener(MovieItemClickListener clickListener) {
+    public void setClickListener(TvShowItemClickListener clickListener) {
         this.clickListener = clickListener;
     }
 
     @Override
     public int getItemCount() {
-        return movieItemArrayList.size();
+        return tvShowItemArrayList.size();
     }
 
 }

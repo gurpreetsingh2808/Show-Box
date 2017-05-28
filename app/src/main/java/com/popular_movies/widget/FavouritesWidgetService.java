@@ -17,11 +17,9 @@ import android.widget.RemoteViews;
 
 import com.popular_movies.BuildConfig;
 import com.popular_movies.R;
-import com.popular_movies.domain.MovieDataTable;
+import com.popular_movies.domain.MovieTable;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -58,9 +56,9 @@ public class FavouritesWidgetService extends Service {
             // Select a random employee
             mID = (new Random().nextInt(11) + 1);
 
-            Uri uri = ContentUris.withAppendedId(MovieDataTable.CONTENT_URI, mID);
-            String[] projection = {MovieDataTable.FIELD_COL_POSTER_PATH, MovieDataTable.FIELD_COL_TITLE,
-                    MovieDataTable.FIELD_COL_VOTE_AVERAGE };
+            Uri uri = ContentUris.withAppendedId(MovieTable.CONTENT_URI, mID);
+            String[] projection = {MovieTable.FIELD_COL_POSTER_PATH, MovieTable.FIELD_COL_TITLE,
+                    MovieTable.FIELD_COL_VOTE_AVERAGE };
             String selection = null;
             String[] selectionArgs = null;
             String sortOrder = null;
@@ -70,9 +68,9 @@ public class FavouritesWidgetService extends Service {
             if (cursor != null && cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 //mName = cursor.getString(cursor.getColumnIndex(EmployeeDatabase.COLUMN_LASTNAME)) + ", " + cursor.getString(cursor.getColumnIndex(EmployeeDatabase.COLUMN_FIRSTNAME));
-                mTitle = cursor.getString(cursor.getColumnIndex(MovieDataTable.FIELD_COL_TITLE));
-                mRating = cursor.getString(cursor.getColumnIndex(MovieDataTable.FIELD_COL_VOTE_AVERAGE));
-                mPicture = cursor.getString(cursor.getColumnIndex(MovieDataTable.FIELD_COL_POSTER_PATH));
+                mTitle = cursor.getString(cursor.getColumnIndex(MovieTable.FIELD_COL_TITLE));
+                mRating = cursor.getString(cursor.getColumnIndex(MovieTable.FIELD_COL_VOTE_AVERAGE));
+                mPicture = cursor.getString(cursor.getColumnIndex(MovieTable.FIELD_COL_POSTER_PATH));
             } else {
                 mTitle = "empty cursor";
             }

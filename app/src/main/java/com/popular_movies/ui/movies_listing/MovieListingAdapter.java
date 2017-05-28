@@ -2,7 +2,6 @@ package com.popular_movies.ui.movies_listing;
 
 import android.content.Context;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,12 +12,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.MovieData;
+import com.popular_movies.domain.Movie;
 import com.popular_movies.framework.ImageLoader;
 import com.popular_movies.ui.MovieItemClickListener;
-import com.popular_movies.ui.main.MainActivity;
-import com.popular_movies.ui.movie_details.MovieDetailFragment;
-import com.popular_movies.util.AppUtils;
 import com.popular_movies.util.DateConvert;
 
 import java.util.HashMap;
@@ -34,7 +30,7 @@ import butterknife.ButterKnife;
 public class MovieListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static String TAG = MovieListingAdapter.class.getSimpleName();
-    private List<MovieData> movieItemArrayList;
+    private List<Movie> movieItemArrayList;
     private LayoutInflater inflater;
     private Context context;
     private MovieItemClickListener clickListener;
@@ -42,7 +38,7 @@ public class MovieListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int VIEW_TYPE_LOADING = 1;
     private Map<Integer, String> mapGenre = new HashMap<>();
 
-    public MovieListingAdapter(Context context, List<MovieData> movieDataList) {
+    public MovieListingAdapter(Context context, List<Movie> movieDataList) {
         if (context != null) {
             this.context = context;
             inflater = LayoutInflater.from(context);
@@ -77,7 +73,7 @@ public class MovieListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof MovieViewHolder) {
-            final MovieData movieData = movieItemArrayList.get(position);
+            final Movie movieData = movieItemArrayList.get(position);
             MovieViewHolder movieViewHolder = (MovieViewHolder) holder;
             movieViewHolder.setData(movieData);
 
@@ -96,12 +92,12 @@ public class MovieListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.mapGenre = mapGenre;
     }
 
-    public void addAll(List<MovieData> results) {
+    public void addAll(List<Movie> results) {
         movieItemArrayList.addAll(results);
         notifyDataSetChanged();
     }
 
-    public void add(MovieData movie) {
+    public void add(Movie movie) {
         movieItemArrayList.add(movie);
         Handler handler = new Handler();
         final Runnable r = new Runnable() {
@@ -150,7 +146,7 @@ public class MovieListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
         }
 
-        private void setData(final MovieData movieData) {
+        private void setData(final Movie movieData) {
             //  set title
             title.setText(movieData.getOriginal_title());
             //  set poster/movie image

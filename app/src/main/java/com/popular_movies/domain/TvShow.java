@@ -5,55 +5,37 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
-import ckm.simple.sql_provider.annotation.SimpleSQLColumn;
-import ckm.simple.sql_provider.annotation.SimpleSQLTable;
-
 /**
  * Created by Gurpreet on 2/21/2016.
  */
 
-@SimpleSQLTable(table = "movieData", provider = "MovieProvider")
+////@SimpleSQLTable(table = "movie", provider = "MovieProvider")
 
-public class MovieData implements Parcelable {
+public class TvShow implements Parcelable {
 
-    @SimpleSQLColumn("col_poster_path")
+    //@SimpleSQLColumn("col_poster_path")
     private String poster_path;
-
-    private Boolean adult;
-
-    @SimpleSQLColumn("col_overview")
-    private String overview;
-
-    @SimpleSQLColumn("col_release_date")
-    private Date release_date;
-
-    private Integer[] genre_ids;
-
-    @SimpleSQLColumn("col_id")
-    private int id;
-
-    @SimpleSQLColumn("col_title")
-    private String original_title;
-
-    private String original_language;
-
-    private String title;
-
-    @SimpleSQLColumn("col_backdrop")
-    private String backdrop_path;
-
     private String popularity;
-
-    private String vote_count;
-
-    private Boolean video;
-
-    @SimpleSQLColumn("col_vote_average")
+    //@SimpleSQLColumn("col_id")
+    private int id;
+    //@SimpleSQLColumn("col_backdrop")
+    private String backdrop_path;
+    //@SimpleSQLColumn("col_vote_average")
     private String vote_average;
+    //@SimpleSQLColumn("col_overview")
+    private String overview;
+    //@SimpleSQLColumn("col_release_date")
+    private Date first_air_date;
+    private String[] origin_country;
+    private Integer[] genre_ids;
+    private String original_language;
+    private String vote_count;
+    private String name;
+    //@SimpleSQLColumn("col_title")
+    private String original_name;
 
 
-
-    public MovieData() {
+    public TvShow() {
     }
 
     public String getPoster_path() {
@@ -64,28 +46,12 @@ public class MovieData implements Parcelable {
         this.poster_path = poster_path;
     }
 
-    public Boolean getAdult() {
-        return adult;
-    }
-
-    public void setAdult(Boolean adult) {
-        this.adult = adult;
-    }
-
     public String getOverview() {
         return overview;
     }
 
     public void setOverview(String overview) {
         this.overview = overview;
-    }
-
-    public Date getRelease_date() {
-        return release_date;
-    }
-
-    public void setRelease_date(Date release_date) {
-        this.release_date = release_date;
     }
 
     public Integer[] getGenre_ids() {
@@ -104,28 +70,12 @@ public class MovieData implements Parcelable {
         this.id = id;
     }
 
-    public String getOriginal_title() {
-        return original_title;
-    }
-
-    public void setOriginal_title(String original_title) {
-        this.original_title = original_title;
-    }
-
     public String getOriginal_language() {
         return original_language;
     }
 
     public void setOriginal_language(String original_language) {
         this.original_language = original_language;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getBackdrop_path() {
@@ -152,14 +102,6 @@ public class MovieData implements Parcelable {
         this.vote_count = vote_count;
     }
 
-    public Boolean getVideo() {
-        return video;
-    }
-
-    public void setVideo(Boolean video) {
-        this.video = video;
-    }
-
     public String getVote_average() {
         return vote_average;
     }
@@ -169,54 +111,86 @@ public class MovieData implements Parcelable {
     }
 
 
-    public MovieData(String title, String description, String thumbnailURL, String wideThumbnailURL, String userRatings, Date release_date, int id) {
-        this.original_title = title;
+    public TvShow(String title, String description, String thumbnailURL, String wideThumbnailURL, String userRatings, Date release_date, int id) {
+        this.original_name = title;
         this.overview = description;
         this.poster_path = thumbnailURL;
         this.backdrop_path = wideThumbnailURL;
         this.vote_average = userRatings;
-        this.release_date = release_date;
+        this.first_air_date = release_date;
         this.id = id;
     }
 
 
-    public MovieData(Parcel in) {
-        original_title = in.readString();
+    public TvShow(Parcel in) {
+        original_name = in.readString();
         overview = in.readString();
         poster_path = in.readString();
         backdrop_path = in.readString();
         vote_average = in.readString();
-        release_date = new Date(in.readLong());
+        first_air_date = new Date(in.readLong());
         id = in.readInt();
     }
 
-    public static final Creator<MovieData> CREATOR = new Creator<MovieData>() {
-        @Override
-        public MovieData createFromParcel(Parcel in) {
-            return new MovieData(in);
+    public static final Creator<TvShow> CREATOR = new Creator<TvShow>() {
+        //@Override
+        public TvShow createFromParcel(Parcel in) {
+            return new TvShow(in);
         }
 
-        @Override
-        public MovieData[] newArray(int size) {
-            return new MovieData[size];
+        //@Override
+        public TvShow[] newArray(int size) {
+            return new TvShow[size];
         }
     };
 
-    @Override
+    //@Override
     public int describeContents() {
         return 0;
     }
 
-    @Override
+    //@Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(original_title);
+        dest.writeString(original_name);
         dest.writeString(overview);
         dest.writeString(poster_path);
         dest.writeString(backdrop_path);
         dest.writeString(vote_average);
-        if(release_date != null) {
-            dest.writeLong(release_date.getTime());
+        if(first_air_date != null) {
+            dest.writeLong(first_air_date.getTime());
         }
         dest.writeInt(id);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getOriginal_name() {
+        return original_name;
+    }
+
+    public void setOriginal_name(String original_name) {
+        this.original_name = original_name;
+    }
+
+    public Date getFirst_air_date() {
+        return first_air_date;
+    }
+
+    public void setFirst_air_date(Date first_air_date) {
+        this.first_air_date = first_air_date;
+    }
+
+    public String[] getOrigin_country() {
+        return origin_country;
+    }
+
+    public void setOrigin_country(String[] origin_country) {
+        this.origin_country = origin_country;
     }
 }

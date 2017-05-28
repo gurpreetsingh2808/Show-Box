@@ -16,9 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.popular_movies.domain.MovieDataTable;
-import com.popular_movies.ui.main.MainActivity;
 import com.popular_movies.R;
+import com.popular_movies.domain.MovieTable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,7 +75,7 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Uri CONTENT_URI = MovieDataTable.CONTENT_URI;
+        Uri CONTENT_URI = MovieTable.CONTENT_URI;
         return new CursorLoader(getContext(), CONTENT_URI, null, null, null, null);
     }
 
