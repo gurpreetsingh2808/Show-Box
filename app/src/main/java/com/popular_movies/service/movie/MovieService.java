@@ -5,6 +5,8 @@ import android.app.Activity;
 import com.popular_movies.BuildConfig;
 import com.popular_movies.domain.Genre;
 import com.popular_movies.domain.GenreResponse;
+import com.popular_movies.domain.MovieCollection;
+import com.popular_movies.domain.MovieDetails;
 import com.popular_movies.domain.MovieResponse;
 import com.popular_movies.domain.ReviewResponse;
 import com.popular_movies.domain.TrailerResponse;
@@ -41,11 +43,17 @@ public interface MovieService {
         @GET("movie/now_playing?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<MovieResponse> getNowPlayingMovies();
 
+        @GET("movie/{id}?api_key=" + BuildConfig.TMDB_API_KEY)
+        Call<MovieDetails> getMovieDetails(@Path("id") int id);
+
         @GET("movie/{id}/videos?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<TrailerResponse> getTrailers(@Path("id") int id);
 
         @GET("movie/{id}/reviews?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<ReviewResponse> getReview(@Path("id") int id);
+
+        @GET("collection/{id}?api_key=" + BuildConfig.TMDB_API_KEY)
+        Call<MovieCollection> getCollection(@Path("id") int id);
 
         @GET("search/movie?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<MovieResponse> getSearchResults(@Query("query") String searchQuery);
@@ -75,6 +83,16 @@ public interface MovieService {
 
     void getLatestMovies(Activity activity, GetMoviesCallback getNowPlayingMoviesCalback);
 
+    /**
+     * Get movie details model
+     */
+    void getMovieDetails(int id, Activity activity, GetMovieDetailsCallback getMovieDetailsCallback);
+
+    interface GetMovieDetailsCallback {
+        void onSuccess(MovieDetails movieDetails);
+
+        void onFailure(Throwable throwable);
+    }
 
     /**
      * Get movie trailers model
@@ -94,6 +112,17 @@ public interface MovieService {
 
     interface GetReviewsCallback {
         void onSuccess(ReviewResponse reviewResponse);
+        void onFailure(Throwable throwable);
+    }
+
+    /**
+     * Get movie details model
+     */
+    void getMovieCollection(int id, Activity activity, GetMovieCollectionCallback getMovieCollectionCallback);
+
+    interface GetMovieCollectionCallback {
+        void onSuccess(MovieCollection movieCollection);
+
         void onFailure(Throwable throwable);
     }
 

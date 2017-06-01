@@ -1,0 +1,14 @@
+package com.popular_movies.util;
+
+/**
+ * Created by Gurpreet on 31-05-2017.
+ */
+
+public class TimeUtils {
+
+    public static String formatDuration(int duration) {
+        int hours = duration / 60; //since both are ints, you get an int
+        int minutes = duration % 60;
+        return hours + " hrs " + minutes + " mins ";
+    }
+}

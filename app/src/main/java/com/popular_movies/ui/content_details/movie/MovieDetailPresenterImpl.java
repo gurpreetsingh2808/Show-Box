@@ -2,6 +2,8 @@ package com.popular_movies.ui.content_details.movie;
 
 import android.app.Activity;
 
+import com.popular_movies.domain.MovieCollection;
+import com.popular_movies.domain.MovieDetails;
 import com.popular_movies.domain.ReviewResponse;
 import com.popular_movies.domain.TrailerResponse;
 import com.popular_movies.service.movie.MovieService;
@@ -23,6 +25,21 @@ public class MovieDetailPresenterImpl implements MovieDetailPresenter.Presenter 
         this.view = view;
         this.activity = activity;
         this.movieService = new MovieServiceImpl();
+    }
+
+    @Override
+    public void fetchMovieDetails(int movieId) {
+        movieService.getMovieDetails(movieId, activity, new MovieService.GetMovieDetailsCallback() {
+            @Override
+            public void onSuccess(MovieDetails movieDetails) {
+                view.onMovieDetailsRetreivalSuccess(movieDetails);
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                view.onMovieDetailsRetreivalFailure(throwable);
+            }
+        });
     }
 
     @Override
@@ -51,6 +68,21 @@ public class MovieDetailPresenterImpl implements MovieDetailPresenter.Presenter 
             @Override
             public void onFailure(Throwable throwable) {
                 view.onTrailersRetreivalFailure(throwable);
+            }
+        });
+    }
+
+    @Override
+    public void fetchMovieCollection(int movieId) {
+        movieService.getMovieCollection(movieId, activity, new MovieService.GetMovieCollectionCallback() {
+            @Override
+            public void onSuccess(MovieCollection movieCollection) {
+                view.onMovieCollectionRetreivalSuccess(movieCollection);
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                view.onMovieCollectionRetreivalFailure(throwable);
             }
         });
     }

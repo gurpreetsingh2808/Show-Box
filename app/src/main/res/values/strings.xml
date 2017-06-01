@@ -59,4 +59,8 @@
     <string name="Trailer.NotAvailable">No trailers available</string>
     <string name="Review.NotAvailable">No reviews available</string>
 
+    <string name="MovieDetails.Collection">Collections</string>
+    <string name="NA">N/A</string>
+    <string name="Collection.NotAvailable">No Collections Available</string>
+
 </resources>

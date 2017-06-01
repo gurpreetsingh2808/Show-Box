@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.popular_movies.ui.movie_details.MovieDetailActivity">
+    tools:context="com.popular_movies.ui.content_details.MovieDetailActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -51,8 +51,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
                         app:layout_scrollFlags="scroll|enterAlways"
-                        app:popupTheme="@style/AppTheme.PopupOverlay" >
-                        </android.support.v7.widget.Toolbar>
+                        app:popupTheme="@style/AppTheme.PopupOverlay"></android.support.v7.widget.Toolbar>
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/ivBack"
@@ -60,7 +59,7 @@
                         android:layout_height="32dp"
                         android:layout_marginTop="@dimen/margin_4"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/ic_back_white"/>
+                        app:srcCompat="@drawable/ic_back_white" />
 
                 </com.github.florent37.diagonallayout.DiagonalLayout>
 
@@ -151,17 +150,66 @@
                         android:layout_marginLeft="@dimen/text_margin"
                         android:layout_marginRight="@dimen/text_margin"
                         android:layout_marginTop="@dimen/margin_24"
+                        android:gravity="center_horizontal"
                         android:paddingTop="@dimen/margin_12"
                         android:text="@string/title"
                         android:textColor="@color/pureBlack"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
+                    <RelativeLayout
+                        android:id="@+id/rlAdditonalDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/title"
+                        android:layout_marginBottom="@dimen/margin_12">
+
+                        <TextView
+                            android:id="@+id/tvGenre"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:layout_marginLeft="16dp"
+                            android:textColor="@color/grey"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <RelativeLayout
+                            android:id="@+id/rlDuration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.v7.widget.AppCompatImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:layout_toLeftOf="@+id/tvDuration"
+                                app:srcCompat="@drawable/ic_duration" />
+
+                            <TextView
+                                android:id="@+id/tvDuration"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginRight="16dp"
+                                android:text="@string/NA"
+                                android:textColor="@color/grey"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+
                     <TextView
                         android:id="@+id/synopsis"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/title"
+                        android:layout_below="@id/rlAdditonalDetails"
                         android:layout_marginBottom="@dimen/text_margin"
                         android:layout_marginLeft="@dimen/text_margin"
                         android:layout_marginRight="@dimen/text_margin"
@@ -171,26 +219,95 @@
 
                 </RelativeLayout>
 
-                <TextView
-                    style="@style/TextView.MovieDetailDiagonalHeadings"
-                    android:layout_marginTop="@dimen/text_margin"
-                    android:text="@string/inTheaters"
-                    android:textColor="@color/black" />
-
-                <View
-                    style="@style/View.MovieDetailDiagonalHeadings"
-                    android:layout_gravity="center" />
-
-                <TextView
-                    android:id="@+id/releaseDate"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/margin_12"
-                    android:text="@string/empty_view_text"
-                    android:textColor="@color/grey"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
+
+                    <!-- <LinearLayout
+                         android:layout_width="0dp"
+                         android:layout_height="wrap_content"
+                         android:layout_weight="1"
+                         android:orientation="vertical">
+
+                         <android.support.v7.widget.AppCompatImageView
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_gravity="center_horizontal"
+                             app:srcCompat="@drawable/ic_date"/>
+
+                         <TextView
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_gravity="center"
+                             android:gravity="center"
+                             android:layout_marginTop="@dimen/margin_12"
+                             android:text="Action | Adventure | Sci-Fi"
+                             android:textColor="@color/grey"
+                             android:textSize="14sp"
+                             android:textStyle="bold" />
+                     </LinearLayout>
+     -->
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <!--  <android.support.v7.widget.AppCompatImageView
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_gravity="center_horizontal"
+                              app:srcCompat="@drawable/ic_date"/>
+                              -->
+                        <TextView
+                            style="@style/TextView.MovieDetailDiagonalHeadings"
+                            android:layout_marginTop="@dimen/text_margin"
+                            android:text="@string/inTheaters"
+                            android:textColor="@color/black" />
+
+                        <View
+                            style="@style/View.MovieDetailDiagonalHeadings"
+                            android:layout_gravity="center" />
+
+                        <TextView
+                            android:id="@+id/releaseDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/margin_12"
+                            android:text="@string/empty_view_text"
+                            android:textColor="@color/grey"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!--
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <android.support.v7.widget.AppCompatImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_horizontal"
+                                            app:srcCompat="@drawable/ic_duration"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="@dimen/margin_12"
+                                        android:text="2hrs 10 mins"
+                                        android:textColor="@color/grey"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold" />
+                                    </LinearLayout>-->
+
+                </LinearLayout>
 
                 <!--
                         TRAILERS LAYOUT BEGIN
@@ -241,7 +358,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="20dp"
-                                    app:dsv_orientation="horizontal"/>
+                                    app:dsv_orientation="horizontal" />
 
                                 <ProgressBar
                                     android:id="@+id/pbTrailers"
@@ -257,8 +374,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
-                                    android:visibility="gone"
-                                    android:text="@string/Trailer.NotAvailable"/>
+                                    android:text="@string/Trailer.NotAvailable"
+                                    android:visibility="gone" />
                             </RelativeLayout>
 
                         </RelativeLayout>
@@ -303,10 +420,12 @@
                         REVIEWS LAYOUT BEGIN
                  -->
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white">
+                    android:minHeight="300dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tvHeadingUserReviews"
@@ -317,25 +436,27 @@
 
                     <View
                         style="@style/View.MovieDetailDiagonalHeadings"
-                        android:layout_below="@+id/tvHeadingUserReviews" />
+                        android:layout_gravity="center_horizontal"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@+id/tvHeadingUserReviews"
+                        android:minHeight="200dp"
                         android:layout_marginTop="@dimen/margin_24">
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/rvReviews"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_gravity="center"/>
 
                         <android.support.v7.widget.AppCompatImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/margin_8"
-                            app:srcCompat="@drawable/ic_arrow_back"/>
+                            app:srcCompat="@drawable/ic_arrow_back" />
 
                         <android.support.v7.widget.AppCompatImageView
                             android:layout_width="wrap_content"
@@ -343,16 +464,16 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="@dimen/margin_8"
-                            app:srcCompat="@drawable/ic_arrow_next"/>
+                            app:srcCompat="@drawable/ic_arrow_next" />
 
                         <TextView
                             android:id="@+id/tvNoReviews"
                             android:layout_width="wrap_content"
                             android:layout_height="80dp"
-                            android:gravity="center"
                             android:layout_centerInParent="true"
-                            android:visibility="gone"
-                            android:text="@string/Review.NotAvailable"/>
+                            android:gravity="center"
+                            android:text="@string/Review.NotAvailable"
+                            android:visibility="gone" />
 
                         <ProgressBar
                             android:id="@+id/pbReviews"
@@ -364,8 +485,9 @@
 
                     </RelativeLayout>
 
-                </RelativeLayout>
+                </LinearLayout>
 
+<!--
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -392,10 +514,130 @@
                         </RelativeLayout>
                     </com.github.florent37.diagonallayout.DiagonalLayout>
                 </RelativeLayout>
+-->
 
                 <!--
                        REVIEWS LAYOUT END
                  -->
+
+                <!--
+                        COLLECTIONS LAYOUT BEGIN
+                 -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:visibility="visible">
+
+                    <com.github.florent37.diagonallayout.DiagonalLayout
+                        android:id="@+id/diagonalColection"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:visibility="visible"
+                        app:layout_collapseMode="parallax"
+                        diagonal:diagonal_angle="10"
+                        diagonal:diagonal_direction="right"
+                        diagonal:diagonal_position="top">
+
+                        <RelativeLayout
+                            android:id="@+id/rlCollectionHeader"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/pureBlack">
+
+                            <TextView
+                                android:id="@+id/tvHeadingCollection"
+                                style="@style/TextView.MovieDetailDiagonalHeadings"
+                                android:layout_marginTop="70dp"
+                                android:text="@string/MovieDetails.Collection"
+                                android:textColor="@color/white" />
+
+                            <View
+                                style="@style/View.MovieDetailDiagonalHeadings"
+                                android:layout_below="@+id/tvHeadingCollection" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_below="@+id/tvHeadingCollection"
+                                android:layout_marginTop="@dimen/margin_24">
+
+                                <com.yarolegovich.discretescrollview.DiscreteScrollView
+                                    android:id="@+id/dsvCollection"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_centerInParent="true"
+                                    app:dsv_orientation="horizontal" />
+
+                                <ProgressBar
+                                    android:id="@+id/pbCollection"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="80dp"
+                                    android:background="@drawable/circular_indicator_bg"
+                                    android:padding="10dp" />
+
+                                <TextView
+                                    android:id="@+id/tvNoCollection"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:textColor="@color/white"
+                                    android:text="@string/Collection.NotAvailable"
+                                    android:visibility="gone" />
+
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+                    </com.github.florent37.diagonallayout.DiagonalLayout>
+<!--
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_alignParentBottom="true"
+                        android:visibility="visible">
+
+                        <com.github.florent37.diagonallayout.DiagonalLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:background="@color/white"
+                            android:visibility="visible"
+                            app:layout_collapseMode="parallax"
+                            diagonal:diagonal_angle="10"
+                            diagonal:diagonal_direction="left"
+                            diagonal:diagonal_position="bottom">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/pureBlack">
+
+                            </RelativeLayout>
+                        </com.github.florent37.diagonallayout.DiagonalLayout>
+                    </RelativeLayout>
+-->
+
+                </RelativeLayout>
+
+
+                <!--
+                    COLLECTIONS LAYOUT END
+                 -->
+
+
+
+
+
+
+
 
                 <!--
                         CAST LAYOUT BEGIN

@@ -53,13 +53,34 @@
         <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:srcCompat="@drawable/ic_popular" />
+                app:srcCompat="@drawable/ic_movie" />
 
             <TextView
                 style="@style/TextView.Menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Menu.Movies" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llTvShows"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:onClick="onNavigationItemSelected">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:srcCompat="@drawable/ic_television" />
+
+            <TextView
+                style="@style/TextView.Menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Menu.TvShows" />
         </LinearLayout>
 
         <LinearLayout
@@ -83,25 +104,6 @@
                 android:text="@string/Menu.Favourites" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/llTvShows"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
-            android:onClick="onNavigationItemSelected">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                app:srcCompat="@drawable/ic_favorite" />
-
-            <TextView
-                style="@style/TextView.Menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Menu.TvShows" />
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/llPeople"
@@ -114,7 +116,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:srcCompat="@drawable/ic_favorite" />
+                app:srcCompat="@drawable/ic_people" />
 
             <TextView
                 style="@style/TextView.Menu"
@@ -133,7 +135,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:srcCompat="@drawable/ic_favorite" />
+                app:srcCompat="@drawable/ic_discover" />
 
             <TextView
                 style="@style/TextView.Menu"

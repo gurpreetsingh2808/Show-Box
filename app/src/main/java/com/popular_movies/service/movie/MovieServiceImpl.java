@@ -4,6 +4,8 @@ import android.app.Activity;
 
 import com.popular_movies.domain.Genre;
 import com.popular_movies.domain.GenreResponse;
+import com.popular_movies.domain.MovieCollection;
+import com.popular_movies.domain.MovieDetails;
 import com.popular_movies.domain.MovieResponse;
 import com.popular_movies.domain.ReviewResponse;
 import com.popular_movies.domain.TrailerResponse;
@@ -159,6 +161,28 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public void getMovieDetails(int id, Activity activity, final GetMovieDetailsCallback getMovieDetailsCallback) {
+        MovieResource movieResource = ResourceBuilder.buildResource(MovieResource.class, activity);
+        Call<MovieDetails> call = movieResource.getMovieDetails(id);
+        call.enqueue(new Callback<MovieDetails>() {
+            @Override
+            public void onResponse(Call<MovieDetails> call, Response<MovieDetails> response) {
+                if (response.body() != null && response.isSuccessful())
+                    getMovieDetailsCallback.onSuccess(response.body());
+                else
+                    getMovieDetailsCallback.onFailure(new Throwable("Error"));
+            }
+
+            @Override
+            public void onFailure(Call<MovieDetails> call, Throwable t) {
+                if (!call.isCanceled()) {
+                    getMovieDetailsCallback.onFailure(t);
+                }
+            }
+        });
+    }
+
+    @Override
     public void getTrailers(int id, Activity activity, final GetTrailersCallback getTrailersCallback) {
 
         MovieResource movieResource = ResourceBuilder.buildResource(MovieResource.class, activity);
@@ -198,6 +222,28 @@ public class MovieServiceImpl implements MovieService {
             public void onFailure(Call<ReviewResponse> call, Throwable t) {
                 if (!call.isCanceled()) {
                     getReviewsCallback.onFailure(t);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getMovieCollection(int id, Activity activity, final GetMovieCollectionCallback getMovieCollectionCallback) {
+        MovieResource movieResource = ResourceBuilder.buildResource(MovieResource.class, activity);
+        Call<MovieCollection> call = movieResource.getCollection(id);
+        call.enqueue(new Callback<MovieCollection>() {
+            @Override
+            public void onResponse(Call<MovieCollection> call, Response<MovieCollection> response) {
+                if (response.body() != null && response.isSuccessful())
+                    getMovieCollectionCallback.onSuccess(response.body());
+                else
+                    getMovieCollectionCallback.onFailure(new Throwable("Error"));
+            }
+
+            @Override
+            public void onFailure(Call<MovieCollection> call, Throwable t) {
+                if (!call.isCanceled()) {
+                    getMovieCollectionCallback.onFailure(t);
                 }
             }
         });

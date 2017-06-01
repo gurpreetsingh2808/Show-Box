@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.florent37.diagonallayout.DiagonalLayout;
@@ -29,16 +30,23 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.popular_movies.BuildConfig;
 import com.popular_movies.R;
 import com.popular_movies.database.MovieProviderHelper;
+import com.popular_movies.domain.BelongsToCollection;
 import com.popular_movies.domain.Movie;
+import com.popular_movies.domain.MovieCollection;
+import com.popular_movies.domain.MovieDetails;
 import com.popular_movies.domain.Review;
 import com.popular_movies.domain.ReviewResponse;
 import com.popular_movies.domain.Trailer;
 import com.popular_movies.domain.TrailerResponse;
+import com.popular_movies.domain.dictionary.DetailContentType;
 import com.popular_movies.framework.ImageLoader;
+import com.popular_movies.ui.MovieItemClickListener;
 import com.popular_movies.ui.activity.ReviewActivity;
+import com.popular_movies.ui.content_details.MovieDetailActivity;
 import com.popular_movies.ui.content_details.TrailerAdapter;
 import com.popular_movies.util.AppUtils;
 import com.popular_movies.util.DateConvert;
+import com.popular_movies.util.TimeUtils;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
@@ -51,7 +59,7 @@ import butterknife.OnClick;
 import me.relex.circleindicator.CircleIndicator;
 
 public class MovieDetailFragment extends Fragment implements MovieDetailPresenter.View, ReviewsAdapter.NavigateReviewListener,
-        TrailerAdapter.TrailerClickListener {
+        TrailerAdapter.TrailerClickListener, MovieItemClickListener {
 
     private static final String TAG = MovieDetailFragment.class.getSimpleName();
     //  toolbar
@@ -70,6 +78,12 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
     TextView tvNoTrailers;
     @BindView(R.id.tvNoReviews)
     TextView tvNoReviews;
+    @BindView(R.id.tvGenre)
+    TextView tvGenre;
+    @BindView(R.id.tvDuration)
+    TextView tvDuration;
+    @BindView(R.id.tvNoCollection)
+    TextView tvNoCollection;
 
     //  image view
     @BindView(R.id.toolbarImage)
@@ -90,6 +104,8 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
     ProgressBar pbReviews;
     @BindView(R.id.pbTrailers)
     ProgressBar pbTrailers;
+    @BindView(R.id.pbCollection)
+    ProgressBar pbCollection;
 
     //  favoite icon
     @BindView(R.id.ivFavorite)
@@ -98,22 +114,28 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
     @BindView(R.id.buttonUserReviews)
     Button btnUserReview;
 
+    @BindView(R.id.rlDuration)
+    RelativeLayout rlDuration;
+
     @BindView(R.id.diagonalLayout)
     DiagonalLayout diagonalLayout;
     @BindView(R.id.dsvTrailers)
     DiscreteScrollView dsvTrailers;
+    @BindView(R.id.dsvCollection)
+    DiscreteScrollView dsvCollection;
 
-    private static final String KEY_MOVIE = "KEY_MOVIE";
+    private static final String KEY_DETAIL_CONTENT = "KEY_DETAIL_CONTENT";
     Movie movieData;
     private InterstitialAd mInterstitialAd;
     private View view;
     private ReviewsAdapter reviewsAdapter;
     private LinearLayoutManager layoutManagerReview;
+    private MovieDetailPresenterImpl movieDetailPresenterImpl;
 
     public static MovieDetailFragment getInstance(Parcelable movie) {
         MovieDetailFragment detailsFragment = new MovieDetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable(KEY_MOVIE, movie);
+        bundle.putParcelable(KEY_DETAIL_CONTENT, movie);
         //bundle.putParcelable(detailsFragment.getString(R.string.key_movie), movie);
         detailsFragment.setArguments(bundle);
         return detailsFragment;
@@ -141,7 +163,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
-               // ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                // ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
 
         }
@@ -184,9 +206,10 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
                 }
             });
 
-            MovieDetailPresenterImpl movieDetailPresenterImpl = new MovieDetailPresenterImpl(this, getActivity());
+            movieDetailPresenterImpl = new MovieDetailPresenterImpl(this, getActivity());
             movieDetailPresenterImpl.fetchTrailers(movieData.getId());
             movieDetailPresenterImpl.fetchReviews(movieData.getId());
+            movieDetailPresenterImpl.fetchMovieDetails(movieData.getId());
 
         }
         if (MovieProviderHelper.getInstance().doesMovieExist(movieData.getId())) {
@@ -267,7 +290,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
     @Override
     public void onReviewsRetreivalSuccess(ReviewResponse reviewResponse) {
         pbReviews.setVisibility(View.GONE);
-        if(reviewResponse.getResults().size() > 0) {
+        if (reviewResponse.getResults().size() > 0) {
             List<Review> reviewList = reviewResponse.getResults();
             if (reviewList != null) {
                 SnapHelper snapHelper = new LinearSnapHelper();
@@ -284,7 +307,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
 
     @Override
     public void onReviewsRetreivalFailure(Throwable throwable) {
-        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.connection_error) , Snackbar.LENGTH_LONG)
+        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.connection_error), Snackbar.LENGTH_LONG)
                 .show();
         pbReviews.setVisibility(View.GONE);
     }
@@ -292,7 +315,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
     @Override
     public void onTrailersRetreivalSuccess(TrailerResponse trailerResponse) {
         pbTrailers.setVisibility(View.GONE);
-        if(trailerResponse.getResults().size() > 0) {
+        if (trailerResponse.getResults().size() > 0) {
             List<Trailer> listTrailers = new ArrayList<>();
             if (getContext() != null) {
                 for (Trailer trailer : trailerResponse.getResults()) {
@@ -320,13 +343,70 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
     }
 
     @Override
+    public void onMovieDetailsRetreivalSuccess(MovieDetails movieDetails) {
+        //  display movie genre and duration
+        if(movieDetails.getGenres() != null) {
+            StringBuilder sbGenre = new StringBuilder();
+            for (int i = 0; i < movieDetails.getGenres().length; i++) {
+                if (i != 0)
+                    sbGenre.append(" | ");
+                sbGenre.append(movieDetails.getGenres()[i].getName());
+            }
+            tvGenre.setText(sbGenre);
+        }
+        tvDuration.setText(TimeUtils.formatDuration(movieDetails.getRuntime()));
+
+        if (movieDetails.getBelongs_to_collection() != null) {
+            movieDetailPresenterImpl.fetchMovieCollection(movieDetails.getBelongs_to_collection().getId());
+        }
+        //  if no trailers available
+        else {
+            pbCollection.setVisibility(View.GONE);
+            tvNoCollection.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onMovieDetailsRetreivalFailure(Throwable throwable) {
+        pbCollection.setVisibility(View.GONE);
+        tvNoCollection.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onMovieCollectionRetreivalSuccess(MovieCollection movieCollection) {
+        pbCollection.setVisibility(View.GONE);
+        if (movieCollection.getParts().length > 0) {
+            List<Movie> listMovie = new ArrayList<>();
+            if (getContext() != null) {
+                for (Movie movie : movieCollection.getParts()) {
+                        listMovie.add(movie);
+                }
+                dsvCollection.setAdapter(new MovieCollectionAdapter(listMovie, this));
+                dsvCollection.setItemTransformer(new ScaleTransformer.Builder()
+                        .setMinScale(0.8f)
+                        .build());
+            }
+        }
+        //  if no trailers available
+        else {
+            tvNoCollection.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onMovieCollectionRetreivalFailure(Throwable throwable) {
+        pbCollection.setVisibility(View.GONE);
+        tvNoCollection.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void onNextClick(int pos) {
-            rvReviews.smoothScrollToPosition(pos + 1);
+        rvReviews.smoothScrollToPosition(pos + 1);
     }
 
     @Override
     public void onPreviousClick(int pos) {
-        if(pos > 0) {
+        if (pos > 0) {
             rvReviews.smoothScrollToPosition(pos - 1);
         }
     }
@@ -339,5 +419,13 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
     @OnClick(R.id.ivBack)
     public void goBack() {
         getActivity().finish();
+    }
+
+    @Override
+    public void itemClicked(View view, int position, Movie movieData) {
+        Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+        intent.putExtra(getString(R.string.key_detail_content), movieData);
+        intent.putExtra(getString(R.string.key_detail_content_type), DetailContentType.MOVIE);
+        startActivity(intent);
     }
 }
