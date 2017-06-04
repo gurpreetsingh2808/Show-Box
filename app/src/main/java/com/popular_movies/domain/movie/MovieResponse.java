@@ -1,4 +1,4 @@
-package com.popular_movies.domain;
+package com.popular_movies.domain.movie;
 
 import java.util.List;
 
@@ -6,12 +6,13 @@ import java.util.List;
  * Created by Gurpreet on 21-01-2017.
  */
 
-public class TvShowResponse {
+public class MovieResponse {
 
     private Integer page;
-    private List<TvShow> results;
+    private List<Movie> results;
     private Integer total_results;
     private Integer total_pages;
+    private Dates dates;
 
 
     public Integer getPage() {
@@ -22,11 +23,11 @@ public class TvShowResponse {
         this.page = page;
     }
 
-    public List<TvShow> getResults() {
+    public List<Movie> getResults() {
         return results;
     }
 
-    public void setResults(List<TvShow> results) {
+    public void setResults(List<Movie> results) {
         this.results = results;
     }
 
@@ -44,5 +45,13 @@ public class TvShowResponse {
 
     public void setTotal_results(Integer total_results) {
         this.total_results = total_results;
+    }
+
+    public Dates getDates() {
+        return dates;
+    }
+
+    public void setDates(Dates dates) {
+        this.dates = dates;
     }
 }

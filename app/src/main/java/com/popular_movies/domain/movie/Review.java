@@ -1,4 +1,4 @@
-package com.popular_movies.domain;
+package com.popular_movies.domain.movie;
 
 import android.os.Parcel;
 import android.os.Parcelable;

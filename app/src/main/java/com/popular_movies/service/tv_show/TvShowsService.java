@@ -3,9 +3,9 @@ package com.popular_movies.service.tv_show;
 import android.app.Activity;
 
 import com.popular_movies.BuildConfig;
-import com.popular_movies.domain.GenreResponse;
-import com.popular_movies.domain.TrailerResponse;
-import com.popular_movies.domain.TvShowResponse;
+import com.popular_movies.domain.common.GenreResponse;
+import com.popular_movies.domain.common.TrailerResponse;
+import com.popular_movies.domain.tv.TvShowResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

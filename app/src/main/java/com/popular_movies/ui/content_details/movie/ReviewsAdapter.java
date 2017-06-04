@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.Review;
+import com.popular_movies.domain.movie.Review;
 import com.popular_movies.framework.util.animation.ExpandableTextView;
 
 import java.util.ArrayList;

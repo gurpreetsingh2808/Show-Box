@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.popular_movies.MyApplication;
-import com.popular_movies.domain.Movie;
-import com.popular_movies.domain.MovieTable;
+import com.popular_movies.domain.movie.Movie;
+import com.popular_movies.domain.movie.MovieTable;
 
 import java.util.List;
 

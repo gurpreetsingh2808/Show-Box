@@ -17,8 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.TvShow;
-import com.popular_movies.domain.TvShowResponse;
+import com.popular_movies.domain.tv.TvShow;
+import com.popular_movies.domain.tv.TvShowResponse;
 import com.popular_movies.domain.dictionary.DetailContentType;
 import com.popular_movies.ui.content_details.MovieDetailActivity;
 import com.popular_movies.ui.content_details.tv_series.TvShowDetailFragment;

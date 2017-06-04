@@ -1,4 +1,4 @@
-package com.popular_movies.domain;
+package com.popular_movies.domain.common;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import java.util.List;
  * Created by Gurpreet on 21-01-2017.
  */
 
-public class ReviewResponse {
+public class TrailerResponse {
 
     private Integer id;
-    private List<Review> results;
+    private List<Trailer> results;
 
     public Integer getId() {
         return id;
@@ -19,11 +19,11 @@ public class ReviewResponse {
         this.id = id;
     }
 
-    public List<Review> getResults() {
+    public List<Trailer> getResults() {
         return results;
     }
 
-    public void setResults(List<Review> results) {
+    public void setResults(List<Trailer> results) {
         this.results = results;
     }
 }

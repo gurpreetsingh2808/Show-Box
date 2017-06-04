@@ -1,4 +1,4 @@
-package com.popular_movies.domain;
+package com.popular_movies.domain.movie;
 
 import java.util.Date;
 

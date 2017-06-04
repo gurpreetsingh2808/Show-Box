@@ -17,7 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.MovieTable;
+import com.popular_movies.domain.movie.MovieTable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

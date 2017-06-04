@@ -1,4 +1,4 @@
-package com.popular_movies.domain;
+package com.popular_movies.domain.common;
 
 /**
  * Created by Gurpreet on 17-04-2017.

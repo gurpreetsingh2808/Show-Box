@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.Movie;
+import com.popular_movies.domain.movie.Movie;
 import com.popular_movies.framework.ImageLoader;
 import com.popular_movies.ui.MovieItemClickListener;
 import com.popular_movies.util.DateConvert;

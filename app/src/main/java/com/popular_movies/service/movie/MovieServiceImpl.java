@@ -2,16 +2,14 @@ package com.popular_movies.service.movie;
 
 import android.app.Activity;
 
-import com.popular_movies.domain.Genre;
-import com.popular_movies.domain.GenreResponse;
-import com.popular_movies.domain.MovieCollection;
-import com.popular_movies.domain.MovieDetails;
-import com.popular_movies.domain.MovieResponse;
-import com.popular_movies.domain.ReviewResponse;
-import com.popular_movies.domain.TrailerResponse;
+import com.popular_movies.domain.common.CreditsResponse;
+import com.popular_movies.domain.common.GenreResponse;
+import com.popular_movies.domain.movie.MovieCollection;
+import com.popular_movies.domain.movie.MovieDetails;
+import com.popular_movies.domain.movie.MovieResponse;
+import com.popular_movies.domain.movie.ReviewResponse;
+import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.service.ResourceBuilder;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -244,6 +242,28 @@ public class MovieServiceImpl implements MovieService {
             public void onFailure(Call<MovieCollection> call, Throwable t) {
                 if (!call.isCanceled()) {
                     getMovieCollectionCallback.onFailure(t);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getCredits(int id, Activity activity, final GetCreditsCallback getCreditsCallback) {
+        MovieResource movieResource = ResourceBuilder.buildResource(MovieResource.class, activity);
+        Call<CreditsResponse> call = movieResource.getCredits(id);
+        call.enqueue(new Callback<CreditsResponse>() {
+            @Override
+            public void onResponse(Call<CreditsResponse> call, Response<CreditsResponse> response) {
+                if (response.body() != null && response.isSuccessful())
+                    getCreditsCallback.onSuccess(response.body());
+                else
+                    getCreditsCallback.onFailure(new Throwable("Error"));
+            }
+
+            @Override
+            public void onFailure(Call<CreditsResponse> call, Throwable t) {
+                if (!call.isCanceled()) {
+                    getCreditsCallback.onFailure(t);
                 }
             }
         });

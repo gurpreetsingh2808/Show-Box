@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.Trailer;
+import com.popular_movies.domain.common.Trailer;
 import com.popular_movies.framework.ImageLoader;
 
 import java.util.List;

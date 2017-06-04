@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.TvShow;
+import com.popular_movies.domain.tv.TvShow;
 import com.popular_movies.framework.ImageLoader;
 
 import java.util.List;

@@ -13,8 +13,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.Review;
-import com.popular_movies.domain.ReviewResponse;
+import com.popular_movies.domain.movie.Review;
+import com.popular_movies.domain.movie.ReviewResponse;
 import com.popular_movies.ui.content_details.movie.ReviewPresenter;
 import com.popular_movies.ui.content_details.movie.ReviewPresenterImpl;
 import com.popular_movies.ui.content_details.movie.ReviewsAdapter;

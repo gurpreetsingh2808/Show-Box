@@ -1,4 +1,6 @@
-package com.popular_movies.domain;
+package com.popular_movies.domain.movie;
+
+import com.popular_movies.domain.common.Genre;
 
 /**
  * Created by Gurpreet on 30-05-2017.

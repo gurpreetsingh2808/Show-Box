@@ -2,10 +2,9 @@ package com.popular_movies.ui.content_details.movie;
 
 import android.app.Activity;
 
-import com.popular_movies.domain.ReviewResponse;
+import com.popular_movies.domain.movie.ReviewResponse;
 import com.popular_movies.service.movie.MovieService;
 import com.popular_movies.service.movie.MovieServiceImpl;
-import com.popular_movies.ui.content_details.movie.ReviewPresenter;
 
 
 /**

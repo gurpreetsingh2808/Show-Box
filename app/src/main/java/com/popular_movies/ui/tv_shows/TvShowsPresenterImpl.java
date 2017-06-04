@@ -2,7 +2,7 @@ package com.popular_movies.ui.tv_shows;
 
 import android.app.Activity;
 
-import com.popular_movies.domain.TvShowResponse;
+import com.popular_movies.domain.tv.TvShowResponse;
 import com.popular_movies.service.tv_show.TvShowsService;
 import com.popular_movies.service.tv_show.TvShowsServiceImpl;
 

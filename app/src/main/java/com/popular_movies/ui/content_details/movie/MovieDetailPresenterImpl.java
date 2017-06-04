@@ -2,10 +2,11 @@ package com.popular_movies.ui.content_details.movie;
 
 import android.app.Activity;
 
-import com.popular_movies.domain.MovieCollection;
-import com.popular_movies.domain.MovieDetails;
-import com.popular_movies.domain.ReviewResponse;
-import com.popular_movies.domain.TrailerResponse;
+import com.popular_movies.domain.common.CreditsResponse;
+import com.popular_movies.domain.movie.MovieCollection;
+import com.popular_movies.domain.movie.MovieDetails;
+import com.popular_movies.domain.movie.ReviewResponse;
+import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.service.movie.MovieService;
 import com.popular_movies.service.movie.MovieServiceImpl;
 
@@ -83,6 +84,21 @@ public class MovieDetailPresenterImpl implements MovieDetailPresenter.Presenter 
             @Override
             public void onFailure(Throwable throwable) {
                 view.onMovieCollectionRetreivalFailure(throwable);
+            }
+        });
+    }
+
+    @Override
+    public void fetchMovieCredits(int movieId) {
+        movieService.getCredits(movieId, activity, new MovieService.GetCreditsCallback() {
+            @Override
+            public void onSuccess(CreditsResponse creditResponse) {
+                view.onCreditsRetreivalSuccess(creditResponse);
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                view.onCreditsRetreivalFailure(throwable);
             }
         });
     }

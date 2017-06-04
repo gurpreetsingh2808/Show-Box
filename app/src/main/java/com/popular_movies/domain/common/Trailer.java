@@ -1,4 +1,4 @@
-package com.popular_movies.domain;
+package com.popular_movies.domain.common;
 
 import android.support.annotation.NonNull;
 

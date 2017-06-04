@@ -1,17 +1,15 @@
-package com.popular_movies.domain;
+package com.popular_movies.domain.movie;
 
 /**
- * Created by Gurpreet on 01-06-2017.
+ * Created by Gurpreet on 31-05-2017.
  */
 
-public class MovieCollection {
+public class BelongsToCollection {
 
     private Integer id;
     private String name;
-    private String overview;
     private String poster_path;
     private String backdrop_path;
-    private Movie[] parts;
 
     public Integer getId() {
         return id;
@@ -27,14 +25,6 @@ public class MovieCollection {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getOverview() {
-        return overview;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
     }
 
     public String getPoster_path() {
@@ -53,11 +43,4 @@ public class MovieCollection {
         this.backdrop_path = backdrop_path;
     }
 
-    public Movie[] getParts() {
-        return parts;
-    }
-
-    public void setParts(Movie[] parts) {
-        this.parts = parts;
-    }
 }

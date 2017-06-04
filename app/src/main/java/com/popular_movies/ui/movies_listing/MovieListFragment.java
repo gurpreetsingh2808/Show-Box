@@ -17,10 +17,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.Genre;
-import com.popular_movies.domain.GenreResponse;
-import com.popular_movies.domain.Movie;
-import com.popular_movies.domain.MovieResponse;
+import com.popular_movies.domain.common.Genre;
+import com.popular_movies.domain.common.GenreResponse;
+import com.popular_movies.domain.movie.Movie;
+import com.popular_movies.domain.movie.MovieResponse;
 import com.popular_movies.ui.MovieItemClickListener;
 import com.popular_movies.ui.content_details.MovieDetailActivity;
 import com.popular_movies.util.pagination.EndlessRecyclerOnScrollListener;

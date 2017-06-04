@@ -30,14 +30,15 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.popular_movies.BuildConfig;
 import com.popular_movies.R;
 import com.popular_movies.database.MovieProviderHelper;
-import com.popular_movies.domain.BelongsToCollection;
-import com.popular_movies.domain.Movie;
-import com.popular_movies.domain.MovieCollection;
-import com.popular_movies.domain.MovieDetails;
-import com.popular_movies.domain.Review;
-import com.popular_movies.domain.ReviewResponse;
-import com.popular_movies.domain.Trailer;
-import com.popular_movies.domain.TrailerResponse;
+import com.popular_movies.domain.common.Cast;
+import com.popular_movies.domain.common.CreditsResponse;
+import com.popular_movies.domain.movie.Movie;
+import com.popular_movies.domain.movie.MovieCollection;
+import com.popular_movies.domain.movie.MovieDetails;
+import com.popular_movies.domain.movie.Review;
+import com.popular_movies.domain.movie.ReviewResponse;
+import com.popular_movies.domain.common.Trailer;
+import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.domain.dictionary.DetailContentType;
 import com.popular_movies.framework.ImageLoader;
 import com.popular_movies.ui.MovieItemClickListener;
@@ -51,6 +52,7 @@ import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -59,7 +61,7 @@ import butterknife.OnClick;
 import me.relex.circleindicator.CircleIndicator;
 
 public class MovieDetailFragment extends Fragment implements MovieDetailPresenter.View, ReviewsAdapter.NavigateReviewListener,
-        TrailerAdapter.TrailerClickListener, MovieItemClickListener {
+        TrailerAdapter.TrailerClickListener, MovieItemClickListener, CastAdapter.CastClickListener {
 
     private static final String TAG = MovieDetailFragment.class.getSimpleName();
     //  toolbar
@@ -84,6 +86,8 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
     TextView tvDuration;
     @BindView(R.id.tvNoCollection)
     TextView tvNoCollection;
+    @BindView(R.id.tvNoCast)
+    TextView tvNoCast;
 
     //  image view
     @BindView(R.id.toolbarImage)
@@ -106,6 +110,8 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
     ProgressBar pbTrailers;
     @BindView(R.id.pbCollection)
     ProgressBar pbCollection;
+    @BindView(R.id.pbCast)
+    ProgressBar pbCast;
 
     //  favoite icon
     @BindView(R.id.ivFavorite)
@@ -123,6 +129,8 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
     DiscreteScrollView dsvTrailers;
     @BindView(R.id.dsvCollection)
     DiscreteScrollView dsvCollection;
+    @BindView(R.id.dsvCast)
+    DiscreteScrollView dsvCast;
 
     private static final String KEY_DETAIL_CONTENT = "KEY_DETAIL_CONTENT";
     Movie movieData;
@@ -210,6 +218,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
             movieDetailPresenterImpl.fetchTrailers(movieData.getId());
             movieDetailPresenterImpl.fetchReviews(movieData.getId());
             movieDetailPresenterImpl.fetchMovieDetails(movieData.getId());
+            movieDetailPresenterImpl.fetchMovieCredits(movieData.getId());
 
         }
         if (MovieProviderHelper.getInstance().doesMovieExist(movieData.getId())) {
@@ -378,9 +387,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
         if (movieCollection.getParts().length > 0) {
             List<Movie> listMovie = new ArrayList<>();
             if (getContext() != null) {
-                for (Movie movie : movieCollection.getParts()) {
-                        listMovie.add(movie);
-                }
+                Collections.addAll(listMovie, movieCollection.getParts());
                 dsvCollection.setAdapter(new MovieCollectionAdapter(listMovie, this));
                 dsvCollection.setItemTransformer(new ScaleTransformer.Builder()
                         .setMinScale(0.8f)
@@ -397,6 +404,31 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
     public void onMovieCollectionRetreivalFailure(Throwable throwable) {
         pbCollection.setVisibility(View.GONE);
         tvNoCollection.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onCreditsRetreivalSuccess(CreditsResponse creditsResponse) {
+        pbCast.setVisibility(View.GONE);
+        if (creditsResponse != null && creditsResponse.getCast().length > 0) {
+            List<Cast> listCast = new ArrayList<>();
+            if (getContext() != null) {
+                Collections.addAll(listCast, creditsResponse.getCast());
+                dsvCast.setAdapter(new CastAdapter(listCast, this));
+                dsvCast.setItemTransformer(new ScaleTransformer.Builder()
+                        .setMinScale(0.8f)
+                        .build());
+            }
+        }
+        //  if no trailers available
+        else {
+            tvNoCollection.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onCreditsRetreivalFailure(Throwable throwable) {
+        pbCast.setVisibility(View.GONE);
+        tvNoCast.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -427,5 +459,10 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
         intent.putExtra(getString(R.string.key_detail_content), movieData);
         intent.putExtra(getString(R.string.key_detail_content_type), DetailContentType.MOVIE);
         startActivity(intent);
+    }
+
+    @Override
+    public void itemClicked(View view, int position, Cast cast) {
+        //  TODO: Navigate to people's profile
     }
 }

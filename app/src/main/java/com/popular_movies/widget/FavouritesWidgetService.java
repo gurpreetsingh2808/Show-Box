@@ -17,7 +17,7 @@ import android.widget.RemoteViews;
 
 import com.popular_movies.BuildConfig;
 import com.popular_movies.R;
-import com.popular_movies.domain.MovieTable;
+import com.popular_movies.domain.movie.MovieTable;
 
 import java.io.IOException;
 import java.net.URL;

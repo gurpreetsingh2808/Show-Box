@@ -3,15 +3,13 @@ package com.popular_movies.service.movie;
 import android.app.Activity;
 
 import com.popular_movies.BuildConfig;
-import com.popular_movies.domain.Genre;
-import com.popular_movies.domain.GenreResponse;
-import com.popular_movies.domain.MovieCollection;
-import com.popular_movies.domain.MovieDetails;
-import com.popular_movies.domain.MovieResponse;
-import com.popular_movies.domain.ReviewResponse;
-import com.popular_movies.domain.TrailerResponse;
-
-import java.util.List;
+import com.popular_movies.domain.common.CreditsResponse;
+import com.popular_movies.domain.common.GenreResponse;
+import com.popular_movies.domain.movie.MovieCollection;
+import com.popular_movies.domain.movie.MovieDetails;
+import com.popular_movies.domain.movie.MovieResponse;
+import com.popular_movies.domain.movie.ReviewResponse;
+import com.popular_movies.domain.common.TrailerResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -51,6 +49,9 @@ public interface MovieService {
 
         @GET("movie/{id}/reviews?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<ReviewResponse> getReview(@Path("id") int id);
+
+        @GET("movie/{id}/credits?api_key=" + BuildConfig.TMDB_API_KEY)
+        Call<CreditsResponse> getCredits(@Path("id") int id);
 
         @GET("collection/{id}?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<MovieCollection> getCollection(@Path("id") int id);
@@ -123,6 +124,16 @@ public interface MovieService {
     interface GetMovieCollectionCallback {
         void onSuccess(MovieCollection movieCollection);
 
+        void onFailure(Throwable throwable);
+    }
+
+    /**
+     * Get movie credits model
+     */
+    void getCredits(int id, Activity activity, GetCreditsCallback getCreditsCallback);
+
+    interface GetCreditsCallback {
+        void onSuccess(CreditsResponse creditResponse);
         void onFailure(Throwable throwable);
     }
 

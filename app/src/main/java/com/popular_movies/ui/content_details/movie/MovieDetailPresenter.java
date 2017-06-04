@@ -1,9 +1,10 @@
 package com.popular_movies.ui.content_details.movie;
 
-import com.popular_movies.domain.MovieCollection;
-import com.popular_movies.domain.MovieDetails;
-import com.popular_movies.domain.ReviewResponse;
-import com.popular_movies.domain.TrailerResponse;
+import com.popular_movies.domain.common.CreditsResponse;
+import com.popular_movies.domain.movie.MovieCollection;
+import com.popular_movies.domain.movie.MovieDetails;
+import com.popular_movies.domain.movie.ReviewResponse;
+import com.popular_movies.domain.common.TrailerResponse;
 
 /**
  * Created by Gurpreet on 21-01-2017.
@@ -23,6 +24,9 @@ public class MovieDetailPresenter {
 
         void onMovieCollectionRetreivalSuccess(MovieCollection movieCollection);
         void onMovieCollectionRetreivalFailure(Throwable throwable);
+
+        void onCreditsRetreivalSuccess(CreditsResponse creditsResponse);
+        void onCreditsRetreivalFailure(Throwable throwable);
     }
 
     interface Presenter {
@@ -30,5 +34,6 @@ public class MovieDetailPresenter {
         void fetchReviews(int movieId);
         void fetchTrailers(int movieId);
         void fetchMovieCollection(int movieId);
+        void fetchMovieCredits(int movieId);
     }
 }

@@ -2,7 +2,7 @@ package com.popular_movies.ui.main;
 
 import android.app.Activity;
 
-import com.popular_movies.domain.MovieResponse;
+import com.popular_movies.domain.movie.MovieResponse;
 import com.popular_movies.service.movie.MovieService;
 import com.popular_movies.service.movie.MovieServiceImpl;
 

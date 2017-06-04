@@ -2,7 +2,7 @@ package com.popular_movies.ui.content_details.tv_series;
 
 import android.app.Activity;
 
-import com.popular_movies.domain.TrailerResponse;
+import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.service.tv_show.TvShowsService;
 import com.popular_movies.service.tv_show.TvShowsServiceImpl;
 

@@ -2,8 +2,7 @@ package com.popular_movies.ui.tv_shows;
 
 import android.view.View;
 
-import com.popular_movies.domain.Movie;
-import com.popular_movies.domain.TvShow;
+import com.popular_movies.domain.tv.TvShow;
 
 /**
  * Created by Gurpreet on 30-04-2017.

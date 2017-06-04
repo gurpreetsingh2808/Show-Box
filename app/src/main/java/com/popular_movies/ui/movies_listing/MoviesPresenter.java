@@ -1,7 +1,7 @@
 package com.popular_movies.ui.movies_listing;
 
-import com.popular_movies.domain.GenreResponse;
-import com.popular_movies.domain.MovieResponse;
+import com.popular_movies.domain.common.GenreResponse;
+import com.popular_movies.domain.movie.MovieResponse;
 
 /**
  * Created by Gurpreet on 21-01-2017.

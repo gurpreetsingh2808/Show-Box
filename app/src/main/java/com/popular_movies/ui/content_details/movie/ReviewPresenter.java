@@ -1,6 +1,6 @@
 package com.popular_movies.ui.content_details.movie;
 
-import com.popular_movies.domain.ReviewResponse;
+import com.popular_movies.domain.movie.ReviewResponse;
 
 /**
  * Created by Gurpreet on 21-01-2017.

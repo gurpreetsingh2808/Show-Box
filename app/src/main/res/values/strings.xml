@@ -62,5 +62,7 @@
     <string name="MovieDetails.Collection">Collections</string>
     <string name="NA">N/A</string>
     <string name="Collection.NotAvailable">No Collections Available</string>
+    <string name="MovieDetails.Cast">Cast</string>
+    <string name="notAvailable">Not available</string>
 
 </resources>
