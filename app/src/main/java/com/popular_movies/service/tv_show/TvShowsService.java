@@ -5,7 +5,10 @@ import android.app.Activity;
 import com.popular_movies.BuildConfig;
 import com.popular_movies.domain.common.GenreResponse;
 import com.popular_movies.domain.common.TrailerResponse;
+import com.popular_movies.domain.movie.MovieDetails;
+import com.popular_movies.domain.tv.TvShowDetails;
 import com.popular_movies.domain.tv.TvShowResponse;
+import com.popular_movies.service.movie.MovieService;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -36,6 +39,9 @@ public interface TvShowsService {
 
         @GET("tv/on_the_air?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<TvShowResponse> getOnTheAirShows();
+
+        @GET("tv/{id}?api_key=" + BuildConfig.TMDB_API_KEY)
+        Call<TvShowDetails> getTvShowDetails(@Path("id") int id);
 
         @GET("tv/{id}/videos?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<TrailerResponse> getTrailers(@Path("id") int id);
@@ -73,6 +79,17 @@ public interface TvShowsService {
 
     void getLatestTvSeries(Activity activity, GetTvSeriesCallback getLatestTvSeriesCalback);
 
+
+    /**
+     * Get tv show details model
+     */
+    void getTvShowDetails(int id, Activity activity, GetTvShowDetailsCallback getTvShowDetailsCallback);
+
+    interface GetTvShowDetailsCallback {
+        void onSuccess(TvShowDetails tvShowDetails);
+
+        void onFailure(Throwable throwable);
+    }
 
     /**
      * Get movie trailers model

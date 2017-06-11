@@ -41,6 +41,7 @@ import com.popular_movies.domain.common.Trailer;
 import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.domain.dictionary.DetailContentType;
 import com.popular_movies.framework.ImageLoader;
+import com.popular_movies.ui.FlowManager;
 import com.popular_movies.ui.MovieItemClickListener;
 import com.popular_movies.ui.activity.ReviewActivity;
 import com.popular_movies.ui.content_details.MovieDetailActivity;
@@ -377,8 +378,6 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
 
     @Override
     public void onMovieDetailsRetreivalFailure(Throwable throwable) {
-        pbCollection.setVisibility(View.GONE);
-        tvNoCollection.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -455,10 +454,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
 
     @Override
     public void itemClicked(View view, int position, Movie movieData) {
-        Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
-        intent.putExtra(getString(R.string.key_detail_content), movieData);
-        intent.putExtra(getString(R.string.key_detail_content_type), DetailContentType.MOVIE);
-        startActivity(intent);
+        FlowManager.moveToDetailsActivity(getContext(), DetailContentType.MOVIE, movieData);
     }
 
     @Override

@@ -20,6 +20,7 @@ import com.popular_movies.R;
 import com.popular_movies.domain.tv.TvShow;
 import com.popular_movies.domain.tv.TvShowResponse;
 import com.popular_movies.domain.dictionary.DetailContentType;
+import com.popular_movies.ui.FlowManager;
 import com.popular_movies.ui.content_details.MovieDetailActivity;
 import com.popular_movies.ui.content_details.tv_series.TvShowDetailFragment;
 import com.popular_movies.ui.movies_listing.MoviesListingActivity;
@@ -285,17 +286,8 @@ public class TvShowsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     .replace(R.id.movie_detail, TvShowDetailFragment.getInstance(tvShow))
                     .commit();
         } else {
-            Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
-            intent.putExtra(getString(R.string.key_detail_content), tvShow);
-            intent.putExtra(getString(R.string.key_detail_content_type), DetailContentType.TV_SERIES);
-                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            AppBarLayout barLayout = (AppBarLayout) ((AppCompatActivity) context).findViewById(R.id.actionbar);
-                            ActivityOptions compat = ActivityOptions.makeSceneTransitionAnimation((AppCompatActivity) context,
-                                    Pair.create((View) thumbnail, context.getString(R.string.transition_name)),
-                                    Pair.create((View) barLayout, context.getString(R.string.transition_name_action_bar)));
-                            context.startActivity(intent, compat.toBundle());
-                        } else*/
-            startActivity(intent);
+            FlowManager.moveToDetailsActivity(getContext(), DetailContentType.TV_SERIES, tvShow);
+
         }
     }
 }

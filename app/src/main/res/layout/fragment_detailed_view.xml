@@ -42,17 +42,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
-                        android:contentDescription="@string/movie_icon"
                         android:background="@drawable/shadow"
+                        android:contentDescription="@string/movie_icon"
                         android:scaleType="centerCrop"
                         app:layout_collapseMode="parallax" />
-<!--
+                    <!--
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/shadow" />
--->
+                                        <ImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/shadow" />
+                    -->
 
                     <android.support.v7.widget.Toolbar
                         android:id="@+id/toolbar"
@@ -65,8 +65,8 @@
                     <android.support.v7.widget.AppCompatImageView
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:layout_marginTop="1dp"
                         android:layout_marginLeft="1dp"
+                        android:layout_marginTop="1dp"
                         android:adjustViewBounds="true"
                         app:srcCompat="@drawable/ic_arrow_back" />
 
@@ -277,6 +277,7 @@
                               app:srcCompat="@drawable/ic_date"/>
                               -->
                         <TextView
+                            android:id="@+id/tvHeaderReleaseDate"
                             style="@style/TextView.MovieDetailDiagonalHeadings"
                             android:layout_marginTop="@dimen/text_margin"
                             android:text="@string/inTheaters"
@@ -580,7 +581,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_below="@+id/tvHeadingCast"
-                                android:layout_marginTop="@dimen/margin_48">
+                                android:layout_marginTop="@dimen/margin_24">
 
                                 <com.yarolegovich.discretescrollview.DiscreteScrollView
                                     android:id="@+id/dsvCast"
@@ -594,16 +595,17 @@
                                     android:id="@+id/pbCast"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
-                                    android:layout_centerHorizontal="true"
                                     android:layout_marginTop="80dp"
+                                    android:layout_centerInParent="true"
                                     android:background="@drawable/circular_indicator_bg"
                                     android:padding="10dp" />
 
                                 <TextView
                                     android:id="@+id/tvNoCast"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="80dp"
                                     android:layout_centerInParent="true"
+                                    android:gravity="center"
                                     android:text="@string/notAvailable"
                                     android:textColor="@color/white"
                                     android:visibility="gone" />

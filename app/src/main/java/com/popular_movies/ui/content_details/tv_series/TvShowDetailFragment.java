@@ -29,12 +29,14 @@ import com.popular_movies.R;
 import com.popular_movies.domain.common.Trailer;
 import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.domain.tv.TvShow;
+import com.popular_movies.domain.tv.TvShowDetails;
 import com.popular_movies.framework.ImageLoader;
 import com.popular_movies.ui.activity.ReviewActivity;
 import com.popular_movies.ui.content_details.TrailerAdapter;
 import com.popular_movies.ui.content_details.movie.ReviewsAdapter;
 import com.popular_movies.util.AppUtils;
 import com.popular_movies.util.DateConvert;
+import com.popular_movies.util.TimeUtils;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
@@ -58,6 +60,8 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     TextView title;
     @BindView(R.id.releaseDate)
     TextView releaseDate;
+    @BindView(R.id.tvHeaderReleaseDate)
+    TextView tvHeaderReleaseDate;
     @BindView(R.id.synopsis)
     TextView synopsis;
     @BindView(R.id.userRatings)
@@ -66,6 +70,10 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     TextView tvNoTrailers;
     @BindView(R.id.tvNoReviews)
     TextView tvNoReviews;
+    @BindView(R.id.tvGenre)
+    TextView tvGenre;
+    @BindView(R.id.tvDuration)
+    TextView tvDuration;
 
     //  image view
     @BindView(R.id.toolbarImage)
@@ -142,15 +150,11 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
 
         }
 
+        //  filling tv show details received from previous screen
         if (tvShow != null) {
             title.setText(tvShow.getOriginal_name());
-
-            //releaseDate.append(" " + DateConvert.convert(tvShow.getRelease_date()));
-            ////////////////////////////
-//            ,
-//
-//            ,
 //            set text to first air date in place of in theatres
+            tvHeaderReleaseDate.setText("Release date");
             releaseDate.setText(DateConvert.convert(tvShow.getFirst_air_date()));
             synopsis.setText(tvShow.getOverview());
             userRatings.setText(tvShow.getVote_average());
@@ -185,8 +189,9 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
                 }
             });
 
-            TvShowDetailPresenterImpl movieDetailPresenterImpl = new TvShowDetailPresenterImpl(this, getActivity());
-            movieDetailPresenterImpl.fetchTrailers(tvShow.getId());
+            TvShowDetailPresenterImpl tvShowDetailPresenter = new TvShowDetailPresenterImpl(this, getActivity());
+            tvShowDetailPresenter.fetchTrailers(tvShow.getId());
+            tvShowDetailPresenter.fetchTvShowDetails(tvShow.getId());
 
         }
 //        if (TvShowProviderHelper.getInstance().doesTvShowExist(tvShow.getId())) {
@@ -292,6 +297,30 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
         pbTrailers.setVisibility(View.GONE);
         Snackbar.make(view, getString(R.string.connection_error), Snackbar.LENGTH_LONG)
                 .show();
+    }
+
+    @Override
+    public void onTvShowDetailsRetreivalSuccess(TvShowDetails tvShowDetails) {
+//  display movie genre and duration
+        if(tvShowDetails.getGenres() != null) {
+            StringBuilder sbGenre = new StringBuilder();
+            for (int i = 0; i < tvShowDetails.getGenres().length; i++) {
+                if (i != 0)
+                    sbGenre.append(" | ");
+                sbGenre.append(tvShowDetails.getGenres()[i].getName());
+            }
+            tvGenre.setText(sbGenre);
+        }
+        tvDuration.setText(TimeUtils.formatDuration(tvShowDetails.getEpisode_run_time()[0]));
+
+
+
+        //   TODO : INCOMPLETE
+    }
+
+    @Override
+    public void onTvShowDetailsRetreivalFailure(Throwable throwable) {
+
     }
 
     @Override

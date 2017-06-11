@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.popular_movies.domain.common.GenreResponse;
 import com.popular_movies.domain.common.TrailerResponse;
+import com.popular_movies.domain.tv.TvShowDetails;
 import com.popular_movies.domain.tv.TvShowResponse;
 import com.popular_movies.service.ResourceBuilder;
 
@@ -124,6 +125,28 @@ public class TvShowsServiceImpl implements TvShowsService {
             public void onFailure(Call<TvShowResponse> call, Throwable t) {
                 if (!call.isCanceled()) {
                     getLatestTvSeriesCalback.onFailure(t);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getTvShowDetails(int id, Activity activity, final GetTvShowDetailsCallback getTvShowDetailsCallback) {
+        TvSeriesResource tvSeriesResource = ResourceBuilder.buildResource(TvSeriesResource.class, activity);
+        Call<TvShowDetails> call = tvSeriesResource.getTvShowDetails(id);
+        call.enqueue(new Callback<TvShowDetails>() {
+            @Override
+            public void onResponse(Call<TvShowDetails> call, Response<TvShowDetails> response) {
+                if (response.body() != null && response.isSuccessful())
+                    getTvShowDetailsCallback.onSuccess(response.body());
+                else
+                    getTvShowDetailsCallback.onFailure(new Throwable("Error"));
+            }
+
+            @Override
+            public void onFailure(Call<TvShowDetails> call, Throwable t) {
+                if (!call.isCanceled()) {
+                    getTvShowDetailsCallback.onFailure(t);
                 }
             }
         });

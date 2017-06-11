@@ -3,6 +3,7 @@ package com.popular_movies.ui.content_details.tv_series;
 import android.app.Activity;
 
 import com.popular_movies.domain.common.TrailerResponse;
+import com.popular_movies.domain.tv.TvShowDetails;
 import com.popular_movies.service.tv_show.TvShowsService;
 import com.popular_movies.service.tv_show.TvShowsServiceImpl;
 
@@ -22,6 +23,21 @@ public class TvShowDetailPresenterImpl implements TvShowDetailPresenter.Presente
         this.view = view;
         this.activity = activity;
         this.tvShowsService = new TvShowsServiceImpl();
+    }
+
+    @Override
+    public void fetchTvShowDetails(int id) {
+        tvShowsService.getTvShowDetails(id, activity, new TvShowsService.GetTvShowDetailsCallback() {
+            @Override
+            public void onSuccess(TvShowDetails tvShowDetails) {
+                view.onTvShowDetailsRetreivalSuccess(tvShowDetails);
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                view.onTvShowDetailsRetreivalFailure(throwable);
+            }
+        });
     }
 
     @Override
