@@ -1,6 +1,8 @@
 package com.popular_movies.ui.content_details.tv_series;
 
+import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.TrailerResponse;
+import com.popular_movies.domain.tv.TvShowDetails;
 
 /**
  * Created by Gurpreet on 21-01-2017.
@@ -12,9 +14,18 @@ public class TvShowDetailPresenter {
         void onTrailersRetreivalSuccess(TrailerResponse trailerResponse);
         void onTrailersRetreivalFailure(Throwable throwable);
 
+        void onTvShowDetailsRetreivalSuccess(TvShowDetails movieDetails);
+        void onTvShowDetailsRetreivalFailure(Throwable throwable);
+
+        void onCreditsRetreivalSuccess(CreditsResponse creditsResponse);
+        void onCreditsRetreivalFailure(Throwable throwable);
+
     }
 
     interface Presenter {
-        void fetchTrailers(int movieId);
+        void fetchTvShowDetails(int id);
+        void fetchTrailers(int id);
+//        void fetchSeasons(int movieId);
+        void fetchTvShowCredits(int movieId);
     }
 }

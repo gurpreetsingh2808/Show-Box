@@ -19,8 +19,10 @@ import android.widget.ProgressBar;
 import com.popular_movies.R;
 import com.popular_movies.domain.common.Genre;
 import com.popular_movies.domain.common.GenreResponse;
+import com.popular_movies.domain.dictionary.DetailContentType;
 import com.popular_movies.domain.movie.Movie;
 import com.popular_movies.domain.movie.MovieResponse;
+import com.popular_movies.ui.FlowManager;
 import com.popular_movies.ui.MovieItemClickListener;
 import com.popular_movies.ui.content_details.MovieDetailActivity;
 import com.popular_movies.util.pagination.EndlessRecyclerOnScrollListener;
@@ -199,9 +201,10 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void itemClicked(View view, int position, Movie movieData) {
+        FlowManager.moveToDetailsActivity(getContext(), DetailContentType.MOVIE, movieData);
         //if (!AppUtils.isTablet(getContext())) {
-        Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
-        intent.putExtra(getString(R.string.key_detail_content), movieData);
+//        Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+//        intent.putExtra(getString(R.string.key_detail_content), movieData);
                         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             AppBarLayout barLayout = (AppBarLayout) ((AppCompatActivity) context).findViewById(R.id.actionbar);
                             ActivityOptions compat = ActivityOptions.makeSceneTransitionAnimation((AppCompatActivity) context,
@@ -209,7 +212,7 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
                                     Pair.create((View) barLayout, context.getString(R.string.transition_name_action_bar)));
                             context.startActivity(intent, compat.toBundle());
                         } else*/
-        startActivity(intent);
+//        startActivity(intent);
        /*  }
          else {
              getActivity().getSupportFragmentManager().beginTransaction()

@@ -3,9 +3,13 @@ package com.popular_movies.service.tv_show;
 import android.app.Activity;
 
 import com.popular_movies.BuildConfig;
+import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.GenreResponse;
 import com.popular_movies.domain.common.TrailerResponse;
+import com.popular_movies.domain.movie.MovieDetails;
+import com.popular_movies.domain.tv.TvShowDetails;
 import com.popular_movies.domain.tv.TvShowResponse;
+import com.popular_movies.service.movie.MovieService;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -37,6 +41,9 @@ public interface TvShowsService {
         @GET("tv/on_the_air?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<TvShowResponse> getOnTheAirShows();
 
+        @GET("tv/{id}?api_key=" + BuildConfig.TMDB_API_KEY)
+        Call<TvShowDetails> getTvShowDetails(@Path("id") int id);
+
         @GET("tv/{id}/videos?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<TrailerResponse> getTrailers(@Path("id") int id);
 /*
@@ -44,6 +51,9 @@ public interface TvShowsService {
         @GET("tv/{id}/reviews?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<ReviewResponse> getReview(@Path("id") int id);
 */
+
+        @GET("tv/{id}/credits?api_key=" + BuildConfig.TMDB_API_KEY)
+        Call<CreditsResponse> getCredits(@Path("id") int id);
 
         @GET("search/tv?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<TvShowResponse> getSearchResults(@Query("query") String searchQuery);
@@ -75,6 +85,17 @@ public interface TvShowsService {
 
 
     /**
+     * Get tv show details model
+     */
+    void getTvShowDetails(int id, Activity activity, GetTvShowDetailsCallback getTvShowDetailsCallback);
+
+    interface GetTvShowDetailsCallback {
+        void onSuccess(TvShowDetails tvShowDetails);
+
+        void onFailure(Throwable throwable);
+    }
+
+    /**
      * Get movie trailers model
      */
     void getTrailers(int id, Activity activity, GetTrailersCallback getTrailersCallback);
@@ -95,6 +116,16 @@ public interface TvShowsService {
 //        void onSuccess(ReviewResponse reviewResponse);
 //        void onFailure(Throwable throwable);
 //    }
+
+    /**
+     * Get movie credits model
+     */
+    void getCredits(int id, Activity activity, GetCreditsCallback getCreditsCallback);
+
+    interface GetCreditsCallback {
+        void onSuccess(CreditsResponse creditResponse);
+        void onFailure(Throwable throwable);
+    }
 
 
     /**

@@ -2,8 +2,10 @@ package com.popular_movies.service.tv_show;
 
 import android.app.Activity;
 
+import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.GenreResponse;
 import com.popular_movies.domain.common.TrailerResponse;
+import com.popular_movies.domain.tv.TvShowDetails;
 import com.popular_movies.domain.tv.TvShowResponse;
 import com.popular_movies.service.ResourceBuilder;
 
@@ -130,6 +132,28 @@ public class TvShowsServiceImpl implements TvShowsService {
     }
 
     @Override
+    public void getTvShowDetails(int id, Activity activity, final GetTvShowDetailsCallback getTvShowDetailsCallback) {
+        TvSeriesResource tvSeriesResource = ResourceBuilder.buildResource(TvSeriesResource.class, activity);
+        Call<TvShowDetails> call = tvSeriesResource.getTvShowDetails(id);
+        call.enqueue(new Callback<TvShowDetails>() {
+            @Override
+            public void onResponse(Call<TvShowDetails> call, Response<TvShowDetails> response) {
+                if (response.body() != null && response.isSuccessful())
+                    getTvShowDetailsCallback.onSuccess(response.body());
+                else
+                    getTvShowDetailsCallback.onFailure(new Throwable("Error"));
+            }
+
+            @Override
+            public void onFailure(Call<TvShowDetails> call, Throwable t) {
+                if (!call.isCanceled()) {
+                    getTvShowDetailsCallback.onFailure(t);
+                }
+            }
+        });
+    }
+
+    @Override
     public void getTvSeries(String type, String pageNumber, Activity activity, final GetTvSeriesCallback getTvSeriesCallback) {
         TvSeriesResource tvSeriesResource = ResourceBuilder.buildResource(TvSeriesResource.class, activity);
         Call<TvShowResponse> call = tvSeriesResource.getTvSeries(type, pageNumber);
@@ -155,7 +179,6 @@ public class TvShowsServiceImpl implements TvShowsService {
 
     @Override
     public void getTrailers(int id, Activity activity, final GetTrailersCallback getTrailersCallback) {
-
         TvSeriesResource tvSeriesResource = ResourceBuilder.buildResource(TvSeriesResource.class, activity);
         Call<TrailerResponse> call = tvSeriesResource.getTrailers(id);
         call.enqueue(new Callback<TrailerResponse>() {
@@ -171,6 +194,28 @@ public class TvShowsServiceImpl implements TvShowsService {
             public void onFailure(Call<TrailerResponse> call, Throwable t) {
                 if (!call.isCanceled()) {
                     getTrailersCallback.onFailure(t);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getCredits(int id, Activity activity, final GetCreditsCallback getCreditsCallback) {
+        TvSeriesResource tvSeriesResource = ResourceBuilder.buildResource(TvSeriesResource.class, activity);
+        Call<CreditsResponse> call = tvSeriesResource.getCredits(id);
+        call.enqueue(new Callback<CreditsResponse>() {
+            @Override
+            public void onResponse(Call<CreditsResponse> call, Response<CreditsResponse> response) {
+                if (response.body() != null && response.isSuccessful())
+                    getCreditsCallback.onSuccess(response.body());
+                else
+                    getCreditsCallback.onFailure(new Throwable("Error"));
+            }
+
+            @Override
+            public void onFailure(Call<CreditsResponse> call, Throwable t) {
+                if (!call.isCanceled()) {
+                    getCreditsCallback.onFailure(t);
                 }
             }
         });
