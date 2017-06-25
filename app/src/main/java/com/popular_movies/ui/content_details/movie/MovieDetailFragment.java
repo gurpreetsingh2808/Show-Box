@@ -418,9 +418,9 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
                         .build());
             }
         }
-        //  if no trailers available
+        //  if no credits available
         else {
-            tvNoCollection.setVisibility(View.VISIBLE);
+            tvNoCast.setVisibility(View.VISIBLE);
         }
     }
 

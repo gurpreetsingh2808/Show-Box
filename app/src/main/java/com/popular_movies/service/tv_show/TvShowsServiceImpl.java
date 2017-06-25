@@ -2,6 +2,7 @@ package com.popular_movies.service.tv_show;
 
 import android.app.Activity;
 
+import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.GenreResponse;
 import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.domain.tv.TvShowDetails;
@@ -178,7 +179,6 @@ public class TvShowsServiceImpl implements TvShowsService {
 
     @Override
     public void getTrailers(int id, Activity activity, final GetTrailersCallback getTrailersCallback) {
-
         TvSeriesResource tvSeriesResource = ResourceBuilder.buildResource(TvSeriesResource.class, activity);
         Call<TrailerResponse> call = tvSeriesResource.getTrailers(id);
         call.enqueue(new Callback<TrailerResponse>() {
@@ -194,6 +194,28 @@ public class TvShowsServiceImpl implements TvShowsService {
             public void onFailure(Call<TrailerResponse> call, Throwable t) {
                 if (!call.isCanceled()) {
                     getTrailersCallback.onFailure(t);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getCredits(int id, Activity activity, final GetCreditsCallback getCreditsCallback) {
+        TvSeriesResource tvSeriesResource = ResourceBuilder.buildResource(TvSeriesResource.class, activity);
+        Call<CreditsResponse> call = tvSeriesResource.getCredits(id);
+        call.enqueue(new Callback<CreditsResponse>() {
+            @Override
+            public void onResponse(Call<CreditsResponse> call, Response<CreditsResponse> response) {
+                if (response.body() != null && response.isSuccessful())
+                    getCreditsCallback.onSuccess(response.body());
+                else
+                    getCreditsCallback.onFailure(new Throwable("Error"));
+            }
+
+            @Override
+            public void onFailure(Call<CreditsResponse> call, Throwable t) {
+                if (!call.isCanceled()) {
+                    getCreditsCallback.onFailure(t);
                 }
             }
         });

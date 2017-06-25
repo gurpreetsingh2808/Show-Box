@@ -26,6 +26,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.popular_movies.BuildConfig;
 import com.popular_movies.R;
+import com.popular_movies.domain.common.Cast;
+import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.Trailer;
 import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.domain.tv.TvShow;
@@ -33,6 +35,7 @@ import com.popular_movies.domain.tv.TvShowDetails;
 import com.popular_movies.framework.ImageLoader;
 import com.popular_movies.ui.activity.ReviewActivity;
 import com.popular_movies.ui.content_details.TrailerAdapter;
+import com.popular_movies.ui.content_details.movie.CastAdapter;
 import com.popular_movies.ui.content_details.movie.ReviewsAdapter;
 import com.popular_movies.util.AppUtils;
 import com.popular_movies.util.DateConvert;
@@ -41,6 +44,7 @@ import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,7 +53,7 @@ import butterknife.OnClick;
 import me.relex.circleindicator.CircleIndicator;
 
 public class TvShowDetailFragment extends Fragment implements TvShowDetailPresenter.View,
-        TrailerAdapter.TrailerClickListener {
+        TrailerAdapter.TrailerClickListener, CastAdapter.CastClickListener {
 
     private static final String TAG = TvShowDetailFragment.class.getSimpleName();
     //  toolbar
@@ -74,6 +78,8 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     TextView tvGenre;
     @BindView(R.id.tvDuration)
     TextView tvDuration;
+    @BindView(R.id.tvNoCast)
+    TextView tvNoCast;
 
     //  image view
     @BindView(R.id.toolbarImage)
@@ -94,6 +100,8 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     ProgressBar pbReviews;
     @BindView(R.id.pbTrailers)
     ProgressBar pbTrailers;
+    @BindView(R.id.pbCast)
+    ProgressBar pbCast;
 
     //  favoite icon
     @BindView(R.id.ivFavorite)
@@ -106,6 +114,8 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     DiagonalLayout diagonalLayout;
     @BindView(R.id.dsvTrailers)
     DiscreteScrollView dsvTrailers;
+    @BindView(R.id.dsvCast)
+    DiscreteScrollView dsvCast;
 
     private static final String KEY_DETAIL_CONTENT = "KEY_DETAIL_CONTENT";
     TvShow tvShow;
@@ -192,6 +202,8 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
             TvShowDetailPresenterImpl tvShowDetailPresenter = new TvShowDetailPresenterImpl(this, getActivity());
             tvShowDetailPresenter.fetchTrailers(tvShow.getId());
             tvShowDetailPresenter.fetchTvShowDetails(tvShow.getId());
+            tvShowDetailPresenter.fetchTvShowCredits(tvShow.getId());
+
 
         }
 //        if (TvShowProviderHelper.getInstance().doesTvShowExist(tvShow.getId())) {
@@ -324,6 +336,31 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     }
 
     @Override
+    public void onCreditsRetreivalSuccess(CreditsResponse creditsResponse) {
+        pbCast.setVisibility(View.GONE);
+        if (creditsResponse != null && creditsResponse.getCast().length > 0) {
+            List<Cast> listCast = new ArrayList<>();
+            if (getContext() != null) {
+                Collections.addAll(listCast, creditsResponse.getCast());
+                dsvCast.setAdapter(new CastAdapter(listCast, this));
+                dsvCast.setItemTransformer(new ScaleTransformer.Builder()
+                        .setMinScale(0.8f)
+                        .build());
+            }
+        }
+        //  if no credits available
+        else {
+            tvNoCast.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onCreditsRetreivalFailure(Throwable throwable) {
+        pbCast.setVisibility(View.GONE);
+        tvNoCast.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void onTrailerClick(String key) {
         viewTrailerInYoutube(key);
     }
@@ -331,5 +368,10 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     @OnClick(R.id.ivBack)
     public void goBack() {
         getActivity().finish();
+    }
+
+    @Override
+    public void itemClicked(View view, int position, Cast cast) {
+        // TODO :
     }
 }

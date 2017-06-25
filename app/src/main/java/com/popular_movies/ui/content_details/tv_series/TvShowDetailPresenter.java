@@ -1,5 +1,6 @@
 package com.popular_movies.ui.content_details.tv_series;
 
+import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.domain.tv.TvShowDetails;
 
@@ -16,10 +17,15 @@ public class TvShowDetailPresenter {
         void onTvShowDetailsRetreivalSuccess(TvShowDetails movieDetails);
         void onTvShowDetailsRetreivalFailure(Throwable throwable);
 
+        void onCreditsRetreivalSuccess(CreditsResponse creditsResponse);
+        void onCreditsRetreivalFailure(Throwable throwable);
+
     }
 
     interface Presenter {
         void fetchTvShowDetails(int id);
         void fetchTrailers(int id);
+//        void fetchSeasons(int movieId);
+        void fetchTvShowCredits(int movieId);
     }
 }

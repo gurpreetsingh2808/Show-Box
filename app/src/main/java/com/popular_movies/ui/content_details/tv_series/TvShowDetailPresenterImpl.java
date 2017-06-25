@@ -2,6 +2,7 @@ package com.popular_movies.ui.content_details.tv_series;
 
 import android.app.Activity;
 
+import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.domain.tv.TvShowDetails;
 import com.popular_movies.service.tv_show.TvShowsService;
@@ -51,6 +52,21 @@ public class TvShowDetailPresenterImpl implements TvShowDetailPresenter.Presente
             @Override
             public void onFailure(Throwable throwable) {
                 view.onTrailersRetreivalFailure(throwable);
+            }
+        });
+    }
+
+    @Override
+    public void fetchTvShowCredits(int movieId) {
+        tvShowsService.getCredits(movieId, activity, new TvShowsService.GetCreditsCallback() {
+            @Override
+            public void onSuccess(CreditsResponse creditResponse) {
+                view.onCreditsRetreivalSuccess(creditResponse);
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                view.onCreditsRetreivalFailure(throwable);
             }
         });
     }
