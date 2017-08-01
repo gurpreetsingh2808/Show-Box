@@ -1,6 +1,7 @@
 package com.popular_movies.ui.content_details.tv_series;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.TrailerResponse;
@@ -31,6 +32,7 @@ public class TvShowDetailPresenterImpl implements TvShowDetailPresenter.Presente
         tvShowsService.getTvShowDetails(id, activity, new TvShowsService.GetTvShowDetailsCallback() {
             @Override
             public void onSuccess(TvShowDetails tvShowDetails) {
+                Log.e("TAG", tvShowDetails.getEpisode_run_time()[0].toString());
                 view.onTvShowDetailsRetreivalSuccess(tvShowDetails);
             }
 

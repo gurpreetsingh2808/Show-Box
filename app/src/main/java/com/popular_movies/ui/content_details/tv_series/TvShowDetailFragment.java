@@ -30,6 +30,7 @@ import com.popular_movies.domain.common.Cast;
 import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.Trailer;
 import com.popular_movies.domain.common.TrailerResponse;
+import com.popular_movies.domain.tv.Season;
 import com.popular_movies.domain.tv.TvShow;
 import com.popular_movies.domain.tv.TvShowDetails;
 import com.popular_movies.framework.ImageLoader;
@@ -53,7 +54,7 @@ import butterknife.OnClick;
 import me.relex.circleindicator.CircleIndicator;
 
 public class TvShowDetailFragment extends Fragment implements TvShowDetailPresenter.View,
-        TrailerAdapter.TrailerClickListener, CastAdapter.CastClickListener {
+        TrailerAdapter.TrailerClickListener, CastAdapter.CastClickListener, TvShowSeasonClickListener {
 
     private static final String TAG = TvShowDetailFragment.class.getSimpleName();
     //  toolbar
@@ -80,6 +81,8 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     TextView tvDuration;
     @BindView(R.id.tvNoCast)
     TextView tvNoCast;
+    @BindView(R.id.tvNoCollection)
+    TextView tvNoCollection;
 
     //  image view
     @BindView(R.id.toolbarImage)
@@ -100,6 +103,8 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     ProgressBar pbReviews;
     @BindView(R.id.pbTrailers)
     ProgressBar pbTrailers;
+    @BindView(R.id.pbCollection)
+    ProgressBar pbCollection;
     @BindView(R.id.pbCast)
     ProgressBar pbCast;
 
@@ -114,6 +119,8 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     DiagonalLayout diagonalLayout;
     @BindView(R.id.dsvTrailers)
     DiscreteScrollView dsvTrailers;
+    @BindView(R.id.dsvCollection)
+    DiscreteScrollView dsvCollection;
     @BindView(R.id.dsvCast)
     DiscreteScrollView dsvCast;
 
@@ -123,6 +130,8 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     private View view;
     private ReviewsAdapter reviewsAdapter;
     private LinearLayoutManager layoutManagerReview;
+    private TvShowDetailPresenterImpl tvShowDetailPresenter;
+
 
     public static TvShowDetailFragment getInstance(Parcelable movie) {
         TvShowDetailFragment detailsFragment = new TvShowDetailFragment();
@@ -155,7 +164,7 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
-               // ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                // ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
 
         }
@@ -199,7 +208,7 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
                 }
             });
 
-            TvShowDetailPresenterImpl tvShowDetailPresenter = new TvShowDetailPresenterImpl(this, getActivity());
+            tvShowDetailPresenter = new TvShowDetailPresenterImpl(this, getActivity());
             tvShowDetailPresenter.fetchTrailers(tvShow.getId());
             tvShowDetailPresenter.fetchTvShowDetails(tvShow.getId());
             tvShowDetailPresenter.fetchTvShowCredits(tvShow.getId());
@@ -284,7 +293,7 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     @Override
     public void onTrailersRetreivalSuccess(TrailerResponse trailerResponse) {
         pbTrailers.setVisibility(View.GONE);
-        if(trailerResponse.getResults().size() > 0) {
+        if (trailerResponse.getResults().size() > 0) {
             List<Trailer> listTrailers = new ArrayList<>();
             if (getContext() != null) {
                 for (Trailer trailer : trailerResponse.getResults()) {
@@ -313,19 +322,42 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
 
     @Override
     public void onTvShowDetailsRetreivalSuccess(TvShowDetails tvShowDetails) {
+        Log.d(TAG, "success");
+
 //  display movie genre and duration
-        if(tvShowDetails.getGenres() != null) {
+        if (tvShowDetails.getGenres() != null) {
             StringBuilder sbGenre = new StringBuilder();
+            Log.d(TAG, "genre length" + tvShowDetails.getGenres().length);
+
             for (int i = 0; i < tvShowDetails.getGenres().length; i++) {
                 if (i != 0)
                     sbGenre.append(" | ");
                 sbGenre.append(tvShowDetails.getGenres()[i].getName());
             }
             tvGenre.setText(sbGenre);
+            Log.d(TAG, sbGenre.toString());
+
         }
         tvDuration.setText(TimeUtils.formatDuration(tvShowDetails.getEpisode_run_time()[0]));
 
+        //  display tv show seasons
+        if (tvShowDetails.getNumber_of_seasons() > 1 && tvShowDetails.getSeasons() != null &&
+                tvShowDetails.getSeasons().length > 0) {
+            pbCollection.setVisibility(View.GONE);
+            List<Season> listSeason = new ArrayList<>();
+            if (getContext() != null) {
+                Collections.addAll(listSeason, tvShowDetails.getSeasons());
+                dsvCollection.setAdapter(new TvShowSeasonAdapter(listSeason, this));
+                dsvCollection.setItemTransformer(new ScaleTransformer.Builder()
+                        .setMinScale(0.8f)
+                        .build());
+            }
 
+        }
+        //  if only one season available
+        else {
+            tvNoCollection.setVisibility(View.VISIBLE);
+        }
 
         //   TODO : INCOMPLETE
     }
@@ -372,6 +404,11 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
 
     @Override
     public void itemClicked(View view, int position, Cast cast) {
+        // TODO :
+    }
+
+    @Override
+    public void seasonClicked(View view, int position, Season season) {
         // TODO :
     }
 }

@@ -55,6 +55,7 @@ import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -369,7 +370,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
         if (movieDetails.getBelongs_to_collection() != null) {
             movieDetailPresenterImpl.fetchMovieCollection(movieDetails.getBelongs_to_collection().getId());
         }
-        //  if no trailers available
+        //  if no collections available
         else {
             pbCollection.setVisibility(View.GONE);
             tvNoCollection.setVisibility(View.VISIBLE);

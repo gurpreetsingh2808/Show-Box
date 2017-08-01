@@ -1,4 +1,4 @@
-package com.popular_movies.ui.tv_shows;
+package com.popular_movies.ui;
 
 import android.view.View;
 
