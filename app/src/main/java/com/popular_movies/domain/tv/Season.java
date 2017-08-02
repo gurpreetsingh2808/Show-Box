@@ -4,7 +4,7 @@ package com.popular_movies.domain.tv;
  * Created by Gurpreet on 10-06-2017.
  */
 
-class Season {
+public class Season {
     private String air_date;
     private Integer episode_count;
     private Integer id;

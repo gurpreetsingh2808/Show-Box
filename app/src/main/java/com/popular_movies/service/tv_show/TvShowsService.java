@@ -55,6 +55,9 @@ public interface TvShowsService {
         @GET("tv/{id}/credits?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<CreditsResponse> getCredits(@Path("id") int id);
 
+//        @GET("tv/{id}/season/{seasonNumber}/?api_key=" + BuildConfig.TMDB_API_KEY)
+//        Call<CreditsResponse> getCredits(@Path("id") int id);
+
         @GET("search/tv?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<TvShowResponse> getSearchResults(@Query("query") String searchQuery);
 

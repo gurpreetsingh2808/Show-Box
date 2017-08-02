@@ -65,4 +65,7 @@
     <string name="MovieDetails.Cast">Cast</string>
     <string name="notAvailable">Not available</string>
 
+    <string name="key_series_type">KEY_SERIES_TYPE</string>
+
+
 </resources>

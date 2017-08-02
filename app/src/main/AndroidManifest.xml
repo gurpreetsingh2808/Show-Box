@@ -44,6 +44,8 @@
 
         <activity android:name=".ui.movies_listing.MoviesListingActivity" />
 
+        <activity android:name=".ui.tv_series_listing.TvSeriesListingActivity" />
+
         <receiver
             android:name=".widget.MovieWidgetProvider"
             android:label="@string/widget_title">
