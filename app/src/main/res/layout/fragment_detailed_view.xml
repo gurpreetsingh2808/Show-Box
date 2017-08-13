@@ -367,6 +367,7 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:minHeight="180dp"
                                 android:layout_below="@+id/tvHeadingTrailer"
                                 android:layout_marginTop="@dimen/margin_24">
 
@@ -392,6 +393,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
                                     android:text="@string/Trailer.NotAvailable"
+                                    android:textColor="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
 
@@ -580,6 +582,7 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:minHeight="150dp"
                                 android:layout_below="@+id/tvHeadingCast"
                                 android:layout_marginTop="@dimen/margin_24">
 
@@ -588,7 +591,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
-                                    android:layout_marginTop="20dp"
+                                    android:layout_marginTop="@dimen/margin_48"
                                     app:dsv_orientation="horizontal" />
 
                                 <ProgressBar

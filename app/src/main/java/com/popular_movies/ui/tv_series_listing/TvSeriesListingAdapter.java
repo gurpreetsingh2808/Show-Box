@@ -125,12 +125,6 @@ public class TvSeriesListingAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         ImageView thumbnail;
         @BindView(R.id.tvRating)
         TextView tvRating;
-        @BindView(R.id.ivPopularity)
-        ImageView ivPopularity;
-        @BindView(R.id.tvPopularity)
-        TextView tvPopularity;
-        @BindView(R.id.ivAdult)
-        ImageView ivAdult;
         @BindView(R.id.tvGenre)
         TextView tvGenre;
         //public TvShowAdapterHorizontal.ClickListener clickListener;
@@ -152,22 +146,11 @@ public class TvSeriesListingAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             //  set title
             title.setText(tvShowData.getOriginal_name());
             //  set poster/movie image
-            ImageLoader.loadPosterImage(context, tvShowData.getPoster_path(), thumbnail);
+//            ImageLoader.loadPosterImage(context, tvShowData.getPoster_path(), thumbnail);
+            ImageLoader.loadBackdropImage(context, tvShowData.getBackdrop_path(), thumbnail, 3);
+
             //  set rating
             tvRating.setText(tvShowData.getVote_average());
-            //  set popularity icon
-            if(Float.valueOf(tvShowData.getPopularity()) < 100f ) {
-                ivPopularity.setImageResource(R.drawable.ic_popularity_low);
-            }
-            else if(Float.valueOf(tvShowData.getPopularity()) >= 100f && Float.valueOf(tvShowData.getPopularity()) < 200f) {
-                ivPopularity.setImageResource(R.drawable.ic_popularity_ok);
-            }
-            else if(Float.valueOf(tvShowData.getPopularity()) >= 200f) {
-                ivPopularity.setImageResource(R.drawable.ic_popularity_high);
-            }
-            int roundedPopularity = Math.round(Float.valueOf(tvShowData.getPopularity()));
-            //  set popularity text
-            tvPopularity.setText(String.valueOf(roundedPopularity));
             //  set release date
             tvReleaseYear.setText(DateConvert.convert(tvShowData.getFirst_air_date()));
 
