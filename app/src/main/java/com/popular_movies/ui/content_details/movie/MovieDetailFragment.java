@@ -184,7 +184,12 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
             //releaseDate.append(" " + DateConvert.convert(movieData.getRelease_date()));
             releaseDate.setText(DateConvert.convert(movieData.getRelease_date()));
             synopsis.setText(movieData.getOverview());
-            userRatings.setText(movieData.getVote_average());
+            if(movieData.getVote_average().equals("0")) {
+                userRatings.setText(getString(R.string.NA));
+            }
+            else {
+                userRatings.setText(movieData.getVote_average());
+            }
             btnUserReview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -192,8 +197,8 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
                 }
             });
 
-            ImageLoader.loadBackdropImage(getContext(), movieData.getBackdrop_path(), toolbarImage);
-            ////ImageLoader.loadPosterImage(getContext(), movieData.getPoster_path(), toolbarImage, 4);
+//            ImageLoader.loadBackdropImage(getContext(), movieData.getBackdrop_path(), toolbarImage);
+            ImageLoader.loadPosterImage(getContext(), movieData.getPoster_path(), toolbarImage, 4);
 
             ivFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -365,7 +370,12 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
             }
             tvGenre.setText(sbGenre);
         }
-        tvDuration.setText(TimeUtils.formatDuration(movieDetails.getRuntime()));
+        if(movieDetails.getRuntime() == null || movieDetails.getRuntime() == 0) {
+            tvDuration.setText(getString(R.string.NA));
+        }
+        else {
+            tvDuration.setText(TimeUtils.formatDuration(movieDetails.getRuntime()));
+        }
 
         if (movieDetails.getBelongs_to_collection() != null) {
             movieDetailPresenterImpl.fetchMovieCollection(movieDetails.getBelongs_to_collection().getId());

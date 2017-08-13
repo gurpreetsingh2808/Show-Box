@@ -123,12 +123,6 @@ public class MovieListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ImageView thumbnail;
         @BindView(R.id.tvRating)
         TextView tvRating;
-        @BindView(R.id.ivPopularity)
-        ImageView ivPopularity;
-        @BindView(R.id.tvPopularity)
-        TextView tvPopularity;
-        @BindView(R.id.ivAdult)
-        ImageView ivAdult;
         @BindView(R.id.tvGenre)
         TextView tvGenre;
         //public MovieAdapterHorizontal.ClickListener clickListener;
@@ -150,28 +144,12 @@ public class MovieListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             //  set title
             title.setText(movieData.getOriginal_title());
             //  set poster/movie image
-            ImageLoader.loadPosterImage(context, movieData.getPoster_path(), thumbnail);
+//            ImageLoader.loadPosterImage(context, movieData.getPoster_path(), thumbnail);
+            ImageLoader.loadBackdropImage(context, movieData.getBackdrop_path(), thumbnail, 3);
             //  set rating
             tvRating.setText(movieData.getVote_average());
-            //  set popularity icon
-            if(Float.valueOf(movieData.getPopularity()) < 100f ) {
-                ivPopularity.setImageResource(R.drawable.ic_popularity_low);
-            }
-            else if(Float.valueOf(movieData.getPopularity()) >= 100f && Float.valueOf(movieData.getPopularity()) < 200f) {
-                ivPopularity.setImageResource(R.drawable.ic_popularity_ok);
-            }
-            else if(Float.valueOf(movieData.getPopularity()) >= 200f) {
-                ivPopularity.setImageResource(R.drawable.ic_popularity_high);
-            }
-            int roundedPopularity = Math.round(Float.valueOf(movieData.getPopularity()));
-            //  set popularity text
-            tvPopularity.setText(String.valueOf(roundedPopularity));
             //  set release date
             tvReleaseYear.setText(DateConvert.convert(movieData.getRelease_date()));
-            //  set adult image
-            if(movieData.getAdult()) {
-                ivAdult.setVisibility(View.VISIBLE);
-            }
 
             for (int i = 0; i < movieData.getGenre_ids().length; i++) {
                 Log.d(TAG, "genre "+movieData.getGenre_ids()[i]);

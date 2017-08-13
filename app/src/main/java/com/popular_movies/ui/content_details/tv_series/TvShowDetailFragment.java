@@ -30,10 +30,12 @@ import com.popular_movies.domain.common.Cast;
 import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.Trailer;
 import com.popular_movies.domain.common.TrailerResponse;
+import com.popular_movies.domain.dictionary.DetailContentType;
 import com.popular_movies.domain.tv.Season;
 import com.popular_movies.domain.tv.TvShow;
 import com.popular_movies.domain.tv.TvShowDetails;
 import com.popular_movies.framework.ImageLoader;
+import com.popular_movies.ui.FlowManager;
 import com.popular_movies.ui.activity.ReviewActivity;
 import com.popular_movies.ui.content_details.TrailerAdapter;
 import com.popular_movies.ui.content_details.movie.CastAdapter;
@@ -341,9 +343,9 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
         tvDuration.setText(TimeUtils.formatDuration(tvShowDetails.getEpisode_run_time()[0]));
 
         //  display tv show seasons
+        pbCollection.setVisibility(View.GONE);
         if (tvShowDetails.getNumber_of_seasons() > 1 && tvShowDetails.getSeasons() != null &&
                 tvShowDetails.getSeasons().length > 0) {
-            pbCollection.setVisibility(View.GONE);
             List<Season> listSeason = new ArrayList<>();
             if (getContext() != null) {
                 Collections.addAll(listSeason, tvShowDetails.getSeasons());
