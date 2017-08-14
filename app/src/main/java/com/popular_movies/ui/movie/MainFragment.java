@@ -1,4 +1,4 @@
-package com.popular_movies.ui.main;
+package com.popular_movies.ui.movie;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -22,9 +22,8 @@ import com.popular_movies.domain.movie.MovieResponse;
 import com.popular_movies.domain.dictionary.DetailContentType;
 import com.popular_movies.ui.FlowManager;
 import com.popular_movies.ui.MovieItemClickListener;
-import com.popular_movies.ui.content_details.MovieDetailActivity;
 import com.popular_movies.ui.content_details.movie.MovieDetailFragment;
-import com.popular_movies.ui.movies_listing.MoviesListingActivity;
+import com.popular_movies.ui.listing.movies_listing.MoviesListingActivity;
 import com.popular_movies.util.AppUtils;
 import com.popular_movies.util.constants.IntentKeys;
 import com.popular_movies.util.constants.TitleKeyValues;

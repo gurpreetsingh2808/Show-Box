@@ -1,4 +1,4 @@
-package com.popular_movies.ui.tv_series_listing;
+package com.popular_movies.ui.listing.tv_series_listing;
 
 import android.app.Activity;
 

@@ -1,6 +1,5 @@
-package com.popular_movies.ui.movies_listing;
+package com.popular_movies.ui.listing.tv_series_listing;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,10 +20,10 @@ import com.popular_movies.domain.common.Genre;
 import com.popular_movies.domain.common.GenreResponse;
 import com.popular_movies.domain.dictionary.DetailContentType;
 import com.popular_movies.domain.movie.Movie;
-import com.popular_movies.domain.movie.MovieResponse;
+import com.popular_movies.domain.tv.TvShow;
+import com.popular_movies.domain.tv.TvShowResponse;
 import com.popular_movies.ui.FlowManager;
-import com.popular_movies.ui.MovieItemClickListener;
-import com.popular_movies.ui.content_details.MovieDetailActivity;
+import com.popular_movies.ui.TvShowItemClickListener;
 import com.popular_movies.util.pagination.EndlessRecyclerOnScrollListener;
 
 import java.util.ArrayList;
@@ -36,8 +35,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MovieListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
-        MoviesPresenter.View, MovieItemClickListener
+public class TvSeriesListingFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
+        TvSeriesPresenter.View, TvShowItemClickListener
 /*, MovieAdapterHorizontal.ClickListener*/ {
 
     //  recycler view
@@ -48,30 +47,30 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
     @BindView(R.id.pbMoviesList)
     ProgressBar pbMoviesList;
 
-    private String TAG = MovieListFragment.class.getSimpleName();
+    private String TAG = TvSeriesListingFragment.class.getSimpleName();
     public ArrayList<Movie> movieDataList = new ArrayList<>();
-    public MovieListingAdapter adapterHorizontal;
+    public TvSeriesListingAdapter adapterHorizontal;
     // public SwipeRefreshLayout refreshLayout;
     private static final String KEY_TITLE = "KEY_TITLE";
-    static String movieType;
+    static String seriesType;
     private View view;
-    private MoviesPresenterImpl moviesPresenterImpl;
+    private TvSeriesPresenterImpl tvSeriesPresenterImpl;
     private Integer pageNumber = 1;
     private LinearLayoutManager layoutManager;
     private Boolean loadingInProgress = false;
     private Map<Integer, String> mapGenre = new HashMap<>();
 
-    public MovieListFragment() {
+    public TvSeriesListingFragment() {
 
     }
 
-    public static MovieListFragment getInstance(String title) {
-        MovieListFragment fragment = new MovieListFragment();
+    public static TvSeriesListingFragment getInstance(String title) {
+        TvSeriesListingFragment fragment = new TvSeriesListingFragment();
         Bundle bundle = new Bundle();
         bundle.putString(KEY_TITLE, title);
         //bundle.putString(fragment.getActivity().getString(R.string.key_title), title);
         fragment.setArguments(bundle);
-        movieType = title;
+        seriesType = title;
         return fragment;
     }
 
@@ -80,7 +79,7 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_movies_list, container, false);
         ButterKnife.bind(this, view);
-        moviesPresenterImpl = new MoviesPresenterImpl(this, getActivity());
+        tvSeriesPresenterImpl = new TvSeriesPresenterImpl(this, getActivity());
         pbMoviesList.setVisibility(View.VISIBLE);
 
         layoutManager = new LinearLayoutManager(getContext());
@@ -107,14 +106,14 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
         } else {*/
 //            moviesPresenterImpl.fetchMovies(movieType, String.valueOf(pageNumber));
         // }
-        moviesPresenterImpl.fetchGenres();
+        tvSeriesPresenterImpl.fetchGenres();
         rvMoviesList.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
             @Override
             public void onLoadMore() {
                 pageNumber++;
                 adapterHorizontal.add(null);
                 loadingInProgress = true;
-                moviesPresenterImpl.fetchMovies(movieType, String.valueOf(pageNumber));
+                tvSeriesPresenterImpl.fetchTvSeries(seriesType, String.valueOf(pageNumber));
             }
 
             @Override
@@ -125,8 +124,8 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
         });
     }
 
-    private void setHorizontalAdapter(List<Movie> listMovies, RecyclerView recyclerView) {
-        adapterHorizontal = new MovieListingAdapter(getContext(), listMovies);
+    private void setHorizontalAdapter(List<TvShow> listSeries, RecyclerView recyclerView) {
+        adapterHorizontal = new TvSeriesListingAdapter(getContext(), listSeries);
         adapterHorizontal.setClickListener(this);
         if (recyclerView.getAdapter() != null) {
             recyclerView.swapAdapter(adapterHorizontal, false);
@@ -157,23 +156,24 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onRefresh() {
         pageNumber = 1;
-        moviesPresenterImpl.fetchMovies(movieType, String.valueOf(pageNumber));
+        tvSeriesPresenterImpl.fetchTvSeries(seriesType, String.valueOf(pageNumber));
     }
 
+
     @Override
-    public void onMoviesRetreivalSuccess(MovieResponse movieResponse) {
+    public void onTvSeriesRetreivalSuccess(TvShowResponse tvShowResponse) {
         pbMoviesList.setVisibility(View.GONE);
         if (adapterHorizontal == null) {
-            setHorizontalAdapter(movieResponse.getResults(), rvMoviesList);
+            setHorizontalAdapter(tvShowResponse.getResults(), rvMoviesList);
         } else {
             loadingInProgress = false;
             adapterHorizontal.remove();
-            adapterHorizontal.addAll(movieResponse.getResults());
+            adapterHorizontal.addAll(tvShowResponse.getResults());
         }
     }
 
     @Override
-    public void onMoviesRetreivalFailure(Throwable throwable) {
+    public void onTvSeriesRetreivalFailure(Throwable throwable) {
         if (adapterHorizontal == null) {
             pbMoviesList.setVisibility(View.GONE);
         } else {
@@ -190,18 +190,18 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
             mapGenre.put(genre.getId(), genre.getName());
             Log.e(TAG, "genre: id " + genre.getId() + ", name " + genre.getName());
         }
-        moviesPresenterImpl.fetchMovies(movieType, String.valueOf(pageNumber));
+        tvSeriesPresenterImpl.fetchTvSeries(seriesType, String.valueOf(pageNumber));
     }
 
     @Override
     public void onGenresRetreivalFailure(Throwable throwable) {
         Log.e(TAG, "onGenresRetreivalFailure: ");
-        moviesPresenterImpl.fetchMovies(movieType, String.valueOf(pageNumber));
+        tvSeriesPresenterImpl.fetchTvSeries(seriesType, String.valueOf(pageNumber));
     }
 
     @Override
-    public void itemClicked(View view, int position, Movie movieData) {
-        FlowManager.moveToDetailsActivity(getContext(), DetailContentType.MOVIE, movieData);
+    public void itemClicked(View view, int position, TvShow tvShow) {
+        FlowManager.moveToDetailsActivity(getContext(), DetailContentType.TV_SERIES, tvShow);
         //if (!AppUtils.isTablet(getContext())) {
 //        Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
 //        intent.putExtra(getString(R.string.key_detail_content), movieData);

@@ -13,7 +13,7 @@
 
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.movie.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
@@ -42,9 +42,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.movies_listing.MoviesListingActivity" />
+        <activity android:name=".ui.listing.movies_listing.MoviesListingActivity" />
 
-        <activity android:name=".ui.tv_series_listing.TvSeriesListingActivity" />
+        <activity android:name=".ui.listing.tv_series_listing.TvSeriesListingActivity" />
 
         <receiver
             android:name=".widget.MovieWidgetProvider"

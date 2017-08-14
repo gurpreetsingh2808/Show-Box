@@ -1,8 +1,8 @@
-package com.popular_movies.ui.tv_series_listing;
+package com.popular_movies.ui.listing.movies_listing;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class TvSeriesListingActivity extends AppCompatActivity {
+public class MoviesListingActivity extends AppCompatActivity {
 
     //  toolbar
     @BindView(R.id.MovieListing_ToolBar)
@@ -40,7 +40,7 @@ public class TvSeriesListingActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             if(getIntent() != null && getIntent().hasExtra(getString(R.string.key_title))) {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.movies_listing, TvSeriesListingFragment.getInstance(getIntent().getStringExtra(getString(R.string.key_series_type))))
+                        .replace(R.id.movies_listing, MovieListFragment.getInstance(getIntent().getStringExtra(getString(R.string.key_movie_type))))
                         .commit();
                 tvToolbarTitle.setText(getIntent().getStringExtra(getString(R.string.key_title)));
             }

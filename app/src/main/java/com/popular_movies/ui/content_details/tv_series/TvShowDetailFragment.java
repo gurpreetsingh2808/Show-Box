@@ -135,10 +135,10 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     private TvShowDetailPresenterImpl tvShowDetailPresenter;
 
 
-    public static TvShowDetailFragment getInstance(Parcelable movie) {
+    public static TvShowDetailFragment getInstance(Parcelable series) {
         TvShowDetailFragment detailsFragment = new TvShowDetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable(KEY_DETAIL_CONTENT, movie);
+        bundle.putParcelable(KEY_DETAIL_CONTENT, series);
         //bundle.putParcelable(detailsFragment.getString(R.string.key_movie), movie);
         detailsFragment.setArguments(bundle);
         return detailsFragment;

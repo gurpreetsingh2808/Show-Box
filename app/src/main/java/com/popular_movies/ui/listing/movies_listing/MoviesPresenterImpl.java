@@ -1,4 +1,4 @@
-package com.popular_movies.ui.movies_listing;
+package com.popular_movies.ui.listing.movies_listing;
 
 import android.app.Activity;
 
