@@ -10,5 +10,5 @@ import com.popular_movies.domain.tv.Season;
  */
 
 public interface TvShowSeasonClickListener {
-        void seasonClicked(View view, int position, Season season);
+        void seasonClicked(View view, int position, String title);
 }

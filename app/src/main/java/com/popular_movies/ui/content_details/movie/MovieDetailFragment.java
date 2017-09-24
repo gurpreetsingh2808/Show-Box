@@ -49,6 +49,7 @@ import com.popular_movies.ui.content_details.TrailerAdapter;
 import com.popular_movies.util.AppUtils;
 import com.popular_movies.util.DateConvert;
 import com.popular_movies.util.TimeUtils;
+import com.popular_movies.util.constants.IntentKeys;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
@@ -134,7 +135,6 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
     @BindView(R.id.dsvCast)
     DiscreteScrollView dsvCast;
 
-    private static final String KEY_DETAIL_CONTENT = "KEY_DETAIL_CONTENT";
     Movie movieData;
     private InterstitialAd mInterstitialAd;
     private View view;
@@ -145,8 +145,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
     public static MovieDetailFragment getInstance(Parcelable movie) {
         MovieDetailFragment detailsFragment = new MovieDetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable(KEY_DETAIL_CONTENT, movie);
-        //bundle.putParcelable(detailsFragment.getString(R.string.key_movie), movie);
+        bundle.putParcelable(IntentKeys.KEY_DETAIL_CONTENT, movie);
         detailsFragment.setArguments(bundle);
         return detailsFragment;
     }

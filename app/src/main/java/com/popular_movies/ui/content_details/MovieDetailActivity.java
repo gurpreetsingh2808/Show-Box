@@ -74,6 +74,11 @@ public class MovieDetailActivity extends AppCompatActivity {
                                 .getParcelableExtra(getString(R.string.key_detail_content)));
                         setFragment(fragment);
                         break;
+//                    case DetailContentType.TV_SERIES_SEASON :
+//                        fragment =  TvShowSeasonDetailFragment.getInstance(getIntent()
+//                                .getParcelableExtra(getString(R.string.key_detail_content)));
+//                        setFragment(fragment);
+//                        break;
                 }
             }
 

@@ -64,7 +64,8 @@ public class TvShowSeasonAdapter extends RecyclerView.Adapter<TvShowSeasonAdapte
                 @Override
                 public void onClick(View view) {
                     if (clickListener != null) {
-                        clickListener.seasonClicked(view, getPosition(), data.get(getAdapterPosition()));
+                        String title = data.get(getAdapterPosition()).getName() + " : " +data.get(getAdapterPosition()).getSeason_number();
+                        clickListener.seasonClicked(view, getPosition(),  title);
                     }
                 }
             });

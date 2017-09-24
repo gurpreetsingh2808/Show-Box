@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.popular_movies.ui.movies_listing.MoviesListingActivity">
+    tools:context=".ui.listing.MoviesListingActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/MovieListing.AppBar"

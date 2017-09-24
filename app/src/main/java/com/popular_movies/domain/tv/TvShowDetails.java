@@ -2,6 +2,8 @@ package com.popular_movies.domain.tv;
 
 import com.popular_movies.domain.common.Genre;
 
+import java.util.Date;
+
 /**
  * Created by Gurpreet on 10-06-2017.
  */
@@ -11,7 +13,7 @@ public class TvShowDetails {
     private String backdrop_path;
     private ShowCreator[] created_by;
     private Integer[] episode_run_time;
-    private String first_air_date;
+    private Date first_air_date;
     private Genre[] genres;
     private String homepage;
     private Integer id;
@@ -47,7 +49,7 @@ public class TvShowDetails {
         return episode_run_time;
     }
 
-    public String getFirst_air_date() {
+    public Date getFirst_air_date() {
         return first_air_date;
     }
 
@@ -143,7 +145,7 @@ public class TvShowDetails {
         this.episode_run_time = episode_run_time;
     }
 
-    public void setFirst_air_date(String first_air_date) {
+    public void setFirst_air_date(Date first_air_date) {
         this.first_air_date = first_air_date;
     }
 

@@ -1,4 +1,4 @@
-package com.popular_movies.ui.tv_series_listing;
+package com.popular_movies.ui.listing.movies_listing;
 
 import android.content.Context;
 import android.os.Handler;
@@ -13,10 +13,8 @@ import android.widget.TextView;
 
 import com.popular_movies.R;
 import com.popular_movies.domain.movie.Movie;
-import com.popular_movies.domain.tv.TvShow;
 import com.popular_movies.framework.ImageLoader;
 import com.popular_movies.ui.MovieItemClickListener;
-import com.popular_movies.ui.TvShowItemClickListener;
 import com.popular_movies.util.DateConvert;
 
 import java.util.HashMap;
@@ -29,42 +27,42 @@ import butterknife.ButterKnife;
 /**
  * Created by Gurpreet on 1/17/2016.
  */
-public class TvSeriesListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MovieListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static String TAG = TvSeriesListingAdapter.class.getSimpleName();
-    private List<TvShow> tvShowItemArrayList;
+    private static String TAG = MovieListingAdapter.class.getSimpleName();
+    private List<Movie> movieItemArrayList;
     private LayoutInflater inflater;
     private Context context;
-    private TvShowItemClickListener clickListener;
+    private MovieItemClickListener clickListener;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private Map<Integer, String> mapGenre = new HashMap<>();
 
-    public TvSeriesListingAdapter(Context context, List<TvShow> tvShowDataList) {
+    public MovieListingAdapter(Context context, List<Movie> movieDataList) {
         if (context != null) {
             this.context = context;
             inflater = LayoutInflater.from(context);
-            this.tvShowItemArrayList = tvShowDataList;
+            this.movieItemArrayList = movieDataList;
             /*if (AppUtils.isTablet(context)) {
                 ((FragmentActivity) context).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.movie_detail, MovieDetailFragment.getInstance(tvShowItemArrayList.get(0)))
+                        .replace(R.id.movie_detail, MovieDetailFragment.getInstance(movieItemArrayList.get(0)))
                         .commit();
             }*/
         } else {
-            Log.e(TAG, "TvShowAdapterHorizontal: context is null");
+            Log.e(TAG, "MovieAdapterHorizontal: context is null");
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        return tvShowItemArrayList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+        return movieItemArrayList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_ITEM) {
             View view = inflater.inflate(R.layout.item_movie_listing, parent, false);
-            return new TvShowViewHolder(view);
+            return new MovieViewHolder(view);
         } else if (viewType == VIEW_TYPE_LOADING) {
             View view = inflater.inflate(R.layout.item_pagination_loader, parent, false);
             return new LoadingViewHolder(view);
@@ -74,10 +72,10 @@ public class TvSeriesListingAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof TvShowViewHolder) {
-            final TvShow tvShowData = tvShowItemArrayList.get(position);
-            TvShowViewHolder movieViewHolder = (TvShowViewHolder) holder;
-            movieViewHolder.setData(tvShowData);
+        if (holder instanceof MovieViewHolder) {
+            final Movie movieData = movieItemArrayList.get(position);
+            MovieViewHolder movieViewHolder = (MovieViewHolder) holder;
+            movieViewHolder.setData(movieData);
 
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
@@ -87,24 +85,24 @@ public class TvSeriesListingAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemCount() {
-        return tvShowItemArrayList == null ? 0 : tvShowItemArrayList.size();
+        return movieItemArrayList == null ? 0 : movieItemArrayList.size();
     }
 
     public void setGenre(Map<Integer,String> mapGenre) {
         this.mapGenre = mapGenre;
     }
 
-    public void addAll(List<TvShow> results) {
-        tvShowItemArrayList.addAll(results);
+    public void addAll(List<Movie> results) {
+        movieItemArrayList.addAll(results);
         notifyDataSetChanged();
     }
 
-    public void add(TvShow movie) {
-        tvShowItemArrayList.add(movie);
+    public void add(Movie movie) {
+        movieItemArrayList.add(movie);
         Handler handler = new Handler();
         final Runnable r = new Runnable() {
             public void run() {
-                notifyItemInserted(tvShowItemArrayList.size() - 1);
+                notifyItemInserted(movieItemArrayList.size() - 1);
             }
         };
 
@@ -112,11 +110,11 @@ public class TvSeriesListingAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public void remove() {
-        tvShowItemArrayList.remove(tvShowItemArrayList.size() - 1);
-        notifyItemRemoved(tvShowItemArrayList.size());
+        movieItemArrayList.remove(movieItemArrayList.size() - 1);
+        notifyItemRemoved(movieItemArrayList.size());
     }
 
-    class TvShowViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.movie_title)
         TextView title;
         @BindView(R.id.tvReleaseYear)
@@ -127,9 +125,9 @@ public class TvSeriesListingAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         TextView tvRating;
         @BindView(R.id.tvGenre)
         TextView tvGenre;
-        //public TvShowAdapterHorizontal.ClickListener clickListener;
+        //public MovieAdapterHorizontal.ClickListener clickListener;
 
-        TvShowViewHolder(View itemView) {
+        MovieViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
@@ -138,37 +136,36 @@ public class TvSeriesListingAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         @Override
         public void onClick(View v) {
             if (clickListener != null) {
-                clickListener.itemClicked(v, getAdapterPosition(), tvShowItemArrayList.get(getAdapterPosition()));
+                clickListener.itemClicked(v, getAdapterPosition(), movieItemArrayList.get(getAdapterPosition()));
             }
         }
 
-        private void setData(final TvShow tvShowData) {
+        private void setData(final Movie movieData) {
             //  set title
-            title.setText(tvShowData.getOriginal_name());
+            title.setText(movieData.getOriginal_title());
             //  set poster/movie image
-//            ImageLoader.loadPosterImage(context, tvShowData.getPoster_path(), thumbnail);
-            ImageLoader.loadBackdropImage(context, tvShowData.getBackdrop_path(), thumbnail, 3);
-
+//            ImageLoader.loadPosterImage(context, movieData.getPoster_path(), thumbnail);
+            ImageLoader.loadBackdropImage(context, movieData.getBackdrop_path(), thumbnail, 3);
             //  set rating
-            tvRating.setText(tvShowData.getVote_average());
+            tvRating.setText(movieData.getVote_average());
             //  set release date
-            tvReleaseYear.setText(DateConvert.convert(tvShowData.getFirst_air_date()));
+            tvReleaseYear.setText(DateConvert.convert(movieData.getRelease_date()));
 
-            for (int i = 0; i < tvShowData.getGenre_ids().length; i++) {
-                Log.d(TAG, "genre "+tvShowData.getGenre_ids()[i]);
+            for (int i = 0; i < movieData.getGenre_ids().length; i++) {
+                Log.d(TAG, "genre "+movieData.getGenre_ids()[i]);
             }
 
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < tvShowData.getGenre_ids().length; i++) {
+            for (int i = 0; i < movieData.getGenre_ids().length; i++) {
                 for (Map.Entry<Integer, String> genre : mapGenre.entrySet()) {
                     Log.d(TAG, "genre "+genre.getValue());
-                    if (tvShowData.getGenre_ids()[i].intValue() == genre.getKey()) {
+                    if (movieData.getGenre_ids()[i].intValue() == genre.getKey()) {
                         Log.d(TAG, "setData: genre matched");
                         sb.append(genre.getValue());
                         break;
                     }
                 }
-                if(i != tvShowData.getGenre_ids().length-1) {
+                if(i != movieData.getGenre_ids().length-1) {
                     sb.append(", ");
                 }
             }
@@ -185,7 +182,7 @@ public class TvSeriesListingAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    public void setClickListener(TvShowItemClickListener clickListener) {
+    public void setClickListener(MovieItemClickListener clickListener) {
         this.clickListener = clickListener;
     }
 

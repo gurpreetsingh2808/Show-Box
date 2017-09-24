@@ -16,4 +16,12 @@ public class IntentKeys {
     public static final String KEY_AIRING_TODAY = "airing_today";
     public static final String KEY_ON_THE_AIR = "on_the_air";
 
+    // for detailed view
+    public static final String KEY_DETAIL_CONTENT = "KEY_DETAIL_CONTENT";
+
+    //  for listing screens
+    public static final String KEY_TITLE = "KEY_TITLE";
+    public static final String KEY_TV_ID = "KEY_TV_ID";
+    public static final String KEY_SEASON_NUMBER = "KEY_SEASON_NUMBER";
+
 }
