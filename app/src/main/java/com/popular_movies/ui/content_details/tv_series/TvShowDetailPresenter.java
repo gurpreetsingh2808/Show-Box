@@ -25,7 +25,6 @@ public class TvShowDetailPresenter {
     interface Presenter {
         void fetchTvShowDetails(int id);
         void fetchTrailers(int id);
-//        void fetchSeasons(int movieId);
         void fetchTvShowCredits(int movieId);
     }
 }

@@ -44,7 +44,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_12"
                 android:layout_marginRight="@dimen/margin_12"
-                android:layout_marginTop="@dimen/margin_8"
+                android:gravity="center_vertical"
                 android:visibility="visible">
 
                 <TextView

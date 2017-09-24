@@ -1,6 +1,5 @@
 package com.popular_movies.ui.movie;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,13 +16,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.popular_movies.R;
+import com.popular_movies.domain.dictionary.ListingContentType;
 import com.popular_movies.domain.movie.Movie;
 import com.popular_movies.domain.movie.MovieResponse;
 import com.popular_movies.domain.dictionary.DetailContentType;
 import com.popular_movies.ui.FlowManager;
 import com.popular_movies.ui.MovieItemClickListener;
 import com.popular_movies.ui.content_details.movie.MovieDetailFragment;
-import com.popular_movies.ui.listing.movies_listing.MoviesListingActivity;
 import com.popular_movies.util.AppUtils;
 import com.popular_movies.util.constants.IntentKeys;
 import com.popular_movies.util.constants.TitleKeyValues;
@@ -71,7 +70,6 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public MovieAdapterHorizontal adapterHorizontal;
     private MovieAdapterVertical adapterVertical;
     // public SwipeRefreshLayout refreshLayout;
-    private static final String KEY_TITLE = "KEY_TITLE";
     static String movieType;
     private View view;
     private MainPresenterImpl mainPresenterImpl;
@@ -83,7 +81,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public static MainFragment getInstance(String title) {
         MainFragment fragment = new MainFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(KEY_TITLE, title);
+        bundle.putString(IntentKeys.KEY_TITLE, title);
         //bundle.putString(fragment.getActivity().getString(R.string.key_title), title);
         fragment.setArguments(bundle);
         movieType = title;
@@ -263,25 +261,18 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvNowPlayingViewAll:
-                openMoviesListing(IntentKeys.KEY_NOW_PLAYING, TitleKeyValues.now_playing);
+                FlowManager.moveToListingActivity(getContext(), ListingContentType.MOVIE, IntentKeys.KEY_NOW_PLAYING, TitleKeyValues.now_playing);
                 break;
             case R.id.tvUpcomingViewAll:
-                openMoviesListing(IntentKeys.KEY_UPCOMING, TitleKeyValues.upcoming);
+                FlowManager.moveToListingActivity(getContext(), ListingContentType.MOVIE, IntentKeys.KEY_UPCOMING, TitleKeyValues.upcoming);
                 break;
             case R.id.tvTopRatedViewAll:
-                openMoviesListing(IntentKeys.KEY_TOP_RATED, TitleKeyValues.top_rated);
+                FlowManager.moveToListingActivity(getContext(), ListingContentType.MOVIE, IntentKeys.KEY_TOP_RATED, TitleKeyValues.top_rated);
                 break;
             case R.id.tvPopularViewAll:
-                openMoviesListing(IntentKeys.KEY_POPULAR, TitleKeyValues.popular);
+                FlowManager.moveToListingActivity(getContext(), ListingContentType.MOVIE, IntentKeys.KEY_POPULAR, TitleKeyValues.popular);
                 break;
         }
-    }
-
-    private void openMoviesListing(String movieType, String title) {
-        Intent intent = new Intent(getActivity(), MoviesListingActivity.class);
-        intent.putExtra(getString(R.string.key_movie_type), movieType);
-        intent.putExtra(getString(R.string.key_title), title);
-        startActivity(intent);
     }
 
 

@@ -55,7 +55,6 @@
 
     <string name="inTheaters">In theaters</string>
     <string name="trailer">Trailers</string>
-    <string name="key_movie_type">KEY_MOVIE_TYPE</string>
     <string name="Trailer.NotAvailable">No trailers available</string>
     <string name="Review.NotAvailable">No reviews available</string>
 
@@ -64,8 +63,14 @@
     <string name="Collection.NotAvailable">No Collections Available</string>
     <string name="MovieDetails.Cast">Cast</string>
     <string name="notAvailable">Not available</string>
-
+<!--
+    <string name="key_movie_type">KEY_MOVIE_TYPE</string>
     <string name="key_series_type">KEY_SERIES_TYPE</string>
+    <string name="key_listing_type">KEY_LISTING_TYPE</string>
+-->
+
+    <string name="key_listing_content_type">KEY_LISTING_CONTENT_TYPE</string>
+    <string name="key_listing_sub_content_type">KEY_LISTING_SUB_CONTENT_TYPE</string>
 
 
 </resources>

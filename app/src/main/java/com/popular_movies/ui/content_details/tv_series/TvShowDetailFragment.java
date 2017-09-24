@@ -31,6 +31,7 @@ import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.Trailer;
 import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.domain.dictionary.DetailContentType;
+import com.popular_movies.domain.dictionary.ListingContentType;
 import com.popular_movies.domain.tv.Season;
 import com.popular_movies.domain.tv.TvShow;
 import com.popular_movies.domain.tv.TvShowDetails;
@@ -127,7 +128,9 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     DiscreteScrollView dsvCast;
 
     private static final String KEY_DETAIL_CONTENT = "KEY_DETAIL_CONTENT";
-    TvShow tvShow;
+    private TvShow tvShow;
+    private TvShowDetails tvShowDetails;
+    private List<Season> listSeason = null;
     private InterstitialAd mInterstitialAd;
     private View view;
     private ReviewsAdapter reviewsAdapter;
@@ -275,18 +278,6 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
         startActivity(intent);
     }
 
-    private void viewTrailerInYoutube(String trailerKey) {
-        if (trailerKey != null) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(BuildConfig.BASE_URL_TRAILER + trailerKey));
-            startActivity(intent);
-        } else {
-            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.trailer_error),
-                    Snackbar.LENGTH_SHORT).show();
-        }
-    }
-
-
     public TextView getTitle() {
         return title;
     }
@@ -326,6 +317,7 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     public void onTvShowDetailsRetreivalSuccess(TvShowDetails tvShowDetails) {
         Log.d(TAG, "success");
 
+        this.tvShowDetails = tvShowDetails;
 //  display movie genre and duration
         if (tvShowDetails.getGenres() != null) {
             StringBuilder sbGenre = new StringBuilder();
@@ -346,7 +338,7 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
         pbCollection.setVisibility(View.GONE);
         if (tvShowDetails.getNumber_of_seasons() > 1 && tvShowDetails.getSeasons() != null &&
                 tvShowDetails.getSeasons().length > 0) {
-            List<Season> listSeason = new ArrayList<>();
+            listSeason = new ArrayList<>();
             if (getContext() != null) {
                 Collections.addAll(listSeason, tvShowDetails.getSeasons());
                 dsvCollection.setAdapter(new TvShowSeasonAdapter(listSeason, this));
@@ -396,7 +388,7 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
 
     @Override
     public void onTrailerClick(String key) {
-        viewTrailerInYoutube(key);
+        FlowManager.viewTrailerInYoutube(getContext(), key, getActivity().findViewById(android.R.id.content));
     }
 
     @OnClick(R.id.ivBack)
@@ -410,7 +402,8 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     }
 
     @Override
-    public void seasonClicked(View view, int position, Season season) {
-        // TODO :
+    public void seasonClicked(View view, int position, String title) {
+        FlowManager.moveToListingActivity(getContext(), ListingContentType.EPISODES, tvShowDetails.getName() + " : Season "
+                +listSeason.get(position).getSeason_number(), tvShow.getId(), listSeason.get(position).getSeason_number());
     }
 }

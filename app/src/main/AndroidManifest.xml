@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.listing.movies_listing.MoviesListingActivity" />
+        <activity android:name=".ui.listing.MoviesListingActivity" />
 
         <activity android:name=".ui.listing.tv_series_listing.TvSeriesListingActivity" />
 

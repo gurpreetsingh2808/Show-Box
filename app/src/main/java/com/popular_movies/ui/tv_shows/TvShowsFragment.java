@@ -17,13 +17,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.popular_movies.R;
+import com.popular_movies.domain.dictionary.ListingContentType;
 import com.popular_movies.domain.tv.TvShow;
 import com.popular_movies.domain.tv.TvShowResponse;
 import com.popular_movies.domain.dictionary.DetailContentType;
 import com.popular_movies.ui.FlowManager;
 import com.popular_movies.ui.TvShowItemClickListener;
 import com.popular_movies.ui.content_details.tv_series.TvShowDetailFragment;
-import com.popular_movies.ui.listing.tv_series_listing.TvSeriesListingActivity;
 import com.popular_movies.util.AppUtils;
 import com.popular_movies.util.constants.IntentKeys;
 import com.popular_movies.util.constants.TitleKeyValues;
@@ -257,25 +257,18 @@ public class TvShowsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvAiringTodayViewAll:
-                openTvShowsListing(IntentKeys.KEY_AIRING_TODAY, TitleKeyValues.airing_today);
+                FlowManager.moveToListingActivity(getContext(), ListingContentType.TV_SERIES, IntentKeys.KEY_AIRING_TODAY, TitleKeyValues.airing_today);
                 break;
             case R.id.tvOnTheAirViewAll:
-                openTvShowsListing(IntentKeys.KEY_ON_THE_AIR, TitleKeyValues.on_the_air);
+                FlowManager.moveToListingActivity(getContext(), ListingContentType.TV_SERIES, IntentKeys.KEY_ON_THE_AIR, TitleKeyValues.on_the_air);
                 break;
             case R.id.tvTopRatedViewAll:
-                openTvShowsListing(IntentKeys.KEY_TOP_RATED, TitleKeyValues.top_rated);
+                FlowManager.moveToListingActivity(getContext(), ListingContentType.TV_SERIES, IntentKeys.KEY_TOP_RATED, TitleKeyValues.top_rated);
                 break;
             case R.id.tvPopularViewAll:
-                openTvShowsListing(IntentKeys.KEY_POPULAR, TitleKeyValues.popular);
+                FlowManager.moveToListingActivity(getContext(), ListingContentType.TV_SERIES, IntentKeys.KEY_POPULAR, TitleKeyValues.popular);
                 break;
         }
-    }
-
-    private void openTvShowsListing(String seriesType, String title) {
-        Intent intent = new Intent(getActivity(), TvSeriesListingActivity.class);
-        intent.putExtra(getString(R.string.key_series_type), seriesType);
-        intent.putExtra(getString(R.string.key_title), title);
-        startActivity(intent);
     }
 
     @Override
