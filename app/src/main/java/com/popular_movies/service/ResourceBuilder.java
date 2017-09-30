@@ -1,9 +1,11 @@
 package com.popular_movies.service;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.popular_movies.BuildConfig;
 import com.popular_movies.service.interceptors.ErrorInterceptor;
+import com.popular_movies.service.interceptors.HeaderInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,16 +22,22 @@ import static okhttp3.OkHttpClient.Builder;
  * instance on which api's can be invoked
  *
  * @author Gurpreet Singh
- * @since 20-Jan-2017
+ * @since 30-Sep-2017
  */
 public class ResourceBuilder {
 
-    private static <T> T buildResource(final Class<T> service, String url, Activity activity) {
+    public static <T> T buildResource(final Class<T> service, Activity activity) {
+        return buildResource(service, BuildConfig.BASE_URL, activity, HeaderInterceptorType.NONE);
+    }
+
+    public static <T> T buildTraktResource(final Class<T> service, Activity activity) {
+        return buildResource(service, BuildConfig.BASE_URL_TRAKT, activity, HeaderInterceptorType.TRAKT);
+    }
+
+    private static <T> T buildResource(final Class<T> service, String url, Activity activity, String headerInterceptorType) {
         OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
-
         setTimeSettings(okHttpClient);
-        addInterceptors(okHttpClient, activity);
-
+        addInterceptors(okHttpClient, activity, headerInterceptorType);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -38,13 +46,6 @@ public class ResourceBuilder {
 
         return retrofit.create(service);
     }
-
-
-    public static <T> T buildResource(final Class<T> service, Activity activity) {
-        return buildResource(service, BuildConfig.BASE_URL, activity);
-    }
-
-
 
     // Private helper method to set timeout values on the backend calls
     private static void setTimeSettings(Builder okHttpClient) {
@@ -56,10 +57,17 @@ public class ResourceBuilder {
     }
 
     // Private Helper method to set various interceptors on the request
-    private static void addInterceptors(Builder okHttpClient, Activity activity) {
+    private static void addInterceptors(Builder okHttpClient, Activity activity, String headerInterceptorType) {
 
         // Add error processing interceptor
         okHttpClient.addInterceptor(new ErrorInterceptor(activity));
+
+        //  Add header interceptor
+        switch (headerInterceptorType) {
+            case HeaderInterceptorType.TRAKT:
+                okHttpClient.addInterceptor(new HeaderInterceptor());
+                break;
+        }
 
         // Add  logging interceptor as the last interceptor, because this will also log the information
         // which you added with previous interceptors to your request.

@@ -1,6 +1,7 @@
 package com.popular_movies.ui.content_details;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,16 +12,17 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.dictionary.DetailContentType;
 import com.popular_movies.ui.content_details.movie.MovieDetailFragment;
 import com.popular_movies.ui.content_details.tv_series.TvShowDetailFragment;
+import com.popular_movies.ui.content_details.tv_series.episode.EpisodeDetailFragment;
+import com.popular_movies.ui.movie.MainActivity;
 import com.popular_movies.util.AppUtils;
 
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class MovieDetailActivity extends AppCompatActivity {
-    public static final String TAG = MovieDetailActivity.class.getSimpleName();
+public class DetailActivity extends AppCompatActivity {
+    public static final String TAG = DetailActivity.class.getSimpleName();
 
 
     public void setupWindowAnimations() {
@@ -74,11 +76,11 @@ public class MovieDetailActivity extends AppCompatActivity {
                                 .getParcelableExtra(getString(R.string.key_detail_content)));
                         setFragment(fragment);
                         break;
-//                    case DetailContentType.TV_SERIES_SEASON :
-//                        fragment =  TvShowSeasonDetailFragment.getInstance(getIntent()
-//                                .getParcelableExtra(getString(R.string.key_detail_content)));
-//                        setFragment(fragment);
-//                        break;
+                    case DetailContentType.EPISODE :
+                        fragment =  EpisodeDetailFragment.getInstance(getIntent()
+                                .getParcelableExtra(getString(R.string.key_detail_content)));
+                        setFragment(fragment);
+                        break;
                 }
             }
 
@@ -89,6 +91,16 @@ public class MovieDetailActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.detailFragment, fragment, getString(R.string.tag))
                 .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (this.isTaskRoot()) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

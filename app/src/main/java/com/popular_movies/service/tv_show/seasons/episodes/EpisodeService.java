@@ -29,11 +29,8 @@ public interface EpisodeService {
         @GET("tv/{id}/credits?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<CreditsResponse> getCredits(@Path("id") int id);
 
-//        @GET("tv/{id}/season/{seasonNumber}/?api_key=" + BuildConfig.TMDB_API_KEY)
-//        Call<CreditsResponse> getCredits(@Path("id") int id);
-
-        @GET("genre/tv/list?api_key=" + BuildConfig.TMDB_API_KEY)
-        Call<GenreResponse> getGenres();
+//        @GET("shows/{name}/seasons/{season_number}/episodes/{episode_number}/comments")
+//        Call<Response> getComments(@Path("name") String name, @Path("season_number") int season_number, @Path("episode_number") int episode_number);
     }
 
 
@@ -60,13 +57,13 @@ public interface EpisodeService {
     }
 
 
-//    /**
-//     * Get movie reviews model
-//     */
-//    void getReviews(int id, Activity activity, GetReviewsCallback getReviewsCallback);
+    /**
+     * Get episode reviews model
+     */
+//    void getComments(String name, int seasonNumber, int episodeNumber, Activity activity, GetReviewsCallback getReviewsCallback);
 //
 //    interface GetReviewsCallback {
-//        void onSuccess(ReviewResponse reviewResponse);
+//        void onSuccess(Response reviewResponse);
 //        void onFailure(Throwable throwable);
 //    }
 
@@ -77,18 +74,6 @@ public interface EpisodeService {
 
     interface GetCreditsCallback {
         void onSuccess(CreditsResponse creditResponse);
-
-        void onFailure(Throwable throwable);
-    }
-
-
-    /**
-     * genre model
-     */
-    void getGenre(Activity activity, FetchGenresCallback fetchGenresCallback);
-
-    interface FetchGenresCallback {
-        void onSuccess(GenreResponse genreResponse);
 
         void onFailure(Throwable throwable);
     }

@@ -25,7 +25,7 @@ public class Movie implements Parcelable {
     private String overview;
 
     @SimpleSQLColumn("col_release_date")
-    private Date release_date;
+    private String release_date;
 
     private Integer[] genre_ids;
 
@@ -42,14 +42,14 @@ public class Movie implements Parcelable {
     @SimpleSQLColumn("col_backdrop")
     private String backdrop_path;
 
-    private String popularity;
+    private Float popularity;
 
-    private String vote_count;
+    private Integer vote_count;
 
     private Boolean video;
 
     @SimpleSQLColumn("col_vote_average")
-    private String vote_average;
+    private Float vote_average;
 
 
 
@@ -80,11 +80,11 @@ public class Movie implements Parcelable {
         this.overview = overview;
     }
 
-    public Date getRelease_date() {
+    public String getRelease_date() {
         return release_date;
     }
 
-    public void setRelease_date(Date release_date) {
+    public void setRelease_date(String release_date) {
         this.release_date = release_date;
     }
 
@@ -136,22 +136,6 @@ public class Movie implements Parcelable {
         this.backdrop_path = backdrop_path;
     }
 
-    public String getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(String popularity) {
-        this.popularity = popularity;
-    }
-
-    public String getVote_count() {
-        return vote_count;
-    }
-
-    public void setVote_count(String vote_count) {
-        this.vote_count = vote_count;
-    }
-
     public Boolean getVideo() {
         return video;
     }
@@ -160,16 +144,16 @@ public class Movie implements Parcelable {
         this.video = video;
     }
 
-    public String getVote_average() {
+    public Float getVote_average() {
         return vote_average;
     }
 
-    public void setVote_average(String vote_average) {
+    public void setVote_average(Float vote_average) {
         this.vote_average = vote_average;
     }
 
 
-    public Movie(String title, String description, String thumbnailURL, String wideThumbnailURL, String userRatings, Date release_date, int id) {
+    public Movie(String title, String description, String thumbnailURL, String wideThumbnailURL, Float userRatings, String release_date, int id) {
         this.original_title = title;
         this.overview = description;
         this.poster_path = thumbnailURL;
@@ -185,8 +169,8 @@ public class Movie implements Parcelable {
         overview = in.readString();
         poster_path = in.readString();
         backdrop_path = in.readString();
-        vote_average = in.readString();
-        release_date = new Date(in.readLong());
+        vote_average = in.readFloat();
+        release_date = in.readString();
         id = in.readInt();
     }
 
@@ -213,10 +197,26 @@ public class Movie implements Parcelable {
         dest.writeString(overview);
         dest.writeString(poster_path);
         dest.writeString(backdrop_path);
-        dest.writeString(vote_average);
+        dest.writeFloat(vote_average);
         if(release_date != null) {
-            dest.writeLong(release_date.getTime());
+            dest.writeString(release_date);
         }
         dest.writeInt(id);
+    }
+
+    public Float getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Float popularity) {
+        this.popularity = popularity;
+    }
+
+    public Integer getVote_count() {
+        return vote_count;
+    }
+
+    public void setVote_count(Integer vote_count) {
+        this.vote_count = vote_count;
     }
 }

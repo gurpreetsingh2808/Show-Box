@@ -6,10 +6,12 @@ import com.popular_movies.BuildConfig;
 import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.GenreResponse;
 import com.popular_movies.domain.common.TrailerResponse;
-import com.popular_movies.domain.movie.MovieDetails;
 import com.popular_movies.domain.tv.TvShowDetails;
+import com.popular_movies.domain.tv.TvShowExternalIds;
 import com.popular_movies.domain.tv.TvShowResponse;
-import com.popular_movies.service.movie.MovieService;
+import com.popular_movies.domain.tv.seasons.CommentsResponse;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -46,23 +48,22 @@ public interface TvShowsService {
 
         @GET("tv/{id}/videos?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<TrailerResponse> getTrailers(@Path("id") int id);
-/*
 
-        @GET("tv/{id}/reviews?api_key=" + BuildConfig.TMDB_API_KEY)
-        Call<ReviewResponse> getReview(@Path("id") int id);
-*/
+        @GET("tv/{id}/external_ids?api_key=" + BuildConfig.TMDB_API_KEY)
+        Call<TvShowExternalIds> getExternalIds(@Path("id") int id);
 
         @GET("tv/{id}/credits?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<CreditsResponse> getCredits(@Path("id") int id);
-
-//        @GET("tv/{id}/season/{seasonNumber}/?api_key=" + BuildConfig.TMDB_API_KEY)
-//        Call<CreditsResponse> getCredits(@Path("id") int id);
 
         @GET("search/tv?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<TvShowResponse> getSearchResults(@Query("query") String searchQuery);
 
         @GET("genre/tv/list?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<GenreResponse> getGenres();
+
+        @GET("shows/{name}/comments")
+        Call<List<CommentsResponse>> getComments(@Path("name") String name);
+
     }
 
     /**
@@ -109,16 +110,27 @@ public interface TvShowsService {
         void onFailure(Throwable throwable);
     }
 
+    /**
+     * Get movie trailers model
+     */
+    void getTvShowExternalIds(int id, Activity activity, GetTvShowExternalIdsCallback getTvShowExternalIdsCallback);
 
-//    /**
-//     * Get movie reviews model
-//     */
-//    void getReviews(int id, Activity activity, GetReviewsCallback getReviewsCallback);
-//
-//    interface GetReviewsCallback {
-//        void onSuccess(ReviewResponse reviewResponse);
-//        void onFailure(Throwable throwable);
-//    }
+    interface GetTvShowExternalIdsCallback {
+        void onSuccess(TvShowExternalIds tvShowExternalIds);
+
+        void onFailure(Throwable throwable);
+    }
+
+    /**
+     * Get episode reviews model
+     */
+    void getComments(String name, Activity activity, GetCommentsCallback getCommentsCallback);
+
+    interface GetCommentsCallback {
+        void onSuccess(List<CommentsResponse> comments);
+        void onFailure(Throwable throwable);
+    }
+
 
     /**
      * Get movie credits model

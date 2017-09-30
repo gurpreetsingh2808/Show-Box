@@ -18,7 +18,7 @@ import android.widget.ProgressBar;
 import com.popular_movies.R;
 import com.popular_movies.domain.common.Genre;
 import com.popular_movies.domain.common.GenreResponse;
-import com.popular_movies.domain.dictionary.DetailContentType;
+import com.popular_movies.ui.content_details.DetailContentType;
 import com.popular_movies.domain.movie.Movie;
 import com.popular_movies.domain.movie.MovieResponse;
 import com.popular_movies.ui.FlowManager;

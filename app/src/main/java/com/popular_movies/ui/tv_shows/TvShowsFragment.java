@@ -1,6 +1,5 @@
 package com.popular_movies.ui.tv_shows;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +17,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.dictionary.ListingContentType;
+import com.popular_movies.ui.listing.ListingContentType;
 import com.popular_movies.domain.tv.TvShow;
 import com.popular_movies.domain.tv.TvShowResponse;
-import com.popular_movies.domain.dictionary.DetailContentType;
+import com.popular_movies.ui.content_details.DetailContentType;
 import com.popular_movies.ui.FlowManager;
 import com.popular_movies.ui.TvShowItemClickListener;
 import com.popular_movies.ui.content_details.tv_series.TvShowDetailFragment;
@@ -250,6 +250,7 @@ public class TvShowsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onShowsAiringTodayRetreivalFailure(Throwable throwable) {
+        Log.e(TvShowsFragment.class.getSimpleName(), "onShowsAiringTodayRetreivalFailure: "+throwable.fillInStackTrace() );
         pbAiringToday.setVisibility(View.GONE);
     }
 

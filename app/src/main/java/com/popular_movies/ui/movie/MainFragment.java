@@ -16,13 +16,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.dictionary.ListingContentType;
+import com.popular_movies.ui.listing.ListingContentType;
 import com.popular_movies.domain.movie.Movie;
 import com.popular_movies.domain.movie.MovieResponse;
-import com.popular_movies.domain.dictionary.DetailContentType;
+import com.popular_movies.ui.content_details.DetailContentType;
 import com.popular_movies.ui.FlowManager;
 import com.popular_movies.ui.MovieItemClickListener;
-import com.popular_movies.ui.content_details.movie.MovieDetailFragment;
 import com.popular_movies.util.AppUtils;
 import com.popular_movies.util.constants.IntentKeys;
 import com.popular_movies.util.constants.TitleKeyValues;
@@ -278,13 +277,13 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void itemClicked(View view, int position, Movie movieData) {
-        if (AppUtils.isTablet(getContext()) && AppUtils.isLandscape(getContext())) {
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_top)
-                    .replace(R.id.movie_detail, MovieDetailFragment.getInstance(movieData))
-                    .commit();
-        }
-        else {
+//        if (AppUtils.isTablet(getContext()) && AppUtils.isLandscape(getContext())) {
+//            getActivity().getSupportFragmentManager().beginTransaction()
+//                    .setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_top)
+//                    .replace(R.id.movie_detail, MovieDetailFragment.getInstance(movieData))
+//                    .commit();
+//        }
+//        else {
             FlowManager.moveToDetailsActivity(getContext(), DetailContentType.MOVIE, movieData);
 
                         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -294,7 +293,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                                     Pair.create((View) barLayout, context.getString(R.string.transition_name_action_bar)));
                             context.startActivity(intent, compat.toBundle());
                         } else*/
-        }
+//        }
 
     }
 }

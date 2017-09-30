@@ -1,6 +1,7 @@
 package com.popular_movies.ui.tv_shows;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.popular_movies.domain.tv.TvShowResponse;
 import com.popular_movies.service.tv_show.TvShowsService;

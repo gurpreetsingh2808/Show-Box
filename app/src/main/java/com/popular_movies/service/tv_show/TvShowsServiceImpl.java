@@ -6,8 +6,13 @@ import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.GenreResponse;
 import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.domain.tv.TvShowDetails;
+import com.popular_movies.domain.tv.TvShowExternalIds;
 import com.popular_movies.domain.tv.TvShowResponse;
+import com.popular_movies.domain.tv.seasons.CommentsResponse;
 import com.popular_movies.service.ResourceBuilder;
+import com.popular_movies.service.tv_show.seasons.TvShowSeasonsService;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -194,6 +199,50 @@ public class TvShowsServiceImpl implements TvShowsService {
             public void onFailure(Call<TrailerResponse> call, Throwable t) {
                 if (!call.isCanceled()) {
                     getTrailersCallback.onFailure(t);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getTvShowExternalIds(int id, Activity activity, final GetTvShowExternalIdsCallback getTvShowExternalIdsCallback) {
+        TvSeriesResource tvSeriesResource = ResourceBuilder.buildResource(TvSeriesResource.class, activity);
+        Call<TvShowExternalIds> call = tvSeriesResource.getExternalIds(id);
+        call.enqueue(new Callback<TvShowExternalIds>() {
+            @Override
+            public void onResponse(Call<TvShowExternalIds> call, Response<TvShowExternalIds> response) {
+                if (response.body() != null && response.isSuccessful())
+                    getTvShowExternalIdsCallback.onSuccess(response.body());
+                else
+                    getTvShowExternalIdsCallback.onFailure(new Throwable("Error"));
+            }
+
+            @Override
+            public void onFailure(Call<TvShowExternalIds> call, Throwable t) {
+                if (!call.isCanceled()) {
+                    getTvShowExternalIdsCallback.onFailure(t);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getComments(String name, Activity activity, final GetCommentsCallback getCommentsCallback) {
+        TvSeriesResource tvSeriesResource = ResourceBuilder.buildTraktResource(TvSeriesResource.class, activity);
+        Call<List<CommentsResponse>> call = tvSeriesResource.getComments(name);
+        call.enqueue(new Callback<List<CommentsResponse>>() {
+            @Override
+            public void onResponse(Call<List<CommentsResponse>> call, Response<List<CommentsResponse>> response) {
+                if (response.body() != null && response.isSuccessful())
+                    getCommentsCallback.onSuccess(response.body());
+                else
+                    getCommentsCallback.onFailure(new Throwable("Error"));
+            }
+
+            @Override
+            public void onFailure(Call<List<CommentsResponse>> call, Throwable t) {
+                if (!call.isCanceled()) {
+                    getCommentsCallback.onFailure(t);
                 }
             }
         });

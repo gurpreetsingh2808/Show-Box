@@ -147,7 +147,7 @@ public class MovieListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 //            ImageLoader.loadPosterImage(context, movieData.getPoster_path(), thumbnail);
             ImageLoader.loadBackdropImage(context, movieData.getBackdrop_path(), thumbnail, 3);
             //  set rating
-            tvRating.setText(movieData.getVote_average());
+            tvRating.setText(movieData.getVote_average().toString());
             //  set release date
             tvReleaseYear.setText(DateConvert.convert(movieData.getRelease_date()));
 
