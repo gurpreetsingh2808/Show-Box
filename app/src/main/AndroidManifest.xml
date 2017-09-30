@@ -18,20 +18,10 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".ui.content_details.MovieDetailActivity"
+            android:name=".ui.content_details.DetailActivity"
             android:label="@string/title_activity_movie_detail"
             android:screenOrientation="portrait"
         android:theme="@style/AppTheme.ActionBar.Transparent" />
-
-        <activity
-            android:name=".ui.activity.ReviewActivity"
-            android:label="@string/title_activity_review"
-            android:parentActivityName=".ui.content_details.MovieDetailActivity"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.popular_movies.ui.content_details.MovieDetailActivity" />
-        </activity>
 
         <activity android:name=".SplashActivity"
             android:screenOrientation="portrait" >
@@ -42,9 +32,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.listing.MoviesListingActivity" />
+        <activity android:name=".ui.listing.ListingActivity" />
 
-        <activity android:name=".ui.listing.tv_series_listing.TvSeriesListingActivity" />
 
         <receiver
             android:name=".widget.MovieWidgetProvider"

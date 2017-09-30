@@ -1,139 +1,56 @@
 package com.popular_movies.ui.content_details.tv_series;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.github.florent37.diagonallayout.DiagonalLayout;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.popular_movies.BuildConfig;
 import com.popular_movies.R;
 import com.popular_movies.domain.common.Cast;
 import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.Trailer;
 import com.popular_movies.domain.common.TrailerResponse;
-import com.popular_movies.domain.dictionary.DetailContentType;
-import com.popular_movies.domain.dictionary.ListingContentType;
+import com.popular_movies.ui.listing.ListingContentType;
 import com.popular_movies.domain.tv.Season;
 import com.popular_movies.domain.tv.TvShow;
 import com.popular_movies.domain.tv.TvShowDetails;
+import com.popular_movies.domain.tv.TvShowExternalIds;
+import com.popular_movies.domain.tv.seasons.CommentsResponse;
 import com.popular_movies.framework.ImageLoader;
 import com.popular_movies.ui.FlowManager;
-import com.popular_movies.ui.activity.ReviewActivity;
+import com.popular_movies.ui.content_details.BaseDetailFragment;
 import com.popular_movies.ui.content_details.TrailerAdapter;
 import com.popular_movies.ui.content_details.movie.CastAdapter;
-import com.popular_movies.ui.content_details.movie.ReviewsAdapter;
 import com.popular_movies.util.AppUtils;
 import com.popular_movies.util.DateConvert;
 import com.popular_movies.util.TimeUtils;
-import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.relex.circleindicator.CircleIndicator;
 
-public class TvShowDetailFragment extends Fragment implements TvShowDetailPresenter.View,
-        TrailerAdapter.TrailerClickListener, CastAdapter.CastClickListener, TvShowSeasonClickListener {
+public class TvShowDetailFragment extends BaseDetailFragment implements TvShowDetailPresenter.View,
+        TrailerAdapter.TrailerClickListener, CastAdapter.CastClickListener, TvShowSeasonClickListener, CommentsAdapter.NavigateReviewListener {
 
     private static final String TAG = TvShowDetailFragment.class.getSimpleName();
-    //  toolbar
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    //  textview
-    @BindView(R.id.title)
-    TextView title;
-    @BindView(R.id.releaseDate)
-    TextView releaseDate;
-    @BindView(R.id.tvHeaderReleaseDate)
-    TextView tvHeaderReleaseDate;
-    @BindView(R.id.synopsis)
-    TextView synopsis;
-    @BindView(R.id.userRatings)
-    TextView userRatings;
-    @BindView(R.id.tvNoTrailers)
-    TextView tvNoTrailers;
-    @BindView(R.id.tvNoReviews)
-    TextView tvNoReviews;
-    @BindView(R.id.tvGenre)
-    TextView tvGenre;
-    @BindView(R.id.tvDuration)
-    TextView tvDuration;
-    @BindView(R.id.tvNoCast)
-    TextView tvNoCast;
-    @BindView(R.id.tvNoCollection)
-    TextView tvNoCollection;
-
-    //  image view
-    @BindView(R.id.toolbarImage)
-    ImageView toolbarImage;
-    @BindView(R.id.ivBack)
-    AppCompatImageView acivBack;
-
-    //  circular progress bar
-    @BindView(R.id.indicator)
-    CircleIndicator indicator;
-
-    //  recycler view
-    @BindView(R.id.rvReviews)
-    RecyclerView rvReviews;
-
-    //  progress bar
-    @BindView(R.id.pbReviews)
-    ProgressBar pbReviews;
-    @BindView(R.id.pbTrailers)
-    ProgressBar pbTrailers;
-    @BindView(R.id.pbCollection)
-    ProgressBar pbCollection;
-    @BindView(R.id.pbCast)
-    ProgressBar pbCast;
-
-    //  favoite icon
-    @BindView(R.id.ivFavorite)
-    AppCompatImageView ivFavorite;
-    //  button
-    @BindView(R.id.buttonUserReviews)
-    Button btnUserReview;
-
-    @BindView(R.id.diagonalLayout)
-    DiagonalLayout diagonalLayout;
-    @BindView(R.id.dsvTrailers)
-    DiscreteScrollView dsvTrailers;
-    @BindView(R.id.dsvCollection)
-    DiscreteScrollView dsvCollection;
-    @BindView(R.id.dsvCast)
-    DiscreteScrollView dsvCast;
 
     private static final String KEY_DETAIL_CONTENT = "KEY_DETAIL_CONTENT";
     private TvShow tvShow;
     private TvShowDetails tvShowDetails;
     private List<Season> listSeason = null;
-    private InterstitialAd mInterstitialAd;
     private View view;
-    private ReviewsAdapter reviewsAdapter;
+    private CommentsAdapter commentsAdapter;
     private LinearLayoutManager layoutManagerReview;
     private TvShowDetailPresenterImpl tvShowDetailPresenter;
 
@@ -159,7 +76,7 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
         view = inflater.inflate(R.layout.fragment_detailed_view, container, false);
         ButterKnife.bind(this, view);
 
-        initializeAd();
+        setHeadings();
         diagonalLayout.setVisibility(View.VISIBLE);
         tvShow = getArguments().getParcelable(getString(R.string.key_detail_content));
         layoutManagerReview = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -178,16 +95,9 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
         if (tvShow != null) {
             title.setText(tvShow.getOriginal_name());
 //            set text to first air date in place of in theatres
-            tvHeaderReleaseDate.setText("Release date");
             releaseDate.setText(DateConvert.convert(tvShow.getFirst_air_date()));
             synopsis.setText(tvShow.getOverview());
-            userRatings.setText(tvShow.getVote_average());
-            btnUserReview.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showAd();
-                }
-            });
+            userRatings.setText(tvShow.getVote_average().toString());
 
             ImageLoader.loadBackdropImage(getContext(), tvShow.getBackdrop_path(), toolbarImage);
             ////ImageLoader.loadPosterImage(getContext(), tvShow.getPoster_path(), toolbarImage, 4);
@@ -215,6 +125,7 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
 
             tvShowDetailPresenter = new TvShowDetailPresenterImpl(this, getActivity());
             tvShowDetailPresenter.fetchTrailers(tvShow.getId());
+            tvShowDetailPresenter.fetchTvShowExternalIds(tvShow.getId());
             tvShowDetailPresenter.fetchTvShowDetails(tvShow.getId());
             tvShowDetailPresenter.fetchTvShowCredits(tvShow.getId());
 
@@ -227,61 +138,10 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        if (!mInterstitialAd.isLoaded()) {
-            requestNewInterstitial();
-        }
+    protected void setHeadings() {
+        tvHeaderReleaseDate.setText("Air Date");
+        tvHeadingUserReviews.setText("Comments");
     }
-
-    private void initializeAd() {
-        //  initialize interstitial ad
-        mInterstitialAd = new InterstitialAd(getActivity());
-        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-                moveToReviewActivity();
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                Log.d(TAG, "onAdLoaded: woohoo! add loaded successfully");
-            }
-        });
-    }
-
-
-    private void requestNewInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder()
-                //.addTestDevice("BC6C6B77CEF61830841859B30835E10C")
-                .build();
-
-        mInterstitialAd.loadAd(adRequest);
-    }
-
-
-    private void showAd() {
-        //  check whether app is loaded or not
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            moveToReviewActivity();
-        }
-    }
-
-    private void moveToReviewActivity() {
-        Intent intent = new Intent(getActivity(), ReviewActivity.class);
-        intent.putExtra(getString(R.string.key_movie_id), tvShow.getId());
-        startActivity(intent);
-    }
-
-    public TextView getTitle() {
-        return title;
-    }
-
 
     @Override
     public void onTrailersRetreivalSuccess(TrailerResponse trailerResponse) {
@@ -387,6 +247,40 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     }
 
     @Override
+    public void onTvShowExternalIdsRetreivalSuccess(TvShowExternalIds tvShowExternalIds) {
+        tvShowDetailPresenter.fetchComments(String.valueOf(tvShowExternalIds.getId()));
+    }
+
+    @Override
+    public void onTvShowExternalIdsRetreivalFailure(Throwable throwable) {
+        pbReviews.setVisibility(View.GONE);
+        tvNoReviews.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onCommentsRetreivalSuccess(List<CommentsResponse> commentsResponse) {
+        pbReviews.setVisibility(View.GONE);
+        if (commentsResponse.size() > 0) {
+            SnapHelper snapHelper = new LinearSnapHelper();
+            snapHelper.attachToRecyclerView(rvReviews);
+            commentsAdapter = new CommentsAdapter(getContext(), commentsResponse, this);
+            rvReviews.setAdapter(commentsAdapter);
+        }
+        //  if no reviews available
+        else {
+            tvNoReviews.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onCommentsRetreivalFailure(Throwable throwable) {
+        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.connection_error), Snackbar.LENGTH_LONG)
+                .show();
+        pbReviews.setVisibility(View.GONE);
+        tvNoReviews.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void onTrailerClick(String key) {
         FlowManager.viewTrailerInYoutube(getContext(), key, getActivity().findViewById(android.R.id.content));
     }
@@ -404,6 +298,18 @@ public class TvShowDetailFragment extends Fragment implements TvShowDetailPresen
     @Override
     public void seasonClicked(View view, int position, String title) {
         FlowManager.moveToListingActivity(getContext(), ListingContentType.EPISODES, tvShowDetails.getName() + " : Season "
-                +listSeason.get(position).getSeason_number(), tvShow.getId(), listSeason.get(position).getSeason_number());
+                + listSeason.get(position).getSeason_number(), tvShow.getId(), listSeason.get(position).getSeason_number());
+    }
+
+    @Override
+    public void onNextClick(int pos) {
+        rvReviews.smoothScrollToPosition(pos + 1);
+    }
+
+    @Override
+    public void onPreviousClick(int pos) {
+        if (pos > 0) {
+            rvReviews.smoothScrollToPosition(pos - 1);
+        }
     }
 }

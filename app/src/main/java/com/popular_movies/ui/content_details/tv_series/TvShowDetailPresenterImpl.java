@@ -6,8 +6,12 @@ import android.util.Log;
 import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.domain.tv.TvShowDetails;
+import com.popular_movies.domain.tv.TvShowExternalIds;
+import com.popular_movies.domain.tv.seasons.CommentsResponse;
 import com.popular_movies.service.tv_show.TvShowsService;
 import com.popular_movies.service.tv_show.TvShowsServiceImpl;
+
+import java.util.List;
 
 
 /**
@@ -69,6 +73,36 @@ public class TvShowDetailPresenterImpl implements TvShowDetailPresenter.Presente
             @Override
             public void onFailure(Throwable throwable) {
                 view.onCreditsRetreivalFailure(throwable);
+            }
+        });
+    }
+
+    @Override
+    public void fetchTvShowExternalIds(int movieId) {
+        tvShowsService.getTvShowExternalIds(movieId, activity, new TvShowsService.GetTvShowExternalIdsCallback() {
+            @Override
+            public void onSuccess(TvShowExternalIds tvShowExternalIds) {
+                view.onTvShowExternalIdsRetreivalSuccess(tvShowExternalIds);
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                view.onCreditsRetreivalFailure(throwable);
+            }
+        });
+    }
+
+    @Override
+    public void fetchComments(String name) {
+        tvShowsService.getComments(name, activity, new TvShowsService.GetCommentsCallback() {
+            @Override
+            public void onSuccess(List<CommentsResponse> comments) {
+                view.onCommentsRetreivalSuccess(comments);
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                view.onCommentsRetreivalFailure(throwable);
             }
         });
     }

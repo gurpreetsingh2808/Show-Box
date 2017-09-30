@@ -16,7 +16,7 @@ import com.popular_movies.R;
 import com.popular_movies.domain.movie.Movie;
 import com.popular_movies.domain.movie.MovieTable;
 import com.popular_movies.framework.ImageLoader;
-import com.popular_movies.ui.content_details.MovieDetailActivity;
+import com.popular_movies.ui.content_details.DetailActivity;
 import com.popular_movies.ui.content_details.movie.MovieDetailFragment;
 import com.popular_movies.util.AppUtils;
 
@@ -62,7 +62,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyVi
         String description = dataCursor.getString(dataCursor.getColumnIndex(MovieTable.FIELD_COL_OVERVIEW));
         String posterPath = dataCursor.getString(dataCursor.getColumnIndex(MovieTable.FIELD_COL_POSTER_PATH));
         String backdrop = dataCursor.getString(dataCursor.getColumnIndex(MovieTable.FIELD_COL_BACKDROP));
-        String voteAverage = dataCursor.getString(dataCursor.getColumnIndex(MovieTable.FIELD_COL_VOTE_AVERAGE));
+        Float voteAverage = dataCursor.getFloat(dataCursor.getColumnIndex(MovieTable.FIELD_COL_VOTE_AVERAGE));
         String releaseDate = dataCursor.getString(dataCursor.getColumnIndex(MovieTable.FIELD_COL_RELEASE_DATE));
         Log.d(TAG, "onBindViewHolder: release date "+releaseDate);
         String id = dataCursor.getString(dataCursor.getColumnIndex(MovieTable.FIELD_COL_ID));
@@ -70,7 +70,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyVi
         holder.title.setText(title);
         ImageLoader.loadPosterImage(context, posterPath, holder.thumbnail);
 
-        final Movie movieData = new Movie(title, description, posterPath, backdrop, voteAverage, new java.sql.Date(Long.valueOf(releaseDate)), Integer.valueOf(id));
+        final Movie movieData = new Movie(title, description, posterPath, backdrop, voteAverage, releaseDate, Integer.valueOf(id));
 
         if (AppUtils.isTablet(context) && AppUtils.isLandscape(context)) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +86,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyVi
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, MovieDetailActivity.class);
+                    Intent intent = new Intent(context, DetailActivity.class);
                     intent.putExtra(context.getString(R.string.key_detail_content), movieData);
                     context.startActivity(intent);
                 }

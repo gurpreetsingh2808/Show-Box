@@ -3,8 +3,6 @@ package com.popular_movies.service.tv_show.seasons;
 import android.app.Activity;
 
 import com.popular_movies.BuildConfig;
-import com.popular_movies.domain.common.CreditsResponse;
-import com.popular_movies.domain.common.GenreResponse;
 import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.domain.tv.seasons.TvShowSeasonDetails;
 

@@ -1,142 +1,52 @@
 package com.popular_movies.ui.content_details.movie;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.github.florent37.diagonallayout.DiagonalLayout;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.popular_movies.BuildConfig;
 import com.popular_movies.R;
 import com.popular_movies.database.MovieProviderHelper;
 import com.popular_movies.domain.common.Cast;
 import com.popular_movies.domain.common.CreditsResponse;
+import com.popular_movies.domain.common.Trailer;
+import com.popular_movies.domain.common.TrailerResponse;
+import com.popular_movies.ui.content_details.DetailContentType;
 import com.popular_movies.domain.movie.Movie;
 import com.popular_movies.domain.movie.MovieCollection;
 import com.popular_movies.domain.movie.MovieDetails;
 import com.popular_movies.domain.movie.Review;
 import com.popular_movies.domain.movie.ReviewResponse;
-import com.popular_movies.domain.common.Trailer;
-import com.popular_movies.domain.common.TrailerResponse;
-import com.popular_movies.domain.dictionary.DetailContentType;
 import com.popular_movies.framework.ImageLoader;
 import com.popular_movies.ui.FlowManager;
 import com.popular_movies.ui.MovieItemClickListener;
-import com.popular_movies.ui.activity.ReviewActivity;
-import com.popular_movies.ui.content_details.MovieDetailActivity;
+import com.popular_movies.ui.content_details.BaseDetailFragment;
 import com.popular_movies.ui.content_details.TrailerAdapter;
 import com.popular_movies.util.AppUtils;
 import com.popular_movies.util.DateConvert;
 import com.popular_movies.util.TimeUtils;
 import com.popular_movies.util.constants.IntentKeys;
-import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.relex.circleindicator.CircleIndicator;
 
-public class MovieDetailFragment extends Fragment implements MovieDetailPresenter.View, ReviewsAdapter.NavigateReviewListener,
+public class MovieDetailFragment extends BaseDetailFragment implements MovieDetailPresenter.View, ReviewsAdapter.NavigateReviewListener,
         TrailerAdapter.TrailerClickListener, MovieItemClickListener, CastAdapter.CastClickListener {
 
     private static final String TAG = MovieDetailFragment.class.getSimpleName();
-    //  toolbar
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    //  textview
-    @BindView(R.id.title)
-    TextView title;
-    @BindView(R.id.releaseDate)
-    TextView releaseDate;
-    @BindView(R.id.synopsis)
-    TextView synopsis;
-    @BindView(R.id.userRatings)
-    TextView userRatings;
-    @BindView(R.id.tvNoTrailers)
-    TextView tvNoTrailers;
-    @BindView(R.id.tvNoReviews)
-    TextView tvNoReviews;
-    @BindView(R.id.tvGenre)
-    TextView tvGenre;
-    @BindView(R.id.tvDuration)
-    TextView tvDuration;
-    @BindView(R.id.tvNoCollection)
-    TextView tvNoCollection;
-    @BindView(R.id.tvNoCast)
-    TextView tvNoCast;
-
-    //  image view
-    @BindView(R.id.toolbarImage)
-    ImageView toolbarImage;
-    @BindView(R.id.ivBack)
-    AppCompatImageView acivBack;
-
-    //  circular progress bar
-    @BindView(R.id.indicator)
-    CircleIndicator indicator;
-
-    //  recycler view
-    @BindView(R.id.rvReviews)
-    RecyclerView rvReviews;
-
-    //  progress bar
-    @BindView(R.id.pbReviews)
-    ProgressBar pbReviews;
-    @BindView(R.id.pbTrailers)
-    ProgressBar pbTrailers;
-    @BindView(R.id.pbCollection)
-    ProgressBar pbCollection;
-    @BindView(R.id.pbCast)
-    ProgressBar pbCast;
-
-    //  favoite icon
-    @BindView(R.id.ivFavorite)
-    AppCompatImageView ivFavorite;
-    //  button
-    @BindView(R.id.buttonUserReviews)
-    Button btnUserReview;
-
-    @BindView(R.id.rlDuration)
-    RelativeLayout rlDuration;
-
-    @BindView(R.id.diagonalLayout)
-    DiagonalLayout diagonalLayout;
-    @BindView(R.id.dsvTrailers)
-    DiscreteScrollView dsvTrailers;
-    @BindView(R.id.dsvCollection)
-    DiscreteScrollView dsvCollection;
-    @BindView(R.id.dsvCast)
-    DiscreteScrollView dsvCast;
 
     Movie movieData;
-    private InterstitialAd mInterstitialAd;
     private View view;
     private ReviewsAdapter reviewsAdapter;
     private LinearLayoutManager layoutManagerReview;
@@ -162,7 +72,6 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
         view = inflater.inflate(R.layout.fragment_detailed_view, container, false);
         ButterKnife.bind(this, view);
 
-        initializeAd();
         diagonalLayout.setVisibility(View.VISIBLE);
         movieData = getArguments().getParcelable(getString(R.string.key_detail_content));
         layoutManagerReview = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -183,18 +92,11 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
             //releaseDate.append(" " + DateConvert.convert(movieData.getRelease_date()));
             releaseDate.setText(DateConvert.convert(movieData.getRelease_date()));
             synopsis.setText(movieData.getOverview());
-            if(movieData.getVote_average().equals("0")) {
+            if (movieData.getVote_average() == 0f) {
                 userRatings.setText(getString(R.string.NA));
+            } else {
+                userRatings.setText(movieData.getVote_average().toString());
             }
-            else {
-                userRatings.setText(movieData.getVote_average());
-            }
-            btnUserReview.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showAd();
-                }
-            });
 
 //            ImageLoader.loadBackdropImage(getContext(), movieData.getBackdrop_path(), toolbarImage);
             ImageLoader.loadPosterImage(getContext(), movieData.getPoster_path(), toolbarImage, 4);
@@ -232,75 +134,6 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
         }
         return view;
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (!mInterstitialAd.isLoaded()) {
-            requestNewInterstitial();
-        }
-    }
-
-    private void initializeAd() {
-        //  initialize interstitial ad
-        mInterstitialAd = new InterstitialAd(getActivity());
-        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-                moveToReviewActivity();
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                Log.d(TAG, "onAdLoaded: woohoo! add loaded successfully");
-            }
-        });
-    }
-
-
-    private void requestNewInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder()
-                //.addTestDevice("BC6C6B77CEF61830841859B30835E10C")
-                .build();
-
-        mInterstitialAd.loadAd(adRequest);
-    }
-
-
-    private void showAd() {
-        //  check whether app is loaded or not
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            moveToReviewActivity();
-        }
-    }
-
-    private void moveToReviewActivity() {
-        Intent intent = new Intent(getActivity(), ReviewActivity.class);
-        intent.putExtra(getString(R.string.key_movie_id), movieData.getId());
-        startActivity(intent);
-    }
-
-    private void viewTrailerInYoutube(String trailerKey) {
-        if (trailerKey != null) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(BuildConfig.BASE_URL_TRAILER + trailerKey));
-            startActivity(intent);
-        } else {
-            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.trailer_error),
-                    Snackbar.LENGTH_SHORT).show();
-        }
-    }
-
-
-    public TextView getTitle() {
-        return title;
-    }
-
 
     @Override
     public void onReviewsRetreivalSuccess(ReviewResponse reviewResponse) {
@@ -360,7 +193,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
     @Override
     public void onMovieDetailsRetreivalSuccess(MovieDetails movieDetails) {
         //  display movie genre and duration
-        if(movieDetails.getGenres() != null) {
+        if (movieDetails.getGenres() != null) {
             StringBuilder sbGenre = new StringBuilder();
             for (int i = 0; i < movieDetails.getGenres().length; i++) {
                 if (i != 0)
@@ -369,10 +202,9 @@ public class MovieDetailFragment extends Fragment implements MovieDetailPresente
             }
             tvGenre.setText(sbGenre);
         }
-        if(movieDetails.getRuntime() == null || movieDetails.getRuntime() == 0) {
+        if (movieDetails.getRuntime() == null || movieDetails.getRuntime() == 0) {
             tvDuration.setText(getString(R.string.NA));
-        }
-        else {
+        } else {
             tvDuration.setText(TimeUtils.formatDuration(movieDetails.getRuntime()));
         }
 

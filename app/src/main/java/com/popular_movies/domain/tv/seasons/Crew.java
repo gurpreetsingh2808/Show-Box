@@ -1,26 +1,41 @@
 package com.popular_movies.domain.tv.seasons;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Gurpreet on 22-09-2017.
  */
 
-public class Crew {
+public class Crew implements Parcelable{
 
-    private String creditId;
+    private String credit_id;
     private String department;
     private Integer gender;
     private Integer id;
     private String job;
     private String name;
-    private String profilePath;
+    private String profile_path;
 
-    public String getCreditId() {
-        return creditId;
+    protected Crew(Parcel in) {
+        credit_id = in.readString();
+        department = in.readString();
+        job = in.readString();
+        name = in.readString();
+        profile_path = in.readString();
     }
 
-    public void setCreditId(String creditId) {
-        this.creditId = creditId;
-    }
+    public static final Creator<Crew> CREATOR = new Creator<Crew>() {
+        @Override
+        public Crew createFromParcel(Parcel in) {
+            return new Crew(in);
+        }
+
+        @Override
+        public Crew[] newArray(int size) {
+            return new Crew[size];
+        }
+    };
 
     public String getDepartment() {
         return department;
@@ -62,12 +77,33 @@ public class Crew {
         this.name = name;
     }
 
-    public String getProfilePath() {
-        return profilePath;
+    public String getCredit_id() {
+        return credit_id;
     }
 
-    public void setProfilePath(String profilePath) {
-        this.profilePath = profilePath;
+    public void setCredit_id(String credit_id) {
+        this.credit_id = credit_id;
     }
 
+    public String getProfile_path() {
+        return profile_path;
+    }
+
+    public void setProfile_path(String profile_path) {
+        this.profile_path = profile_path;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(credit_id);
+        dest.writeString(department);
+        dest.writeString(job);
+        dest.writeString(name);
+        dest.writeString(profile_path);
+    }
 }

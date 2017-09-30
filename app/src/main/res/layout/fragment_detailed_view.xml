@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.popular_movies.ui.content_details.MovieDetailActivity">
+    tools:context="com.popular_movies.ui.content_details.DetailActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -468,19 +468,20 @@
                             android:id="@+id/rvReviews"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
                             android:layout_gravity="center"
                             android:gravity="center" />
 
                         <android.support.v7.widget.AppCompatImageView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/margin_8"
                             app:srcCompat="@drawable/ic_arrow_back" />
 
                         <android.support.v7.widget.AppCompatImageView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="@dimen/margin_8"

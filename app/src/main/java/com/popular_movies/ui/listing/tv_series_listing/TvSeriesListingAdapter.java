@@ -17,6 +17,7 @@ import com.popular_movies.framework.ImageLoader;
 import com.popular_movies.ui.TvShowItemClickListener;
 import com.popular_movies.util.DateConvert;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -144,11 +145,10 @@ public class TvSeriesListingAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             //  set title
             title.setText(tvShowData.getOriginal_name());
             //  set poster/movie image
-//            ImageLoader.loadPosterImage(context, tvShowData.getPoster_path(), thumbnail);
             ImageLoader.loadBackdropImage(context, tvShowData.getBackdrop_path(), thumbnail, 3);
 
             //  set rating
-            tvRating.setText(tvShowData.getVote_average());
+            tvRating.setText(tvShowData.getVote_average().toString());
             //  set release date
             tvReleaseYear.setText(DateConvert.convert(tvShowData.getFirst_air_date()));
 

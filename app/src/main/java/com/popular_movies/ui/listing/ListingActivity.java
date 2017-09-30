@@ -1,18 +1,18 @@
 package com.popular_movies.ui.listing;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.popular_movies.R;
-import com.popular_movies.domain.dictionary.ListingContentType;
 import com.popular_movies.ui.listing.movies_listing.MovieListFragment;
 import com.popular_movies.ui.listing.tv_series_listing.TvSeriesListingFragment;
 import com.popular_movies.ui.listing.tv_series_listing.episodes_listing.EpisodeListingFragment;
+import com.popular_movies.ui.movie.MainActivity;
 import com.popular_movies.util.AppUtils;
 import com.popular_movies.util.constants.IntentKeys;
 
@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class MoviesListingActivity extends AppCompatActivity {
+public class ListingActivity extends AppCompatActivity {
 
     //  toolbar
     @BindView(R.id.MovieListing_ToolBar)
@@ -82,9 +82,18 @@ public class MoviesListingActivity extends AppCompatActivity {
                 .commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (this.isTaskRoot()) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @OnClick(R.id.ivBack)
     public void goBack() {
-        finish();
+        onBackPressed();
     }
 }

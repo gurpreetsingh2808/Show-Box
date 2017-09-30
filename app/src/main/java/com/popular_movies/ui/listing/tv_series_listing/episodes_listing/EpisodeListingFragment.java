@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.popular_movies.R;
+import com.popular_movies.ui.content_details.DetailContentType;
 import com.popular_movies.domain.tv.seasons.Episode;
 import com.popular_movies.domain.tv.seasons.TvShowSeasonDetails;
+import com.popular_movies.ui.FlowManager;
 import com.popular_movies.util.constants.IntentKeys;
 
 import java.util.ArrayList;
@@ -116,7 +118,7 @@ public class EpisodeListingFragment extends Fragment implements SwipeRefreshLayo
     @Override
     public void itemClicked(View view, int position, Episode episode) {
         //  TODO:
-//        FlowManager.moveToDetailsActivity(getContext(), DetailContentType.EPISODE, episode);
+        FlowManager.moveToDetailsActivity(getContext(), DetailContentType.EPISODE, episode);
     }
 
     @Override

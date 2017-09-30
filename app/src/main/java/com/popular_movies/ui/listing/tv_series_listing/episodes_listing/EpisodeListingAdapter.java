@@ -93,7 +93,7 @@ public class EpisodeListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             //  set title
             title.setText(tvEpisodesData.getName());
             //  set poster/movie image
-            ImageLoader.loadPosterImage(context, tvEpisodesData.getStill_path(), thumbnail);
+            ImageLoader.loadPosterImage(context, tvEpisodesData.getStill_path(), thumbnail, 3);
 
             tvGenre.setVisibility(View.GONE);
             //  set rating

@@ -1,11 +1,19 @@
 package com.popular_movies.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 
 public class DateConvert {
-    public static String convert(Date date) {
+    public static String convert(String stringDate) {
+        Date date= null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(stringDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Calendar cal= Calendar.getInstance();
         cal.setTime(date);
         return monthToName(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.DAY_OF_MONTH) + ", " + cal.get(Calendar.YEAR);

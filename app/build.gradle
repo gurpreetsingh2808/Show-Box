@@ -32,8 +32,12 @@ android {
         }
     }
     buildTypes.each {
-        it.buildConfigField 'String', 'TMDB_API_KEY', '"4705c2a1e4480d0d92ea0d8f56e37b00"'
+        it.buildConfigField 'String', 'TMDB_API_KEY', '\"'+getTmdbApiKey()+'\"'
+        it.buildConfigField 'String', 'TRAKT_API_KEY', '\"'+getTraktApiKey()+'\"'
         it.buildConfigField 'String', 'BASE_URL', '"http://api.themoviedb.org/3/"'
+        it.buildConfigField 'String', 'BASE_URL_TRAKT', '"http://api.trakt.tv/"'
+        it.buildConfigField 'String', 'TRAKT_API_VERSION', '"2"'
+
         it.buildConfigField 'String', 'BASE_URL_IMAGE', '"http://image.tmdb.org/t/p/"'
         it.buildConfigField 'String', 'BASE_URL_TRAILER', '"https://www.youtube.com/watch?v="'
         it.buildConfigField 'String', 'BASE_URL_TRAILER_IMAGE', '"http://img.youtube.com/vi/"'
@@ -48,6 +52,18 @@ android {
         // windows
         commandLine 'cmd', '/c', 'adb', 'shell', 'am', 'start', '-n', 'com.popular_movies/.SplashActivity'
     }
+}
+
+def getTmdbApiKey(){
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('application.properties')))
+    return props['TMDB_API_KEY']
+}
+
+def getTraktApiKey(){
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('application.properties')))
+    return props['TRAKT_API_KEY']
 }
 
 
@@ -76,7 +92,7 @@ dependencies {
     compile 'com.squareup:javapoet:1.2.0'
     compile 'ckm.simple:simple_sql_provider_annotation:1.0.6'
     compile 'ckm.simple:simple_sql_provider_processor:1.0.6'
-    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
