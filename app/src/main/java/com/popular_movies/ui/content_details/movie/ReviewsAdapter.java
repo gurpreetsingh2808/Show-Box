@@ -101,6 +101,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.MyViewHo
             review.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     expandableTextView.cycleTextViewExpansion(review);
                 }
             });

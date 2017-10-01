@@ -332,7 +332,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="200dp"
+                    android:minHeight="250dp"
                     android:visibility="visible">
 
                     <com.github.florent37.diagonallayout.DiagonalLayout
@@ -548,7 +548,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="200dp"
+                    android:minHeight="250dp"
                     android:visibility="visible">
 
                     <com.github.florent37.diagonallayout.DiagonalLayout
@@ -631,6 +631,7 @@
                         COLLECTIONS LAYOUT BEGIN
                  -->
                 <LinearLayout
+                    android:id="@+id/llCollectionsLayout"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:orientation="vertical"

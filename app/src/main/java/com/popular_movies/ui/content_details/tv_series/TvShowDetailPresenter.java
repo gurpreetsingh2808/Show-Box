@@ -3,7 +3,7 @@ package com.popular_movies.ui.content_details.tv_series;
 import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.domain.tv.TvShowDetails;
-import com.popular_movies.domain.tv.TvShowExternalIds;
+import com.popular_movies.domain.tv.ExternalIds;
 import com.popular_movies.domain.tv.seasons.CommentsResponse;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class TvShowDetailPresenter {
         void onCreditsRetreivalSuccess(CreditsResponse creditsResponse);
         void onCreditsRetreivalFailure(Throwable throwable);
 
-        void onTvShowExternalIdsRetreivalSuccess(TvShowExternalIds tvShowExternalIds);
+        void onTvShowExternalIdsRetreivalSuccess(ExternalIds tvShowExternalIds);
         void onTvShowExternalIdsRetreivalFailure(Throwable throwable);
 
         void onCommentsRetreivalSuccess(List<CommentsResponse> commentsResponse);

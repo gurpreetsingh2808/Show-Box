@@ -34,16 +34,9 @@ public class ExpandableTextView {
     }
 
     public void cycleTextViewExpansion(TextView tv){
-       /* if(tv.getMaxLines() == COLLAPSE_MAX_LINES) {
-            tv.setEllipsize(null);
-            tv.setLines(tv.getLineCount());
-        }
-        else {
-            tv.setEllipsize(TextUtils.TruncateAt.END);
-            tv.setLines(COLLAPSE_MAX_LINES);
-        }*/
         ObjectAnimator animation = ObjectAnimator.ofInt(tv, PROPERTY_MAX_LINES,
                 tv.getMaxLines() == COLLAPSE_MAX_LINES ? tv.getLineCount() : COLLAPSE_MAX_LINES);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
         animation.setDuration(200).start();
     }
 }

@@ -21,7 +21,7 @@ import com.popular_movies.ui.listing.ListingContentType;
 import com.popular_movies.domain.tv.Season;
 import com.popular_movies.domain.tv.TvShow;
 import com.popular_movies.domain.tv.TvShowDetails;
-import com.popular_movies.domain.tv.TvShowExternalIds;
+import com.popular_movies.domain.tv.ExternalIds;
 import com.popular_movies.domain.tv.seasons.CommentsResponse;
 import com.popular_movies.framework.ImageLoader;
 import com.popular_movies.ui.FlowManager;
@@ -200,7 +200,10 @@ public class TvShowDetailFragment extends BaseDetailFragment implements TvShowDe
                 tvShowDetails.getSeasons().length > 0) {
             listSeason = new ArrayList<>();
             if (getContext() != null) {
-                Collections.addAll(listSeason, tvShowDetails.getSeasons());
+                for (Season season : tvShowDetails.getSeasons()) {
+                    if(season.getSeason_number() != 0)
+                        listSeason.add(season);
+                }
                 dsvCollection.setAdapter(new TvShowSeasonAdapter(listSeason, this));
                 dsvCollection.setItemTransformer(new ScaleTransformer.Builder()
                         .setMinScale(0.8f)
@@ -247,8 +250,8 @@ public class TvShowDetailFragment extends BaseDetailFragment implements TvShowDe
     }
 
     @Override
-    public void onTvShowExternalIdsRetreivalSuccess(TvShowExternalIds tvShowExternalIds) {
-        tvShowDetailPresenter.fetchComments(String.valueOf(tvShowExternalIds.getId()));
+    public void onTvShowExternalIdsRetreivalSuccess(ExternalIds tvShowExternalIds) {
+        tvShowDetailPresenter.fetchComments(String.valueOf(tvShowExternalIds.getImdb_id()));
     }
 
     @Override
@@ -274,8 +277,6 @@ public class TvShowDetailFragment extends BaseDetailFragment implements TvShowDe
 
     @Override
     public void onCommentsRetreivalFailure(Throwable throwable) {
-        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.connection_error), Snackbar.LENGTH_LONG)
-                .show();
         pbReviews.setVisibility(View.GONE);
         tvNoReviews.setVisibility(View.VISIBLE);
     }

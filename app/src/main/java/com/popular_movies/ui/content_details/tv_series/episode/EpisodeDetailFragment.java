@@ -5,6 +5,8 @@ import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +15,15 @@ import android.view.ViewGroup;
 import com.popular_movies.R;
 import com.popular_movies.domain.common.Trailer;
 import com.popular_movies.domain.common.TrailerResponse;
+import com.popular_movies.domain.tv.ExternalIds;
+import com.popular_movies.domain.tv.seasons.CommentsResponse;
 import com.popular_movies.domain.tv.seasons.Crew;
 import com.popular_movies.domain.tv.seasons.Episode;
 import com.popular_movies.framework.ImageLoader;
 import com.popular_movies.ui.content_details.BaseDetailFragment;
 import com.popular_movies.ui.content_details.TrailerAdapter;
 import com.popular_movies.ui.content_details.movie.ReviewsAdapter;
+import com.popular_movies.ui.content_details.tv_series.CommentsAdapter;
 import com.popular_movies.util.AppUtils;
 import com.popular_movies.util.DateConvert;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
@@ -30,14 +35,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class EpisodeDetailFragment extends BaseDetailFragment implements EpisodeDetailPresenter.View,
-        TrailerAdapter.TrailerClickListener, CrewAdapter.CastClickListener {
+        TrailerAdapter.TrailerClickListener, CrewAdapter.CastClickListener, CommentsAdapter.NavigateReviewListener {
 
     private static final String TAG = EpisodeDetailFragment.class.getSimpleName();
 
     private static final String KEY_DETAIL_CONTENT = "KEY_DETAIL_CONTENT";
     Episode episode;
     private View view;
-    private ReviewsAdapter reviewsAdapter;
+    private CommentsAdapter commentsAdapter;
     private LinearLayoutManager layoutManagerReview;
     private EpisodeDetailPresenterImpl episodeDetailPresenter;
 
@@ -102,7 +107,8 @@ public class EpisodeDetailFragment extends BaseDetailFragment implements Episode
             });
 
             episodeDetailPresenter = new EpisodeDetailPresenterImpl(this, getActivity());
-            episodeDetailPresenter.fetchTrailers(episode.getId(), episode.getSeason_number());
+            episodeDetailPresenter.fetchTrailers(episode.getId(), episode.getSeason_number(), episode.getEpisode_number());
+            episodeDetailPresenter.fetchEpisodeExternalIds(episode.getId(), episode.getSeason_number(), episode.getEpisode_number());
 
 
         }
@@ -147,18 +153,50 @@ public class EpisodeDetailFragment extends BaseDetailFragment implements Episode
     @Override
     public void onTrailersRetreivalFailure(Throwable throwable) {
         pbTrailers.setVisibility(View.GONE);
-        Snackbar.make(view, getString(R.string.connection_error), Snackbar.LENGTH_LONG)
+        tvNoTrailers.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onEpisodeExternalIdsRetreivalSuccess(ExternalIds tvShowExternalIds) {
+        episodeDetailPresenter.fetchComments(String.valueOf(tvShowExternalIds.getImdb_id()), episode.getSeason_number(), episode.getEpisode_number());
+    }
+
+    @Override
+    public void onEpisodeExternalIdsRetreivalFailure(Throwable throwable) {
+        pbReviews.setVisibility(View.GONE);
+        tvNoReviews.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onCommentsRetreivalSuccess(List<CommentsResponse> commentsResponse) {
+        pbReviews.setVisibility(View.GONE);
+        if (commentsResponse.size() > 0) {
+            SnapHelper snapHelper = new LinearSnapHelper();
+            snapHelper.attachToRecyclerView(rvReviews);
+            commentsAdapter = new CommentsAdapter(getContext(), commentsResponse, this);
+            rvReviews.setAdapter(commentsAdapter);
+        }
+        //  if no reviews available
+        else {
+            tvNoReviews.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onCommentsRetreivalFailure(Throwable throwable) {
+        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.connection_error), Snackbar.LENGTH_LONG)
                 .show();
+        pbReviews.setVisibility(View.GONE);
+        tvNoReviews.setVisibility(View.VISIBLE);
     }
 
 
     private void setDetails(Episode episodeDetails) {
         Log.d(TAG, "success");
 
-
-        tvHeaderReleaseDate.setText("Air date");
         releaseDate.setText(DateConvert.convert(episode.getAir_date().toString()));
         ImageLoader.loadPosterImage(getContext(), episode.getStill_path(), toolbarImage, 4);
+        llCollectionsLayout.setVisibility(View.GONE);
 
         pbCast.setVisibility(View.GONE);
         if (episodeDetails.getCrew() != null && episodeDetails.getCrew().size() > 0) {
@@ -192,5 +230,17 @@ public class EpisodeDetailFragment extends BaseDetailFragment implements Episode
     @Override
     public void itemClicked(View view, int position, Crew crew) {
 
+    }
+
+    @Override
+    public void onNextClick(int pos) {
+        rvReviews.smoothScrollToPosition(pos + 1);
+    }
+
+    @Override
+    public void onPreviousClick(int pos) {
+        if (pos > 0) {
+            rvReviews.smoothScrollToPosition(pos - 1);
+        }
     }
 }
