@@ -228,7 +228,10 @@ public class MovieDetailFragment extends BaseDetailFragment implements MovieDeta
         if (movieCollection.getParts().length > 0) {
             List<Movie> listMovie = new ArrayList<>();
             if (getContext() != null) {
-                Collections.addAll(listMovie, movieCollection.getParts());
+                for (Movie movie : movieCollection.getParts()) {
+                    if(movie.getId() != movieData.getId())
+                        listMovie.add(movie);
+                }
                 dsvCollection.setAdapter(new MovieCollectionAdapter(listMovie, this));
                 dsvCollection.setItemTransformer(new ScaleTransformer.Builder()
                         .setMinScale(0.8f)

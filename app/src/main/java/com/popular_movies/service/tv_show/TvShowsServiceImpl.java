@@ -6,11 +6,10 @@ import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.GenreResponse;
 import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.domain.tv.TvShowDetails;
-import com.popular_movies.domain.tv.TvShowExternalIds;
+import com.popular_movies.domain.tv.ExternalIds;
 import com.popular_movies.domain.tv.TvShowResponse;
 import com.popular_movies.domain.tv.seasons.CommentsResponse;
 import com.popular_movies.service.ResourceBuilder;
-import com.popular_movies.service.tv_show.seasons.TvShowSeasonsService;
 
 import java.util.List;
 
@@ -207,10 +206,10 @@ public class TvShowsServiceImpl implements TvShowsService {
     @Override
     public void getTvShowExternalIds(int id, Activity activity, final GetTvShowExternalIdsCallback getTvShowExternalIdsCallback) {
         TvSeriesResource tvSeriesResource = ResourceBuilder.buildResource(TvSeriesResource.class, activity);
-        Call<TvShowExternalIds> call = tvSeriesResource.getExternalIds(id);
-        call.enqueue(new Callback<TvShowExternalIds>() {
+        Call<ExternalIds> call = tvSeriesResource.getExternalIds(id);
+        call.enqueue(new Callback<ExternalIds>() {
             @Override
-            public void onResponse(Call<TvShowExternalIds> call, Response<TvShowExternalIds> response) {
+            public void onResponse(Call<ExternalIds> call, Response<ExternalIds> response) {
                 if (response.body() != null && response.isSuccessful())
                     getTvShowExternalIdsCallback.onSuccess(response.body());
                 else
@@ -218,7 +217,7 @@ public class TvShowsServiceImpl implements TvShowsService {
             }
 
             @Override
-            public void onFailure(Call<TvShowExternalIds> call, Throwable t) {
+            public void onFailure(Call<ExternalIds> call, Throwable t) {
                 if (!call.isCanceled()) {
                     getTvShowExternalIdsCallback.onFailure(t);
                 }

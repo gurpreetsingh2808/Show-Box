@@ -5,9 +5,11 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.github.florent37.diagonallayout.DiagonalLayout;
 import com.popular_movies.R;
 import com.popular_movies.ui.FlowManager;
@@ -48,7 +50,6 @@ public class BaseDetailFragment extends Fragment {
     public TextView tvNoCast;
     @BindView(R.id.tvNoCollection)
     public TextView tvNoCollection;
-
     @BindView(R.id.tvHeadingUserReviews)
     public TextView tvHeadingUserReviews;
     @BindView(R.id.tvHeadingCast)
@@ -91,6 +92,9 @@ public class BaseDetailFragment extends Fragment {
     @BindView(R.id.dsvCast)
     public DiscreteScrollView dsvCast;
 
+    //  linear layout
+    @BindView(R.id.llCollectionsLayout)
+    public LinearLayout llCollectionsLayout;
 
     protected void setHeadings() {
     }

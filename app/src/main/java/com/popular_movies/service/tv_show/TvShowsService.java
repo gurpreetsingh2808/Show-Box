@@ -7,7 +7,7 @@ import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.GenreResponse;
 import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.domain.tv.TvShowDetails;
-import com.popular_movies.domain.tv.TvShowExternalIds;
+import com.popular_movies.domain.tv.ExternalIds;
 import com.popular_movies.domain.tv.TvShowResponse;
 import com.popular_movies.domain.tv.seasons.CommentsResponse;
 
@@ -50,7 +50,7 @@ public interface TvShowsService {
         Call<TrailerResponse> getTrailers(@Path("id") int id);
 
         @GET("tv/{id}/external_ids?api_key=" + BuildConfig.TMDB_API_KEY)
-        Call<TvShowExternalIds> getExternalIds(@Path("id") int id);
+        Call<ExternalIds> getExternalIds(@Path("id") int id);
 
         @GET("tv/{id}/credits?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<CreditsResponse> getCredits(@Path("id") int id);
@@ -61,8 +61,8 @@ public interface TvShowsService {
         @GET("genre/tv/list?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<GenreResponse> getGenres();
 
-        @GET("shows/{name}/comments")
-        Call<List<CommentsResponse>> getComments(@Path("name") String name);
+        @GET("shows/{id}/comments")
+        Call<List<CommentsResponse>> getComments(@Path("id") String id);
 
     }
 
@@ -111,12 +111,12 @@ public interface TvShowsService {
     }
 
     /**
-     * Get movie trailers model
+     * Get movie external ids model
      */
     void getTvShowExternalIds(int id, Activity activity, GetTvShowExternalIdsCallback getTvShowExternalIdsCallback);
 
     interface GetTvShowExternalIdsCallback {
-        void onSuccess(TvShowExternalIds tvShowExternalIds);
+        void onSuccess(ExternalIds tvShowExternalIds);
 
         void onFailure(Throwable throwable);
     }

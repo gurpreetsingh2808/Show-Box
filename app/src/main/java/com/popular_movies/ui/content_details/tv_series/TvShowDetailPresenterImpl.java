@@ -6,7 +6,7 @@ import android.util.Log;
 import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.TrailerResponse;
 import com.popular_movies.domain.tv.TvShowDetails;
-import com.popular_movies.domain.tv.TvShowExternalIds;
+import com.popular_movies.domain.tv.ExternalIds;
 import com.popular_movies.domain.tv.seasons.CommentsResponse;
 import com.popular_movies.service.tv_show.TvShowsService;
 import com.popular_movies.service.tv_show.TvShowsServiceImpl;
@@ -81,13 +81,13 @@ public class TvShowDetailPresenterImpl implements TvShowDetailPresenter.Presente
     public void fetchTvShowExternalIds(int movieId) {
         tvShowsService.getTvShowExternalIds(movieId, activity, new TvShowsService.GetTvShowExternalIdsCallback() {
             @Override
-            public void onSuccess(TvShowExternalIds tvShowExternalIds) {
+            public void onSuccess(ExternalIds tvShowExternalIds) {
                 view.onTvShowExternalIdsRetreivalSuccess(tvShowExternalIds);
             }
 
             @Override
             public void onFailure(Throwable throwable) {
-                view.onCreditsRetreivalFailure(throwable);
+                view.onTvShowExternalIdsRetreivalFailure(throwable);
             }
         });
     }
