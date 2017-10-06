@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.github.florent37.diagonallayout.DiagonalLayout;
 import com.popular_movies.R;
 import com.popular_movies.ui.FlowManager;

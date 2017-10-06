@@ -151,21 +151,17 @@ public class MovieListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             //  set release date
             tvReleaseYear.setText(DateConvert.convert(movieData.getRelease_date()));
 
-            for (int i = 0; i < movieData.getGenre_ids().length; i++) {
-                Log.d(TAG, "genre "+movieData.getGenre_ids()[i]);
-            }
-
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < movieData.getGenre_ids().length; i++) {
+            for (int i = 0; i < movieData.getGenre_ids().size(); i++) {
                 for (Map.Entry<Integer, String> genre : mapGenre.entrySet()) {
                     Log.d(TAG, "genre "+genre.getValue());
-                    if (movieData.getGenre_ids()[i].intValue() == genre.getKey()) {
+                    if (movieData.getGenre_ids().get(i).intValue() == genre.getKey()) {
                         Log.d(TAG, "setData: genre matched");
                         sb.append(genre.getValue());
                         break;
                     }
                 }
-                if(i != movieData.getGenre_ids().length-1) {
+                if(i != movieData.getGenre_ids().size()-1) {
                     sb.append(", ");
                 }
             }

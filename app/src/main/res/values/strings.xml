@@ -43,6 +43,9 @@
     <string name="Menu.Discover">DISCOVER</string>
     <string name="Menu.Title">MENU</string>
 
+    <string name="MenuItem.Search">Search</string>
+
+
     <string name="Collection.TopRated">TOP RATED</string>
     <string name="Collection.Popular">POPULAR</string>
     <string name="Collection.ViewAll">VIEW ALL</string>

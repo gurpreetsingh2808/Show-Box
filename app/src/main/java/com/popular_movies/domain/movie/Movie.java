@@ -4,16 +4,21 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Date;
+import java.util.List;
 
 import ckm.simple.sql_provider.annotation.SimpleSQLColumn;
 import ckm.simple.sql_provider.annotation.SimpleSQLTable;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by Gurpreet on 2/21/2016.
  */
 
+@Builder
+@AllArgsConstructor
 @SimpleSQLTable(table = "movie", provider = "MovieProvider")
-
 public class Movie implements Parcelable {
 
     @SimpleSQLColumn("col_poster_path")
@@ -27,7 +32,7 @@ public class Movie implements Parcelable {
     @SimpleSQLColumn("col_release_date")
     private String release_date;
 
-    private Integer[] genre_ids;
+    private List<Integer> genre_ids;
 
     @SimpleSQLColumn("col_id")
     private int id;
@@ -55,6 +60,29 @@ public class Movie implements Parcelable {
 
     public Movie() {
     }
+
+    protected Movie(Parcel in) {
+        poster_path = in.readString();
+        overview = in.readString();
+        release_date = in.readString();
+        id = in.readInt();
+        original_title = in.readString();
+        original_language = in.readString();
+        title = in.readString();
+        backdrop_path = in.readString();
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     public String getPoster_path() {
         return poster_path;
@@ -88,11 +116,11 @@ public class Movie implements Parcelable {
         this.release_date = release_date;
     }
 
-    public Integer[] getGenre_ids() {
+    public List<Integer> getGenre_ids() {
         return genre_ids;
     }
 
-    public void setGenre_ids(Integer[] genre_ids) {
+    public void setGenre_ids(List<Integer> genre_ids) {
         this.genre_ids = genre_ids;
     }
 
@@ -164,45 +192,45 @@ public class Movie implements Parcelable {
     }
 
 
-    public Movie(Parcel in) {
-        original_title = in.readString();
-        overview = in.readString();
-        poster_path = in.readString();
-        backdrop_path = in.readString();
-        vote_average = in.readFloat();
-        release_date = in.readString();
-        id = in.readInt();
-    }
+//    public Movie(Parcel in) {
+//        original_title = in.readString();
+//        overview = in.readString();
+//        poster_path = in.readString();
+//        backdrop_path = in.readString();
+//        vote_average = in.readFloat();
+//        release_date = in.readString();
+//        id = in.readInt();
+//    }
 
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
-        @Override
-        public Movie createFromParcel(Parcel in) {
-            return new Movie(in);
-        }
-
-        @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(original_title);
-        dest.writeString(overview);
-        dest.writeString(poster_path);
-        dest.writeString(backdrop_path);
-        dest.writeFloat(vote_average);
-        if(release_date != null) {
-            dest.writeString(release_date);
-        }
-        dest.writeInt(id);
-    }
+//    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+//        @Override
+//        public Movie createFromParcel(Parcel in) {
+//            return new Movie(in);
+//        }
+//
+//        @Override
+//        public Movie[] newArray(int size) {
+//            return new Movie[size];
+//        }
+//    };
+//
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel dest, int flags) {
+//        dest.writeString(original_title);
+//        dest.writeString(overview);
+//        dest.writeString(poster_path);
+//        dest.writeString(backdrop_path);
+//        dest.writeFloat(vote_average);
+//        if(release_date != null) {
+//            dest.writeString(release_date);
+//        }
+//        dest.writeInt(id);
+//    }
 
     public Float getPopularity() {
         return popularity;
@@ -218,5 +246,22 @@ public class Movie implements Parcelable {
 
     public void setVote_count(Integer vote_count) {
         this.vote_count = vote_count;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(poster_path);
+        dest.writeString(overview);
+        dest.writeString(release_date);
+        dest.writeInt(id);
+        dest.writeString(original_title);
+        dest.writeString(original_language);
+        dest.writeString(title);
+        dest.writeString(backdrop_path);
     }
 }
