@@ -57,7 +57,8 @@ public class FlowManager {
                 moveToDetailsActivity(context, DetailContentType.MOVIE, movie);
                 break;
             case SearchResultContentType.TV_SERIES:
-
+                TvShow tvShow = search.getTvShowObject(search);
+                moveToDetailsActivity(context, DetailContentType.TV_SERIES, tvShow);
                 break;
 
         }

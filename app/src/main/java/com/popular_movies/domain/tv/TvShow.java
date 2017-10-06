@@ -3,12 +3,18 @@ package com.popular_movies.domain.tv;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+
 /**
  * Created by Gurpreet on 2/21/2016.
  */
 
 ////@SimpleSQLTable(table = "movie", provider = "MovieProvider")
-
+@Builder
+@AllArgsConstructor
 public class TvShow implements Parcelable {
 
     //@SimpleSQLColumn("col_poster_path")
@@ -25,7 +31,7 @@ public class TvShow implements Parcelable {
     //@SimpleSQLColumn("col_release_date")
     private String first_air_date;
     private String[] origin_country;
-    private Integer[] genre_ids;
+    private List<Integer> genre_ids;
     private String original_language;
     private Integer vote_count;
     private String name;
@@ -52,11 +58,11 @@ public class TvShow implements Parcelable {
         this.overview = overview;
     }
 
-    public Integer[] getGenre_ids() {
+    public List<Integer> getGenre_ids() {
         return genre_ids;
     }
 
-    public void setGenre_ids(Integer[] genre_ids) {
+    public void setGenre_ids(List<Integer> genre_ids) {
         this.genre_ids = genre_ids;
     }
 

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.popular_movies.domain.movie.Movie;
+import com.popular_movies.domain.tv.TvShow;
 
 import java.util.List;
 
@@ -268,6 +269,22 @@ public class Search implements Parcelable {
                 .popularity(search.getPopularity())
                 .vote_count(search.getVote_count())
                 .video(search.getVideo())
+                .vote_average(search.getVote_average())
+                .build();
+    }
+
+    public TvShow getTvShowObject(Search search) {
+        return TvShow.builder().id(search.getId())
+                .poster_path(search.getPoster_path())
+                .overview(search.getOverview())
+                .first_air_date(search.getFirst_air_date())
+                .genre_ids(search.getGenre_ids())
+                .original_name(search.getOriginal_name())
+                .original_language(search.getOriginal_language())
+                .name(search.getName())
+                .backdrop_path(search.getBackdrop_path())
+                .popularity(search.getPopularity())
+                .vote_count(search.getVote_count())
                 .vote_average(search.getVote_average())
                 .build();
     }
