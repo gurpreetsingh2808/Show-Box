@@ -92,7 +92,7 @@ public class MovieDetailFragment extends BaseDetailFragment implements MovieDeta
             //releaseDate.append(" " + DateConvert.convert(movieData.getRelease_date()));
             releaseDate.setText(DateConvert.convert(movieData.getRelease_date()));
             synopsis.setText(movieData.getOverview());
-            if (movieData.getVote_average() == 0f) {
+            if (movieData.getVote_average() == null || movieData.getVote_average() == 0f) {
                 userRatings.setText(getString(R.string.NA));
             } else {
                 userRatings.setText(movieData.getVote_average().toString());

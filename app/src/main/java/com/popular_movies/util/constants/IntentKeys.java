@@ -23,5 +23,6 @@ public class IntentKeys {
     public static final String KEY_TITLE = "KEY_TITLE";
     public static final String KEY_TV_ID = "KEY_TV_ID";
     public static final String KEY_SEASON_NUMBER = "KEY_SEASON_NUMBER";
+    public static final String KEY_SEARCH = "KEY_SEARCH";
 
 }

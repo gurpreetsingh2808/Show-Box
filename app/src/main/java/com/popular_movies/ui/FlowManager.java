@@ -10,11 +10,14 @@ import android.view.View;
 import com.popular_movies.BuildConfig;
 import com.popular_movies.R;
 import com.popular_movies.domain.movie.Movie;
+import com.popular_movies.domain.search.Search;
 import com.popular_movies.domain.tv.Season;
 import com.popular_movies.domain.tv.TvShow;
 import com.popular_movies.domain.tv.seasons.Episode;
 import com.popular_movies.ui.content_details.DetailActivity;
+import com.popular_movies.ui.content_details.DetailContentType;
 import com.popular_movies.ui.listing.ListingActivity;
+import com.popular_movies.ui.listing.search_listing.SearchResultContentType;
 import com.popular_movies.util.constants.IntentKeys;
 
 /**
@@ -45,6 +48,20 @@ public class FlowManager {
         intent.putExtra(context.getString(R.string.key_detail_content), episode);
         intent.putExtra(context.getString(R.string.key_detail_content_type), contentType);
         context.startActivity(intent);
+    }
+
+    public static void moveToDetailsActivity(Context context, String contentType, Search search) {
+        switch (search.getMedia_type()) {
+            case SearchResultContentType.MOVIE:
+                Movie movie = search.getMovieObject(search);
+                moveToDetailsActivity(context, DetailContentType.MOVIE, movie);
+                break;
+            case SearchResultContentType.TV_SERIES:
+                TvShow tvShow = search.getTvShowObject(search);
+                moveToDetailsActivity(context, DetailContentType.TV_SERIES, tvShow);
+                break;
+
+        }
     }
 
     /********************************************************************************************
@@ -78,11 +95,18 @@ public class FlowManager {
                                              int tvId, int seasonNumber) {
         Intent intent = new Intent(context, ListingActivity.class);
         intent.putExtra(context.getString(R.string.key_listing_content_type), contentType);
-        Log.e(FlowManager.class.getSimpleName(), "moveToListingActivity: TTTIITTLLEE  "+title );
         intent.putExtra(context.getString(R.string.key_title), title);
         intent.putExtra(IntentKeys.KEY_TV_ID, tvId);
         intent.putExtra(IntentKeys.KEY_SEASON_NUMBER, seasonNumber);
 
+        context.startActivity(intent);
+    }
+
+    public static void moveToListingActivity(Context context, String contentType, String searchTerm) {
+        Intent intent = new Intent(context, ListingActivity.class);
+        intent.putExtra(context.getString(R.string.key_listing_content_type), contentType);
+        intent.putExtra(context.getString(R.string.key_title), searchTerm);
+        intent.putExtra(context.getString(R.string.key_listing_sub_content_type), searchTerm);
         context.startActivity(intent);
     }
 }

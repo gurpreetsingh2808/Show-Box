@@ -67,4 +67,21 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
+    <style name="MaterialSearchViewStyle">
+        <item name="searchBackground">@color/matteGrey</item>
+        <!--
+                <item name="searchVoiceIcon">@drawable/ic_action_voice_search</item>
+        -->
+        <item name="searchCloseIcon">@drawable/ic_action_navigation_close</item>
+        <item name="searchBackIcon">@drawable/ic_action_navigation_arrow_back</item>
+        <item name="searchSuggestionBackground">@color/matteGrey</item>
+        <item name="searchBarHeight">?attr/actionBarSize</item>
+        <item name="voiceHintPrompt">@string/hint_prompt</item>
+        <item name="android:textColor">@color/black</item>
+
+        <item name="android:textColorHint">@color/hintColorGrey</item>
+        <item name="android:hint">@string/search_hint</item>
+        <item name="android:inputType">textCapWords</item>
+    </style>
+
 </resources>

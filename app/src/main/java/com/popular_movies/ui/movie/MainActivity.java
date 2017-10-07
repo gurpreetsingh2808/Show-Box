@@ -10,19 +10,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.ChangeClipBounds;
 import android.transition.Slide;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.popular_movies.R;
+import com.popular_movies.ui.FlowManager;
 import com.popular_movies.ui.favourites.FavoritesFragment;
+import com.popular_movies.ui.listing.ListingContentType;
 import com.popular_movies.ui.tv_shows.TvShowsFragment;
 import com.popular_movies.util.AppUtils;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 import com.yalantis.guillotine.interfaces.GuillotineListener;
 
+import br.com.mauker.materialsearchview.MaterialSearchView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -46,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
     //  textview for toolbar
     @BindView(R.id.tvToolbarTitleMain)
     TextView tvToolbarTitle;
+
+    @BindView(R.id.search_view)
+    MaterialSearchView materialSearchView;
 
 
     public void setupWindowAnimations() {
@@ -85,6 +95,35 @@ public class MainActivity extends AppCompatActivity {
 
         //  add guillotine menu to rootview
         addMenu();
+
+        addSearchImplementation();
+    }
+
+    private void addSearchImplementation() {
+        materialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+//                callAPI
+                Log.e(TAG, "onQueryTextSubmit: query "+query );
+                FlowManager.moveToListingActivity(MainActivity.this, ListingContentType.SEARCH, query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        materialSearchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String suggestion = materialSearchView.getSuggestionAtPosition(position);
+                materialSearchView.setQuery(suggestion, false);
+                Log.e(TAG, "onItemClick: query "+suggestion );
+                FlowManager.moveToListingActivity(MainActivity.this, ListingContentType.SEARCH, suggestion);
+            }
+        });
 
     }
 
@@ -160,6 +199,24 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_content, fragment)
                 .commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_home_search:
+                materialSearchView.openSearch();
+                materialSearchView.setFocusable(true);
+                Log.d(TAG, "onOptionsItemSelected: MENU ID YYYYYESSSSSSSS"+item.getItemId());
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 

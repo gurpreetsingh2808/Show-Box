@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.popular_movies.R;
 import com.popular_movies.ui.listing.movies_listing.MovieListFragment;
+import com.popular_movies.ui.listing.search_listing.SearchListingFragment;
 import com.popular_movies.ui.listing.tv_series_listing.TvSeriesListingFragment;
 import com.popular_movies.ui.listing.tv_series_listing.episodes_listing.EpisodeListingFragment;
 import com.popular_movies.ui.movie.MainActivity;
@@ -51,6 +53,7 @@ public class ListingActivity extends AppCompatActivity {
 
                 String type = getIntent().getExtras().getString(getString(R.string.key_listing_content_type));
                 if (type != null) {
+                    Log.e(ListingActivity.class.getSimpleName(), "onCreate: type"+type );
                     switch (type) {
                         case ListingContentType.MOVIE:
                             Fragment fragment = MovieListFragment.getInstance(getIntent()
@@ -67,6 +70,11 @@ public class ListingActivity extends AppCompatActivity {
                                             .getStringExtra(getString(R.string.key_listing_sub_content_type)),
                                             getIntent().getExtras().getInt(IntentKeys.KEY_TV_ID, -1),
                                             getIntent().getIntExtra(IntentKeys.KEY_SEASON_NUMBER, -1));
+                            setFragment(fragment);
+                            break;
+                        case ListingContentType.SEARCH:
+                            fragment = SearchListingFragment.getInstance(getIntent()
+                                    .getStringExtra(getString(R.string.key_listing_sub_content_type)));
                             setFragment(fragment);
                             break;
                     }
