@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.allattentionhere.fabulousfilter.AAH_FabulousFragment;
 import com.popular_movies.R;
 import com.popular_movies.ui.listing.movies_listing.MovieListFragment;
 import com.popular_movies.ui.listing.search_listing.SearchListingFragment;
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class ListingActivity extends AppCompatActivity {
+public class ListingActivity extends AppCompatActivity implements AAH_FabulousFragment.Callbacks, AAH_FabulousFragment.AnimationListener {
 
     //  toolbar
     @BindView(R.id.MovieListing_ToolBar)
@@ -103,5 +104,30 @@ public class ListingActivity extends AppCompatActivity {
     @OnClick(R.id.ivBack)
     public void goBack() {
         onBackPressed();
+    }
+
+    @Override
+    public void onOpenAnimationStart() {
+
+    }
+
+    @Override
+    public void onOpenAnimationEnd() {
+
+    }
+
+    @Override
+    public void onCloseAnimationStart() {
+
+    }
+
+    @Override
+    public void onCloseAnimationEnd() {
+
+    }
+
+    @Override
+    public void onResult(Object result) {
+
     }
 }

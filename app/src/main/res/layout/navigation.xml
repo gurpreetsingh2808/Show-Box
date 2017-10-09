@@ -29,8 +29,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="@color/white"
-            android:text="@string/Menu.Title" />
+            android:textColor="@color/black"
+            fontPath="fonts/Brandon_Bold.otf"
+            android:text="@string/Menu.Title"
+            tools:ignore="MissingPrefix" />
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
@@ -51,11 +53,13 @@
             android:onClick="onNavigationItemSelected">
 
         <ImageView
-                android:layout_width="24dp"
+            android:id="@+id/ivMenuMovies"
+            android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:srcCompat="@drawable/ic_movie" />
+                app:srcCompat="@drawable/ic_menu_movie" />
 
             <TextView
+                android:id="@+id/tvMenuMovies"
                 style="@style/TextView.Menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,11 +76,13 @@
             android:onClick="onNavigationItemSelected">
 
             <ImageView
+                android:id="@+id/ivMenuTvShows"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:srcCompat="@drawable/ic_television" />
+                app:srcCompat="@drawable/ic_menu_television" />
 
             <TextView
+                android:id="@+id/tvMenuTvShows"
                 style="@style/TextView.Menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,12 +98,14 @@
             android:onClick="onNavigationItemSelected">
 
             <ImageView
+                android:id="@+id/ivMenuFavourites"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_horizontal"
-                app:srcCompat="@drawable/ic_favorite" />
+                app:srcCompat="@drawable/ic_menu_favorite" />
 
             <TextView
+                android:id="@+id/tvMenuFavourites"
                 style="@style/TextView.Menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -114,18 +122,20 @@
             android:onClick="onNavigationItemSelected">
 
             <ImageView
+                android:id="@+id/ivMenuPeople"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:srcCompat="@drawable/ic_people" />
+                app:srcCompat="@drawable/ic_menu_people" />
 
             <TextView
+                android:id="@+id/tvMenuPeople"
                 style="@style/TextView.Menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Menu.People" />
         </LinearLayout>
 
-        <LinearLayout
+       <!-- <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="8dp"
@@ -142,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Menu.Discover" />
-        </LinearLayout>
+        </LinearLayout>-->
 
     </LinearLayout>
 </LinearLayout>

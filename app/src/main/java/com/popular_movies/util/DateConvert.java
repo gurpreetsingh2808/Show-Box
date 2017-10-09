@@ -11,18 +11,26 @@ public class DateConvert {
         Date date= null;
         try {
             date = new SimpleDateFormat("yyyy-MM-dd").parse(stringDate);
+            Calendar cal= Calendar.getInstance();
+            cal.setTime(date);
+            return monthToName(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.DAY_OF_MONTH) + ", " + cal.get(Calendar.YEAR);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Calendar cal= Calendar.getInstance();
-        cal.setTime(date);
-        return monthToName(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.DAY_OF_MONTH) + ", " + cal.get(Calendar.YEAR);
-    }
+        return null;
+         }
 
-    public static String getYear(Date date) {
-        Calendar cal= Calendar.getInstance();
-        cal.setTime(date);
-        return String.valueOf(cal.get(Calendar.YEAR));
+    public static String getYear(String stringDate) {
+        Date date= null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(stringDate);
+            Calendar cal= Calendar.getInstance();
+            cal.setTime(date);
+            return String.valueOf(cal.get(Calendar.YEAR));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private static String monthToName(int id) {

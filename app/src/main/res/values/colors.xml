@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#95c2d8</color>
-    <color name="colorPrimaryDark">#95c2d8</color>
+    <color name="colorPrimary">#fff</color>
+    <color name="colorPrimaryBlue">#95c2d8</color>
+
+    <color name="colorPrimaryDark">#fff</color>
     <color name="colorAccent">#f29a00</color>
     <color name="white">#ffffff</color>
     <color name="grey">#727272</color>
@@ -12,13 +14,19 @@
     <color name="hintColorGrey">#9E9E9E</color>
 
     <color name="lightGrey">#E0E0E0</color>
+<!--
     <color name="lighterGrey">#EEEEEE</color>
+-->
+    <color name="lighterGrey">#fff</color>
+
     <color name="black">#212121</color>
     <color name="pureBlack">#000</color>
     <color name="black_transparency_60">#60000000</color>
     <color name="transparent">#00000000</color>
     <color name="matteGrey">#283444</color>
 
+    <color name="filters_buttons_selected">#e0e0e0</color>
+    <color name="filters_buttons">#fff</color>
 
 
     <array name="progress_colors">

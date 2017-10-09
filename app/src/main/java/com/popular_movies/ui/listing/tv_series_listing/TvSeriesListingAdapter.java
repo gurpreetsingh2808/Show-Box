@@ -17,7 +17,6 @@ import com.popular_movies.framework.ImageLoader;
 import com.popular_movies.ui.TvShowItemClickListener;
 import com.popular_movies.util.DateConvert;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,12 +88,13 @@ public class TvSeriesListingAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return tvShowItemArrayList == null ? 0 : tvShowItemArrayList.size();
     }
 
-    public void setGenre(Map<Integer,String> mapGenre) {
+    public void setGenre(Map<Integer, String> mapGenre) {
         this.mapGenre = mapGenre;
     }
 
     public void addAll(List<TvShow> results) {
         tvShowItemArrayList.addAll(results);
+        //  TODO: try to use Notify item range changed
         notifyDataSetChanged();
     }
 
@@ -152,21 +152,17 @@ public class TvSeriesListingAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             //  set release date
             tvReleaseYear.setText(DateConvert.convert(tvShowData.getFirst_air_date()));
 
-            for (int i = 0; i < tvShowData.getGenre_ids().length; i++) {
-                Log.d(TAG, "genre "+tvShowData.getGenre_ids()[i]);
-            }
-
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < tvShowData.getGenre_ids().length; i++) {
+            for (int i = 0; i < tvShowData.getGenre_ids().size(); i++) {
                 for (Map.Entry<Integer, String> genre : mapGenre.entrySet()) {
-                    Log.d(TAG, "genre "+genre.getValue());
-                    if (tvShowData.getGenre_ids()[i].intValue() == genre.getKey()) {
+                    Log.d(TAG, "genre " + genre.getValue());
+                    if (tvShowData.getGenre_ids().get(i).intValue() == genre.getKey()) {
                         Log.d(TAG, "setData: genre matched");
                         sb.append(genre.getValue());
                         break;
                     }
                 }
-                if(i != tvShowData.getGenre_ids().length-1) {
+                if (i != tvShowData.getGenre_ids().size() - 1) {
                     sb.append(", ");
                 }
             }
