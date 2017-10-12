@@ -1,11 +1,12 @@
 package com.popular_movies.service;
 
 import android.app.Activity;
-import android.util.Log;
 
 import com.popular_movies.BuildConfig;
+import com.popular_movies.service.interceptors.CachingControlInterceptor;
 import com.popular_movies.service.interceptors.ErrorInterceptor;
 import com.popular_movies.service.interceptors.HeaderInterceptor;
+import com.popular_movies.service.interceptors.CachingInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
@@ -61,6 +62,13 @@ public class ResourceBuilder {
 
         // Add error processing interceptor
         okHttpClient.addInterceptor(new ErrorInterceptor(activity));
+        //  Add caching interceptor and setup cache
+        CachingControlInterceptor cachingControlInterceptor = new CachingControlInterceptor();
+        okHttpClient.addNetworkInterceptor(cachingControlInterceptor);
+        okHttpClient.cache(cachingControlInterceptor.setupCache(activity.getApplicationContext()));
+
+        //  Add offline caching interceptor
+        okHttpClient.addInterceptor(new CachingInterceptor(activity));
 
         //  Add header interceptor
         switch (headerInterceptorType) {

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#fff</color>
-    <color name="colorPrimaryBlue">#95c2d8</color>
+    <color name="colorPrimaryBlue">#FD6275</color>
+    <!--<color name="colorPrimaryBlue">#FF1847</color>-->
+
 
     <color name="colorPrimaryDark">#fff</color>
     <color name="colorAccent">#f29a00</color>
@@ -23,7 +25,11 @@
     <color name="pureBlack">#000</color>
     <color name="black_transparency_60">#60000000</color>
     <color name="transparent">#00000000</color>
-    <color name="matteGrey">#283444</color>
+    <color name="matteGrey">#707284</color>
+    <!--<color name="blackGrey">#211B2A</color>-->
+    <color name="blackGrey">#1A1E23</color>
+
+
 
     <color name="filters_buttons_selected">#e0e0e0</color>
     <color name="filters_buttons">#fff</color>

@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import java.util.List;
 
+import ckm.simple.sql_provider.annotation.SimpleSQLColumn;
+import ckm.simple.sql_provider.annotation.SimpleSQLTable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
@@ -15,27 +17,37 @@ import lombok.Builder;
 ////@SimpleSQLTable(table = "movie", provider = "MovieProvider")
 @Builder
 @AllArgsConstructor
+@SimpleSQLTable(table = "tvShows", provider = "MovieProvider")
 public class TvShow implements Parcelable {
 
-    //@SimpleSQLColumn("col_poster_path")
+    @SimpleSQLColumn("col_poster_path")
     private String poster_path;
+
     private Float popularity;
-    //@SimpleSQLColumn("col_id")
+
+    @SimpleSQLColumn("col_id")
     private int id;
-    //@SimpleSQLColumn("col_backdrop")
+
+    @SimpleSQLColumn("col_backdrop")
     private String backdrop_path;
-    //@SimpleSQLColumn("col_vote_average")
+
+    @SimpleSQLColumn("col_vote_average")
     private Float vote_average;
-    //@SimpleSQLColumn("col_overview")
+
+    @SimpleSQLColumn("col_overview")
     private String overview;
-    //@SimpleSQLColumn("col_release_date")
+
+    @SimpleSQLColumn("col_first_air_date")
     private String first_air_date;
+
     private String[] origin_country;
     private List<Integer> genre_ids;
     private String original_language;
     private Integer vote_count;
+
+    @SimpleSQLColumn("name")
     private String name;
-    //@SimpleSQLColumn("col_title")
+
     private String original_name;
 
 

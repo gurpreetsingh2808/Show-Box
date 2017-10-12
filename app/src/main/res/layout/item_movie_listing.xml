@@ -11,6 +11,7 @@
             android:layout_height="wrap_content"
             android:minHeight="160dp"
             android:orientation="horizontal"
+            android:background="@color/white"
             android:visibility="visible">
 
             <RelativeLayout
@@ -23,6 +24,7 @@
                     android:elevation="10dp"
                     app:diagonal_angle="7"
                     app:diagonal_direction="right"
+                    android:background="@color/white"
                     app:diagonal_position="right">
 
                     <ImageView
@@ -45,6 +47,7 @@
                 android:layout_marginLeft="@dimen/margin_12"
                 android:layout_marginRight="@dimen/margin_12"
                 android:gravity="center_vertical"
+                android:background="@color/white"
                 android:visibility="visible">
 
                 <TextView

@@ -8,6 +8,8 @@ import android.util.Log;
 import com.popular_movies.MyApplication;
 import com.popular_movies.domain.movie.Movie;
 import com.popular_movies.domain.movie.MovieTable;
+import com.popular_movies.domain.tv.TvShow;
+import com.popular_movies.domain.tv.TvShowsTable;
 
 import java.util.List;
 
@@ -88,4 +90,33 @@ public class MovieProviderHelper {
     public List<Movie> getAllFavouriteMovies() {
         return MovieTable.getRows(getCursor(), true);
     }
+
+    public void insertTvShow(TvShow tvShow) {
+        contentResolver.insert(TvShowsTable.CONTENT_URI,
+                TvShowsTable.getContentValues(tvShow, false));
+    }
+
+
+    public void deleteTvShow(int id) {
+        contentResolver.delete(TvShowsTable.CONTENT_URI,
+                TvShowsTable.FIELD_COL_ID + "=?", new String[]{String.valueOf(id)});
+    }
+
+    public Boolean doesTvShowExist(int id) {
+        List<TvShow> listTvShows = TvShowsTable.getRows(getCursor(), false);
+        for (TvShow tvShow : listTvShows) {
+            Log.d(TAG, "doesMovieExist: movie id "+tvShow.getId());
+            if(tvShow.getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    public List<TvShow> getAllFavouriteTvShows() {
+        return TvShowsTable.getRows(getCursor(), true);
+    }
+
 }

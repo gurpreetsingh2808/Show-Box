@@ -10,6 +10,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -29,7 +30,7 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
     //  recycler view
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    private FavouriteAdapter mAdapter;
+    private FavouriteMovieAdapter mAdapter;
 
     @Nullable
     @Override
@@ -46,11 +47,11 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), width / 140));
         } else {
             if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
-                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
             else
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 5));
         }
-        mAdapter = new FavouriteAdapter(getContext(), null);
+        mAdapter = new FavouriteMovieAdapter(getContext(), null);
         recyclerView.setAdapter(mAdapter);
         return layout;
     }

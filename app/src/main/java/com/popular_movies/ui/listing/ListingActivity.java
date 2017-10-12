@@ -2,11 +2,14 @@ package com.popular_movies.ui.listing;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.allattentionhere.fabulousfilter.AAH_FabulousFragment;
@@ -44,6 +47,14 @@ public class ListingActivity extends AppCompatActivity implements AAH_FabulousFr
         AppUtils.initializeCalligraphy();
         setContentView(R.layout.activity_movies_listing);
         ButterKnife.bind(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(Color.WHITE);
+        } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+//            getWindow().setStatusBarColor(getResources().getColor(R.color.lightGrey));
+            // Set the status bar to dark-semi-transparentish
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 

@@ -85,20 +85,15 @@ public class MainActivity extends AppCompatActivity {
         AppUtils.initializeCalligraphy();
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(Color.WHITE);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
 //            getWindow().setStatusBarColor(getResources().getColor(R.color.lightGrey));
             // Set the status bar to dark-semi-transparentish
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
         setSupportActionBar(toolbar);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_content, new MainFragment())
-                    .commit();
-        }
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -109,8 +104,11 @@ public class MainActivity extends AppCompatActivity {
 
         //  add guillotine menu to rootview
         addMenu();
-
         addSearchImplementation();
+        if (savedInstanceState == null) {
+            setFragment(new MainFragment());
+            highlightSelection(R.id.tvMenuMovies, R.id.ivMenuMovies, R.drawable.ic_menu_movie_selected);
+        }
     }
 
     private void addSearchImplementation() {
@@ -120,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
 //                callAPI
                 Log.e(TAG, "onQueryTextSubmit: query " + query);
                 FlowManager.moveToListingActivity(MainActivity.this, ListingContentType.SEARCH, query);
+                materialSearchView.closeSearch();
                 return false;
             }
 
@@ -136,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 materialSearchView.setQuery(suggestion, false);
                 Log.e(TAG, "onItemClick: query " + suggestion);
                 FlowManager.moveToListingActivity(MainActivity.this, ListingContentType.SEARCH, suggestion);
+                materialSearchView.closeSearch();
             }
         });
 
@@ -194,18 +194,44 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.llMovies:
                 setFragment(new MainFragment());
-                ((ImageView)guillotineMenu.findViewById(R.id.ivMenuMovies)).setImageResource(R.drawable.ic_menu_movie_selected);
-//                ((TextView)guillotineMenu.findViewById(R.id.tvMenuMovies)).setTypeface(FontUtils.getHeadingTypeFace(getBaseContext()));
-                ((TextView)guillotineMenu.findViewById(R.id.tvMenuMovies)).setTextColor(getResources().getColor(R.color.bgPrimary));
-
-                break;
-            case R.id.llFavourites:
-                setFragment(new FavoritesFragment());
+                highlightSelection(R.id.tvMenuMovies, R.id.ivMenuMovies, R.drawable.ic_menu_movie_selected);
                 break;
             case R.id.llTvShows:
                 setFragment(new TvShowsFragment());
+                highlightSelection(R.id.tvMenuTvShows, R.id.ivMenuTvShows, R.drawable.ic_menu_television_selected);
+                break;
+            case R.id.llFavourites:
+                setFragment(new FavoritesFragment());
+                highlightSelection(R.id.tvMenuFavourites, R.id.ivMenuFavourites, R.drawable.ic_menu_favorite_selected);
+                break;
+            case R.id.llPeople:
+//                setFragment();
+                highlightSelection(R.id.tvMenuPeople, R.id.ivMenuPeople, R.drawable.ic_menu_people_selected);
                 break;
         }
+    }
+
+    private void highlightSelection(int textViewId, int imageViewId, int drawableId) {
+        // unhighlight others
+        // movie
+        ((ImageView)guillotineMenu.findViewById(R.id.ivMenuMovies)).setImageResource(R.drawable.ic_menu_movie);
+        ((TextView)guillotineMenu.findViewById(R.id.tvMenuMovies)).setTextColor(getResources().getColor(R.color.matteGrey));
+
+        // tv
+        ((ImageView)guillotineMenu.findViewById(R.id.ivMenuTvShows)).setImageResource(R.drawable.ic_menu_television);
+        ((TextView)guillotineMenu.findViewById(R.id.tvMenuTvShows)).setTextColor(getResources().getColor(R.color.matteGrey));
+
+        // favourites
+        ((ImageView)guillotineMenu.findViewById(R.id.ivMenuFavourites)).setImageResource(R.drawable.ic_menu_favorite);
+        ((TextView)guillotineMenu.findViewById(R.id.tvMenuFavourites)).setTextColor(getResources().getColor(R.color.matteGrey));
+
+        // people
+        ((ImageView)guillotineMenu.findViewById(R.id.ivMenuPeople)).setImageResource(R.drawable.ic_menu_people);
+        ((TextView)guillotineMenu.findViewById(R.id.tvMenuPeople)).setTextColor(getResources().getColor(R.color.matteGrey));
+
+        //  highlight selection at end
+        ((ImageView)guillotineMenu.findViewById(imageViewId)).setImageResource(drawableId);
+        ((TextView)guillotineMenu.findViewById(textViewId)).setTextColor(getResources().getColor(R.color.colorPrimaryBlue));
     }
 
     /**

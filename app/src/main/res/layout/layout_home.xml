@@ -192,8 +192,9 @@
                         android:gravity="center_vertical|end"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
+                        android:textStyle="bold"
                         android:text="@string/Collection.ViewAll"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorPrimaryBlue"
                         tools:ignore="MissingPrefix" />
 
                 </RelativeLayout>
@@ -273,8 +274,9 @@
                         android:gravity="center_vertical|end"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
+                        android:textStyle="bold"
                         android:text="@string/Collection.ViewAll"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorPrimaryBlue"
                         tools:ignore="MissingPrefix" />
 
                 </RelativeLayout>
