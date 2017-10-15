@@ -57,7 +57,7 @@
                         android:paddingRight="16dp"
                         android:text="@string/Collection.ViewAll"
                         android:textStyle="bold"
-                        android:textColor="@color/colorPrimaryBlue"
+                        android:textColor="@color/colorAccent"
                         tools:ignore="MissingPrefix" />
 
                 </RelativeLayout>
@@ -124,7 +124,7 @@
                         android:paddingRight="16dp"
                         android:paddingLeft="16dp"
                         android:textStyle="bold"
-                        android:textColor="@color/colorPrimaryBlue"                        android:text="@string/Collection.ViewAll"
+                        android:textColor="@color/colorAccent"                        android:text="@string/Collection.ViewAll"
                         fontPath="fonts/Brandon_Regular.otf"
                         tools:ignore="MissingPrefix"/>
 
@@ -193,7 +193,7 @@
                         android:paddingRight="16dp"
                         android:text="@string/Collection.ViewAll"
                         android:textStyle="bold"
-                        android:textColor="@color/colorPrimaryBlue"                        tools:ignore="MissingPrefix" />
+                        android:textColor="@color/colorAccent"                        tools:ignore="MissingPrefix" />
 
                 </RelativeLayout>
 
@@ -274,7 +274,7 @@
                         android:paddingRight="16dp"
                         android:text="@string/Collection.ViewAll"
                         android:textStyle="bold"
-                        android:textColor="@color/colorPrimaryBlue"                        tools:ignore="MissingPrefix" />
+                        android:textColor="@color/colorAccent"                        tools:ignore="MissingPrefix" />
 
                 </RelativeLayout>
 

@@ -10,6 +10,7 @@ import android.transition.Slide;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.popular_movies.R;
 import com.popular_movies.ui.content_details.movie.MovieDetailFragment;
@@ -47,11 +48,14 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AppUtils.initializeCalligraphy();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-            //       WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+//                   WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.pureBlack));
-
+            getWindow().getDecorView().setSystemUiVisibility(0);
         }
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_movie_detail);
         ButterKnife.bind(this);
@@ -59,7 +63,6 @@ public class DetailActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             Log.d("moviedetail", "action bar not null");
 //            getSupportActionBar().setTitle(MovieDetailFragment.getInstance(getIntent().
-//                    getParcelableExtra(getString(R.string.key_detail_content))).getTitle().toString());
         }
 
         if (savedInstanceState == null) {

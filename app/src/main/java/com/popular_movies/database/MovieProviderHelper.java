@@ -64,6 +64,25 @@ public class MovieProviderHelper {
                 null);
     }
 
+    public Cursor getTvShowCursor() {
+        if (contentResolver == null) {
+            getInstance();
+        }
+        return contentResolver.query(TvShowsTable.CONTENT_URI, null, null, null, null);
+    }
+
+    public Cursor getTvShowFilledCursor() {
+        if (contentResolver == null) {
+            getInstance();
+        }
+        return contentResolver.query(TvShowsTable.CONTENT_URI,
+                new String[]{TvShowsTable.FIELD_COL_POSTER_PATH, TvShowsTable.FIELD_COL_ORIGINAL_NAME,
+                        TvShowsTable.FIELD_COL_FIRST_AIR_DATE},
+                null,
+                null,
+                null);
+    }
+
 
     public void insert(Movie movieData) {
         contentResolver.insert(MovieTable.CONTENT_URI,
@@ -103,7 +122,7 @@ public class MovieProviderHelper {
     }
 
     public Boolean doesTvShowExist(int id) {
-        List<TvShow> listTvShows = TvShowsTable.getRows(getCursor(), false);
+        List<TvShow> listTvShows = TvShowsTable.getRows(getTvShowCursor(), false);
         for (TvShow tvShow : listTvShows) {
             Log.d(TAG, "doesMovieExist: movie id "+tvShow.getId());
             if(tvShow.getId() == id) {
@@ -116,7 +135,7 @@ public class MovieProviderHelper {
 
 
     public List<TvShow> getAllFavouriteTvShows() {
-        return TvShowsTable.getRows(getCursor(), true);
+        return TvShowsTable.getRows(getTvShowCursor(), true);
     }
 
 }

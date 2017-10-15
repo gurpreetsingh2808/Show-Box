@@ -110,14 +110,14 @@ public class TvShowDetailFragment extends BaseDetailFragment implements TvShowDe
                         ivFavorite.setImageResource(R.drawable.ic_favorite_border);
                         //  delete movie from database
                         MovieProviderHelper.getInstance().deleteTvShow(tvShow.getId());
-                        Snackbar.make(view, getString(R.string.removed) + " " + tvShow.getName() +
+                        Snackbar.make(view, getString(R.string.removed) + " " + tvShow.getOriginal_name() +
                                 " " + getString(R.string.from_favourite), Snackbar.LENGTH_LONG)
                                 .show();
                     } else {
                         ivFavorite.setImageResource(R.drawable.ic_favorite_filled);
                         //  add movie to database
                         MovieProviderHelper.getInstance().insertTvShow(tvShow);
-                        Snackbar.make(view, getString(R.string.added) + " " + tvShow.getName() +
+                        Snackbar.make(view, getString(R.string.added) + " " + tvShow.getOriginal_name() +
                                 " " + getString(R.string.to_favourite), Snackbar.LENGTH_LONG)
                                 .show();
                     }
@@ -132,9 +132,9 @@ public class TvShowDetailFragment extends BaseDetailFragment implements TvShowDe
 
 
         }
-//        if (TvShowProviderHelper.getInstance().doesTvShowExist(tvShow.getId())) {
-//            ivFavorite.setImageResource(R.drawable.ic_favorite_filled);
-//        }
+        if (MovieProviderHelper.getInstance().doesTvShowExist(tvShow.getId())) {
+            ivFavorite.setImageResource(R.drawable.ic_favorite_filled);
+        }
         return view;
     }
 

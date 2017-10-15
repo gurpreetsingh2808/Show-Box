@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#fff</color>
-    <color name="colorPrimaryBlue">#FD6275</color>
-    <!--<color name="colorPrimaryBlue">#FF1847</color>-->
 
+    <!--<color name="colorAccent">#FF1847</color>-->
 
     <color name="colorPrimaryDark">#fff</color>
-    <color name="colorAccent">#f29a00</color>
+    <color name="colorAccent">#FD6275</color>
     <color name="white">#ffffff</color>
     <color name="grey">#727272</color>
     <color name="bgPrimary">#a6dae8</color>

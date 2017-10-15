@@ -28,9 +28,9 @@ import butterknife.ButterKnife;
 /**
  * Created by Gurpreet on 1/17/2016.
  */
-public class FavouriteMovieAdapter extends RecyclerView.Adapter<FavouriteMovieAdapter.MyViewHolder> {
+public class FavouriteMoviesAdapter extends RecyclerView.Adapter<FavouriteMoviesAdapter.MyViewHolder> {
 
-    private static String TAG = FavouriteMovieAdapter.class.getSimpleName();
+    private static String TAG = FavouriteMoviesAdapter.class.getSimpleName();
     private List<Movie> movieItemArrayList;
     private LayoutInflater inflater;
     private Context context;
@@ -38,7 +38,7 @@ public class FavouriteMovieAdapter extends RecyclerView.Adapter<FavouriteMovieAd
     public static ClickListener clickListener;
 
 
-    public FavouriteMovieAdapter(Context context, Cursor cursor) {
+    public FavouriteMoviesAdapter(Context context, Cursor cursor) {
         dataCursor = cursor;
         this.context = context;
         inflater = LayoutInflater.from(context);

@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
 
         //  highlight selection at end
         ((ImageView)guillotineMenu.findViewById(imageViewId)).setImageResource(drawableId);
-        ((TextView)guillotineMenu.findViewById(textViewId)).setTextColor(getResources().getColor(R.color.colorPrimaryBlue));
+        ((TextView)guillotineMenu.findViewById(textViewId)).setTextColor(getResources().getColor(R.color.colorAccent));
     }
 
     /**

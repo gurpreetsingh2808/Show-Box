@@ -30,7 +30,7 @@
         android:layout_marginTop="@dimen/margin_12"
         android:gravity="center_horizontal"
         android:text="@string/empty_view_text"
-        android:textColor="@color/colorPrimaryBlue"
+        android:textColor="@color/colorAccent"
         android:textSize="12sp" />
 
     <TextView
