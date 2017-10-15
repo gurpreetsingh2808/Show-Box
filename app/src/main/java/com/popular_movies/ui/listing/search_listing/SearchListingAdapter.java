@@ -143,42 +143,40 @@ public class SearchListingAdapter extends RecyclerView.Adapter<RecyclerView.View
         private void setData(final Search searchData) {
             switch (searchData.getMedia_type()) {
                 case SearchResultContentType.MOVIE:
-                    title.setText(searchData.getTitle());
-                    tvReleaseYear.setText(DateConvert.convert(searchData.getRelease_date()));
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < searchData.getGenre_ids().size(); i++) {
-                        for (Map.Entry<Integer, String> genre : mapGenre.entrySet()) {
-                            Log.d(TAG, "genre " + genre.getValue());
-                            if (searchData.getGenre_ids().get(i) == genre.getKey()) {
-                                Log.d(TAG, "setData: genre matched");
-                                sb.append(genre.getValue());
-                                break;
-                            }
-                        }
-                        if (i != searchData.getGenre_ids().size() - 1) {
-                            sb.append(", ");
-                        }
-                    }
-                    tvGenre.setText(sb);
+                    setSearchData(searchData.getTitle(), searchData.getRelease_date(), searchData.getVote_average(),
+                            searchData.getGenre_ids());
+
                     break;
                 case SearchResultContentType.TV_SERIES:
-                    title.setText(searchData.getOriginal_name());
-                    tvReleaseYear.setText(DateConvert.convert(searchData.getFirst_air_date()));
+                    setSearchData(searchData.getOriginal_name(), searchData.getFirst_air_date(), searchData.getVote_average(),
+                            searchData.getGenre_ids());
                     break;
             }
             //  set title
             //  set poster/movie image
             ImageLoader.loadBackdropImage(context, searchData.getBackdrop_path(), thumbnail, 3);
 
-            //  set rating
-            tvRating.setText(searchData.getVote_average().toString());
-            //  set release date
+        }
 
-//            for (int i = 0; i < searchData.getGenre_ids().length; i++) {
-//                Log.d(TAG, "genre "+searchData.getGenre_ids()[i]);
-//            }
-//
-//
+        private void setSearchData(String name, String release_date, Float vote_average, List<Integer> genre_ids) {
+            title.setText(name);
+            tvReleaseYear.setText(DateConvert.convert(release_date));
+            tvRating.setText(vote_average.toString());
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < genre_ids.size(); i++) {
+                for (Map.Entry<Integer, String> genre : mapGenre.entrySet()) {
+                    Log.d(TAG, "genre " + genre.getValue());
+                    if (genre_ids.get(i).intValue() == genre.getKey()) {
+                        Log.d(TAG, "setData: genre matched");
+                        sb.append(genre.getValue());
+                        break;
+                    }
+                }
+                if (i != genre_ids.size() - 1) {
+                    sb.append(", ");
+                }
+            }
+            tvGenre.setText(sb);
         }
     }
 

@@ -56,7 +56,8 @@
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:text="@string/Collection.ViewAll"
-                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorAccent"
                         tools:ignore="MissingPrefix" />
 
                 </RelativeLayout>
@@ -89,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/rlNowPlayingOuter"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="-25dp"
                 android:orientation="vertical"   >
 
                 <RelativeLayout
@@ -100,6 +101,7 @@
                     android:orientation="vertical"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
+                    android:layout_marginBottom="6dp"
                     android:tag="sticky">
 
                     <TextView
@@ -121,7 +123,8 @@
                         android:layout_alignParentRight="true"
                         android:paddingRight="16dp"
                         android:paddingLeft="16dp"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
+                        android:textStyle="bold"
                         android:text="@string/Collection.ViewAll"
                         fontPath="fonts/Brandon_Regular.otf"
                         tools:ignore="MissingPrefix"/>
@@ -155,6 +158,7 @@
                 android:id="@+id/rlOuterTopRated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
                 android:layout_below="@+id/rlUpcomingOuter">
 
                 <RelativeLayout
@@ -188,8 +192,9 @@
                         android:gravity="center_vertical|end"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
+                        android:textStyle="bold"
                         android:text="@string/Collection.ViewAll"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         tools:ignore="MissingPrefix" />
 
                 </RelativeLayout>
@@ -235,7 +240,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/rlOuterTopRated"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="-25dp"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -244,6 +249,7 @@
                     android:layout_height="40dp"
                     android:background="@color/lighterGrey"
                     android:orientation="vertical"
+                    android:layout_marginBottom="6dp"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
                     android:tag="sticky">
@@ -268,8 +274,9 @@
                         android:gravity="center_vertical|end"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
+                        android:textStyle="bold"
                         android:text="@string/Collection.ViewAll"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         tools:ignore="MissingPrefix" />
 
                 </RelativeLayout>

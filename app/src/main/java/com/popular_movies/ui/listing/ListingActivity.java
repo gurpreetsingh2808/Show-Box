@@ -2,13 +2,17 @@ package com.popular_movies.ui.listing;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.allattentionhere.fabulousfilter.AAH_FabulousFragment;
 import com.popular_movies.R;
 import com.popular_movies.ui.listing.movies_listing.MovieListFragment;
 import com.popular_movies.ui.listing.search_listing.SearchListingFragment;
@@ -23,7 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class ListingActivity extends AppCompatActivity {
+public class ListingActivity extends AppCompatActivity implements AAH_FabulousFragment.Callbacks, AAH_FabulousFragment.AnimationListener {
 
     //  toolbar
     @BindView(R.id.MovieListing_ToolBar)
@@ -43,6 +47,14 @@ public class ListingActivity extends AppCompatActivity {
         AppUtils.initializeCalligraphy();
         setContentView(R.layout.activity_movies_listing);
         ButterKnife.bind(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(Color.WHITE);
+        } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+//            getWindow().setStatusBarColor(getResources().getColor(R.color.lightGrey));
+            // Set the status bar to dark-semi-transparentish
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
@@ -103,5 +115,30 @@ public class ListingActivity extends AppCompatActivity {
     @OnClick(R.id.ivBack)
     public void goBack() {
         onBackPressed();
+    }
+
+    @Override
+    public void onOpenAnimationStart() {
+
+    }
+
+    @Override
+    public void onOpenAnimationEnd() {
+
+    }
+
+    @Override
+    public void onCloseAnimationStart() {
+
+    }
+
+    @Override
+    public void onCloseAnimationEnd() {
+
+    }
+
+    @Override
+    public void onResult(Object result) {
+
     }
 }

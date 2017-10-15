@@ -2,6 +2,8 @@ package com.popular_movies.ui.movie;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,8 +18,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.popular_movies.R;
@@ -26,6 +30,7 @@ import com.popular_movies.ui.favourites.FavoritesFragment;
 import com.popular_movies.ui.listing.ListingContentType;
 import com.popular_movies.ui.tv_shows.TvShowsFragment;
 import com.popular_movies.util.AppUtils;
+import com.popular_movies.util.FontUtils;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 import com.yalantis.guillotine.interfaces.GuillotineListener;
 
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private GuillotineAnimation guillotineAnimation;
+    private View guillotineMenu;
     //  toolbar
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -79,12 +85,15 @@ public class MainActivity extends AppCompatActivity {
         AppUtils.initializeCalligraphy();
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_content, new MainFragment())
-                    .commit();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(Color.WHITE);
+        } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+//            getWindow().setStatusBarColor(getResources().getColor(R.color.lightGrey));
+            // Set the status bar to dark-semi-transparentish
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+        setSupportActionBar(toolbar);
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -95,8 +104,11 @@ public class MainActivity extends AppCompatActivity {
 
         //  add guillotine menu to rootview
         addMenu();
-
         addSearchImplementation();
+        if (savedInstanceState == null) {
+            setFragment(new MainFragment());
+            highlightSelection(R.id.tvMenuMovies, R.id.ivMenuMovies, R.drawable.ic_menu_movie_selected);
+        }
     }
 
     private void addSearchImplementation() {
@@ -104,8 +116,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
 //                callAPI
-                Log.e(TAG, "onQueryTextSubmit: query "+query );
+                Log.e(TAG, "onQueryTextSubmit: query " + query);
                 FlowManager.moveToListingActivity(MainActivity.this, ListingContentType.SEARCH, query);
+                materialSearchView.closeSearch();
                 return false;
             }
 
@@ -120,8 +133,9 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String suggestion = materialSearchView.getSuggestionAtPosition(position);
                 materialSearchView.setQuery(suggestion, false);
-                Log.e(TAG, "onItemClick: query "+suggestion );
+                Log.e(TAG, "onItemClick: query " + suggestion);
                 FlowManager.moveToListingActivity(MainActivity.this, ListingContentType.SEARCH, suggestion);
+                materialSearchView.closeSearch();
             }
         });
 
@@ -131,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
      * This method adds navigation menu to rootview
      */
     private void addMenu() {
-        View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.navigation, null);
+        guillotineMenu = LayoutInflater.from(this).inflate(R.layout.navigation, null);
         root.addView(guillotineMenu);
 
         guillotineAnimation = new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
@@ -177,17 +191,47 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onNavigationItemSelected(View view) {
         guillotineAnimation.close();
-        switch(view.getId()) {
-            case R.id.llMovies :
+        switch (view.getId()) {
+            case R.id.llMovies:
                 setFragment(new MainFragment());
+                highlightSelection(R.id.tvMenuMovies, R.id.ivMenuMovies, R.drawable.ic_menu_movie_selected);
                 break;
-            case R.id.llFavourites :
-                setFragment(new FavoritesFragment());
-                break;
-            case R.id.llTvShows :
+            case R.id.llTvShows:
                 setFragment(new TvShowsFragment());
+                highlightSelection(R.id.tvMenuTvShows, R.id.ivMenuTvShows, R.drawable.ic_menu_television_selected);
+                break;
+            case R.id.llFavourites:
+                setFragment(new FavoritesFragment());
+                highlightSelection(R.id.tvMenuFavourites, R.id.ivMenuFavourites, R.drawable.ic_menu_favorite_selected);
+                break;
+            case R.id.llPeople:
+//                setFragment();
+                highlightSelection(R.id.tvMenuPeople, R.id.ivMenuPeople, R.drawable.ic_menu_people_selected);
                 break;
         }
+    }
+
+    private void highlightSelection(int textViewId, int imageViewId, int drawableId) {
+        // unhighlight others
+        // movie
+        ((ImageView)guillotineMenu.findViewById(R.id.ivMenuMovies)).setImageResource(R.drawable.ic_menu_movie);
+        ((TextView)guillotineMenu.findViewById(R.id.tvMenuMovies)).setTextColor(getResources().getColor(R.color.matteGrey));
+
+        // tv
+        ((ImageView)guillotineMenu.findViewById(R.id.ivMenuTvShows)).setImageResource(R.drawable.ic_menu_television);
+        ((TextView)guillotineMenu.findViewById(R.id.tvMenuTvShows)).setTextColor(getResources().getColor(R.color.matteGrey));
+
+        // favourites
+        ((ImageView)guillotineMenu.findViewById(R.id.ivMenuFavourites)).setImageResource(R.drawable.ic_menu_favorite);
+        ((TextView)guillotineMenu.findViewById(R.id.tvMenuFavourites)).setTextColor(getResources().getColor(R.color.matteGrey));
+
+        // people
+        ((ImageView)guillotineMenu.findViewById(R.id.ivMenuPeople)).setImageResource(R.drawable.ic_menu_people);
+        ((TextView)guillotineMenu.findViewById(R.id.tvMenuPeople)).setTextColor(getResources().getColor(R.color.matteGrey));
+
+        //  highlight selection at end
+        ((ImageView)guillotineMenu.findViewById(imageViewId)).setImageResource(drawableId);
+        ((TextView)guillotineMenu.findViewById(textViewId)).setTextColor(getResources().getColor(R.color.colorAccent));
     }
 
     /**
@@ -213,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_home_search:
                 materialSearchView.openSearch();
                 materialSearchView.setFocusable(true);
-                Log.d(TAG, "onOptionsItemSelected: MENU ID YYYYYESSSSSSSS"+item.getItemId());
+                Log.d(TAG, "onOptionsItemSelected: MENU ID YYYYYESSSSSSSS" + item.getItemId());
                 break;
         }
         return super.onOptionsItemSelected(item);

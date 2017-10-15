@@ -1,15 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<com.emilsjolander.components.StickyScrollViewItems.StickyScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightGrey"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:background="@color/lighterGrey">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingRight="@dimen/margin_8"
-        android:paddingBottom="@dimen/margin_8"/>
-</FrameLayout>
+        android:layout_height="match_parent">
+
+        <!--     FAVOURITE MOVIES REGION STARTS HERE  -->
+
+        <RelativeLayout
+            android:id="@+id/rlFavouriteMoviesOuter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rlFavouriteMovies"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/lighterGrey"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:tag="sticky">
+
+                <TextView
+                    fontPath="fonts/Brandon_Bold.otf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true"
+                    android:text="@string/Favourites.Movies"
+                    android:textColor="@color/black"
+                    tools:ignore="MissingPrefix" />
+
+                <TextView
+                    android:id="@+id/tvFavouritesViewAll"
+                    fontPath="fonts/Brandon_Regular.otf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|end"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="@string/Collection.ViewAll"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    tools:ignore="MissingPrefix" />
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvFavoriteMovies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlFavouriteMovies"
+                android:orientation="vertical" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rlFavouriteTvShowsOuter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="-25dp"
+            android:layout_below="@+id/rlFavouriteMoviesOuter"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rlFavouriteTvShows"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/lighterGrey"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:tag="sticky">
+
+                <TextView
+                    fontPath="fonts/Brandon_Bold.otf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true"
+                    android:text="@string/Favourites.TvShows"
+                    android:textColor="@color/black"
+                    tools:ignore="MissingPrefix" />
+
+                <TextView
+                    android:id="@+id/tvFavouriteTvShowsViewAll"
+                    fontPath="fonts/Brandon_Regular.otf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|end"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="@string/Collection.ViewAll"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    tools:ignore="MissingPrefix" />
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvFavoriteTvShows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlFavouriteTvShows"
+                android:orientation="vertical" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</com.emilsjolander.components.StickyScrollViewItems.StickyScrollView>

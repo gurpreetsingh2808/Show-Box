@@ -3,8 +3,10 @@ package com.popular_movies.ui.listing.movies_listing;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,9 +25,12 @@ import com.popular_movies.domain.movie.Movie;
 import com.popular_movies.domain.movie.MovieResponse;
 import com.popular_movies.ui.FlowManager;
 import com.popular_movies.ui.MovieItemClickListener;
+import com.popular_movies.ui.listing.movies_listing.filter.MyFabFragment;
+import com.popular_movies.util.DateConvert;
 import com.popular_movies.util.pagination.EndlessRecyclerOnScrollListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +63,8 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
     private LinearLayoutManager layoutManager;
     private Boolean loadingInProgress = false;
     private Map<Integer, String> mapGenre = new HashMap<>();
+    private ArrayMap<String, List<String>> applied_filters = new ArrayMap<>();
+
 
     public MovieListFragment() {
 
@@ -85,6 +92,16 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
         rvMoviesList.setLayoutManager(layoutManager);
         rvMoviesList.setHasFixedSize(true);
         rvMoviesList.setNestedScrollingEnabled(false);
+
+        final MyFabFragment dialogFrag1 = MyFabFragment.newInstance();
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        dialogFrag1.setParentFab(fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogFrag1.show(getChildFragmentManager(), dialogFrag1.getTag());
+            }
+        });
 
 /*
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
@@ -220,5 +237,118 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
          }*/
 
     }
+
+    /**
+     * To get the applied filters for the filter fragment
+     * @return
+     */
+    public ArrayMap<String, List<String>> getApplied_filters() {
+        return applied_filters;
+    }
+
+
+    /**
+     * To get the list of movies for filter fragment
+     * @return
+     */
+    public List<Movie> getMovieData() {
+        return movieDataList;
+    }
+
+//    public List<Movie> getGenreFilteredMovies(List<String> genre, List<Movie> movieDataList) {
+//        List<Movie> tempList = new ArrayList<>();
+//        for (Movie movie : movieDataList) {
+//            for (String g : genre) {
+//                if (movie.getGenre().equalsIgnoreCase(g)) {
+//                    tempList.add(movie);
+//                }
+//            }
+//
+//        }
+//        return tempList;
+//    }
+
+    public List<Movie> getYearFilteredMovies(List<String> yearstr, List<Movie> movieDataList) {
+        List<Movie> tempList = new ArrayList<>();
+        for (Movie movie : movieDataList) {
+            for (String y : yearstr) {
+                if (DateConvert.getYear(movie.getRelease_date()).equalsIgnoreCase(y)) {
+                    tempList.add(movie);
+                }
+            }
+        }
+        return tempList;
+    }
+
+//    public List<Movie> getQualityFilteredMovies(List<String> quality, List<Movie> movieDataList) {
+//        List<Movie> tempList = new ArrayList<>();
+//        for (Movie movie : movieDataList) {
+//            for (String q : quality) {
+//                if (movie.getQuality().equalsIgnoreCase(q)) {
+//                    tempList.add(movie);
+//                }
+//            }
+//        }
+//        return tempList;
+//    }
+
+    public List<Movie> getRatingFilteredMovies(List<String> rating, List<Movie> movieDataList) {
+        List<Movie> tempList = new ArrayList<>();
+        for (Movie movie : movieDataList) {
+            for (String r : rating) {
+                if (movie.getVote_average() >= Float.parseFloat(r.replace(">",""))) {
+                    tempList.add(movie);
+                }
+            }
+        }
+        return tempList;
+    }
+
+//    public List<String> getUniqueGenreKeys() {
+//        List<String> genres = new ArrayList<>();
+//        for (Movie movie : movieDataList) {
+//            if (!genres.contains(movie.getGenre())) {
+//                genres.add(movie.getGenre());
+//            }
+//        }
+//        Collections.sort(genres);
+//        return genres;
+//    }
+
+    public List<String> getUniqueYearKeys() {
+        List<String> years = new ArrayList<>();
+        for (Movie movie : movieDataList) {
+            if (!years.contains(DateConvert.getYear(movie.getRelease_date()) + "")) {
+                years.add(DateConvert.getYear(movie.getRelease_date()) + "");
+            }
+        }
+        Collections.sort(years);
+        return years;
+    }
+
+//    public List<String> getUniqueQualityKeys() {
+//        List<String> qualities = new ArrayList<>();
+//        for (Movie movie : movieDataList) {
+//            if (!qualities.contains(movie.getQuality())) {
+//                qualities.add(movie.getQuality());
+//            }
+//        }
+//        Collections.sort(qualities);
+//        return qualities;
+//    }
+
+    public List<String> getUniqueRatingKeys() {
+        List<String> ratings = new ArrayList<>();
+        for (Movie movie : movieDataList) {
+            int rating = (int) Math.floor(movie.getVote_average());
+            String rate = "> " + rating;
+            if (!ratings.contains(rate)) {
+                ratings.add(rate);
+            }
+        }
+        Collections.sort(ratings);
+        return ratings;
+    }
+
 }
 

@@ -1,7 +1,6 @@
 package com.popular_movies.ui.favourites;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +15,8 @@ import com.popular_movies.R;
 import com.popular_movies.domain.movie.Movie;
 import com.popular_movies.domain.movie.MovieTable;
 import com.popular_movies.framework.ImageLoader;
-import com.popular_movies.ui.content_details.DetailActivity;
+import com.popular_movies.ui.FlowManager;
+import com.popular_movies.ui.content_details.DetailContentType;
 import com.popular_movies.ui.content_details.movie.MovieDetailFragment;
 import com.popular_movies.util.AppUtils;
 
@@ -28,9 +28,9 @@ import butterknife.ButterKnife;
 /**
  * Created by Gurpreet on 1/17/2016.
  */
-public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyViewHolder> {
+public class FavouriteMoviesAdapter extends RecyclerView.Adapter<FavouriteMoviesAdapter.MyViewHolder> {
 
-    private static String TAG = FavouriteAdapter.class.getSimpleName();
+    private static String TAG = FavouriteMoviesAdapter.class.getSimpleName();
     private List<Movie> movieItemArrayList;
     private LayoutInflater inflater;
     private Context context;
@@ -38,7 +38,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyVi
     public static ClickListener clickListener;
 
 
-    public FavouriteAdapter(Context context, Cursor cursor) {
+    public FavouriteMoviesAdapter(Context context, Cursor cursor) {
         dataCursor = cursor;
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -86,9 +86,8 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyVi
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra(context.getString(R.string.key_detail_content), movieData);
-                    context.startActivity(intent);
+                    FlowManager.moveToDetailsActivity(context, DetailContentType.MOVIE, movieData);
+
                 }
             });
         }

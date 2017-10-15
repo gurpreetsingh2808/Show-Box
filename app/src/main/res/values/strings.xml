@@ -55,6 +55,8 @@
     <string name="Collection.AiringToday">AIRING TODAY</string>
     <string name="Collection.OnTheAir">ON THE AIR</string>
 
+    <string name="Favourites.Movies">MOVIES</string>
+    <string name="Favourites.TvShows">TV SHOWS</string>
 
     <string name="inTheaters">In theaters</string>
     <string name="trailer">Trailers</string>

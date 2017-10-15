@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.listing.ListingActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -25,7 +26,7 @@
                     android:id="@+id/tvToolbarTitleMoviesListing"
                     style="@style/TextView.Menu"
                     android:layout_gravity="center"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/black" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -35,7 +36,7 @@
                 android:layout_height="32dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
-                app:srcCompat="@drawable/ic_back_white"/>
+                app:srcCompat="@drawable/ic_arrow_back"/>
         </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
