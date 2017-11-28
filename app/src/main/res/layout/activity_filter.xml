@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbarFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/MovieListing.ToolBar"
+                style="@style/Toolbar">
+
+                <TextView
+                    android:id="@+id/tvToolbarTitleMoviesListing"
+                    style="@style/TextView.Menu"
+                    android:layout_gravity="center"
+                    android:text="@string/filter"
+                    android:textColor="@color/black" />
+
+            </android.support.v7.widget.Toolbar>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/ivBack"
+                android:layout_width="44dp"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                app:srcCompat="@drawable/iv_close" />
+
+        </RelativeLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+        <ScrollView
+            android:id="@+id/svFilter"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/appbarFilter"
+            android:background="@color/white"
+            android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="24dp">
+
+                <LinearLayout
+                    android:id="@+id/llFilterVoteAverage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Filter.VoteAverage"
+                        android:textColor="@color/matteGrey"
+                        android:layout_margin="16dp"
+                        android:textSize="16sp"/>
+
+                   <!-- <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/matteGrey"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:tint="@color/white"
+                        app:srcCompat="@drawable/ic_arrow_back"/>
+              -->
+
+                    <SeekBar
+                        android:id="@+id/seekbarVoteAverage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:max="10"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="8dp"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/llFilterGenre"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/llFilterVoteAverage"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Filter.Genre"
+                        android:textColor="@color/matteGrey"
+                        android:layout_margin="16dp"
+                        android:textSize="16sp"/>
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvGenre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </android.support.v7.widget.RecyclerView>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/llFilterYear"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/llFilterGenre"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Filter.Year"
+                        android:textColor="@color/matteGrey"
+                        android:layout_margin="16dp"
+                        android:textSize="16sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        >
+                        
+                        <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/spinnerStartDate"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginBottom="8dp"
+                            style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                            android:hint="@string/Hint.Start"/>
+                        
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/spinnerEndDate"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                        android:hint="@string/Hint.End"/>
+
+                    </LinearLayout>
+                    
+                </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llFilterSort"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/llFilterYear"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Filter.SortBy"
+                    android:textColor="@color/matteGrey"
+                    android:layout_margin="16dp"
+                    android:textSize="16sp"/>
+
+                <RadioGroup
+                    android:id="@+id/radioGroupSort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp">
+
+                <RadioButton
+                    android:id="@+id/rbSortPopularity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Filter.SortByPopularity"
+                    android:tag="@string/FilterTag.Popularity"/>
+                <RadioButton
+                    android:id="@+id/rbSortReleaseDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Filter.SortByReleaseDate"
+                    android:tag="@string/FilterTag.ReleaseDate"/>
+                <RadioButton
+                    android:id="@+id/rbSortRevenue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Filter.SortByRevenue"
+                    android:tag="@string/FilterTag.Revenue"/>
+                <RadioButton
+                    android:id="@+id/rbSortTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Filter.SortByTitle"
+                    android:tag="@string/FilterTag.Title"/>
+                <RadioButton
+                    android:id="@+id/rbSortVoteAverage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Filter.SortByVoteAverage"
+                    android:tag="@string/FilterTag.VoteAverage"/>
+                <RadioButton
+                    android:id="@+id/rbSortVoteCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="48dp"
+                    android:text="@string/Filter.SortByVoteCount"
+                    android:tag="@string/FilterTag.VoteCount"/>
+                </RadioGroup>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        </ScrollView>
+
+    <android.support.v7.widget.CardView
+        app:cardBackgroundColor="@color/matteGrey"
+        android:tint="@color/white"
+        android:id="@+id/cvFilterApply"
+        android:layout_width="60dp"
+        android:layout_height="56dp"
+        android:layout_marginRight="-4dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@drawable/ic_filter"
+        app:backgroundTint="@color/matteGrey"
+        app:cardElevation="7dp"
+        app:elevation="7dp" >
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_tick"
+            />
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/Filter.Apply"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="18sp"/>-->
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

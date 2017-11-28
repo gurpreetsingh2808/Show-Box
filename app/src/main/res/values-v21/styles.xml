@@ -10,7 +10,6 @@
         <item name="android:fitsSystemWindows">false</item>
         <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>
-        <item name="android:windowLightStatusBar">true</item>
 
     </style>
 

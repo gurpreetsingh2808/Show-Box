@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.SnapHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +74,9 @@ public class MovieDetailFragment extends BaseDetailFragment implements MovieDeta
         ButterKnife.bind(this, view);
 
         diagonalLayout.setVisibility(View.VISIBLE);
-        movieData = getArguments().getParcelable(getString(R.string.key_detail_content));
+        if(getArguments() != null) {
+            movieData = getArguments().getParcelable(getString(R.string.key_detail_content));
+        }
         layoutManagerReview = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvReviews.setLayoutManager(layoutManagerReview);
 
@@ -88,10 +91,11 @@ public class MovieDetailFragment extends BaseDetailFragment implements MovieDeta
 
         if (movieData != null) {
             title.setText(movieData.getOriginal_title());
-
+            Log.d(TAG, "onCreateView: TITLE "+movieData.getOriginal_title());
             //releaseDate.append(" " + DateConvert.convert(movieData.getRelease_date()));
             releaseDate.setText(DateConvert.convert(movieData.getRelease_date()));
             synopsis.setText(movieData.getOverview());
+            Log.d(TAG, "onCreateView: VOTE RATINGS "+movieData.getVote_average());
             if (movieData.getVote_average() == null || movieData.getVote_average() == 0f) {
                 userRatings.setText(getString(R.string.NA));
             } else {

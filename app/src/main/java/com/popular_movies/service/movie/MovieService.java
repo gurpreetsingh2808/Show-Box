@@ -5,16 +5,21 @@ import android.app.Activity;
 import com.popular_movies.BuildConfig;
 import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.GenreResponse;
+import com.popular_movies.domain.filter.Filter;
 import com.popular_movies.domain.movie.MovieCollection;
 import com.popular_movies.domain.movie.MovieDetails;
 import com.popular_movies.domain.movie.MovieResponse;
 import com.popular_movies.domain.movie.ReviewResponse;
 import com.popular_movies.domain.common.TrailerResponse;
 
+import java.util.List;
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 /**
  * Created by Gurpreet on 20-01-2017.
@@ -61,12 +66,16 @@ public interface MovieService {
 
         @GET("genre/movie/list?api_key=" + BuildConfig.TMDB_API_KEY)
         Call<GenreResponse> getGenres();
+
+        @GET("discover/movie?api_key=" + BuildConfig.TMDB_API_KEY + "")
+        Call<MovieResponse> getMoviesWithFilter(@QueryMap Map<String, String> filter, @Query("page") String page);
+
     }
 
     /**
      * Get movies model
      */
-    void getMovies(String movieType, String pageNumber, Activity activity, GetMoviesCallback getMoviesCalback);
+    void getMovies(String movieType, String pageNumber, Activity activity, GetMoviesCallback getMoviesCallback);
 
     interface GetMoviesCallback {
         void onSuccess(MovieResponse movieResponse);
@@ -74,15 +83,15 @@ public interface MovieService {
         void onFailure(Throwable throwable);
     }
 
-    void getPopularMovies(Activity activity, GetMoviesCallback getMoviesCalback);
+    void getPopularMovies(Activity activity, GetMoviesCallback getMoviesCallback);
 
-    void getTopRatedMovies(Activity activity, GetMoviesCallback getMoviesCalback);
+    void getTopRatedMovies(Activity activity, GetMoviesCallback getMoviesCallback);
 
-    void getUpcomingMovies(Activity activity, GetMoviesCallback getUpcomingMoviesCalback);
+    void getUpcomingMovies(Activity activity, GetMoviesCallback getUpcomingMoviesCallback);
 
-    void getNowPlayingMovies(Activity activity, GetMoviesCallback getNowPlayingMoviesCalback);
+    void getNowPlayingMovies(Activity activity, GetMoviesCallback getNowPlayingMoviesCallback);
 
-    void getLatestMovies(Activity activity, GetMoviesCallback getNowPlayingMoviesCalback);
+    void getLatestMovies(Activity activity, GetMoviesCallback getLatestMoviesCallback);
 
     /**
      * Get movie details model
@@ -140,7 +149,7 @@ public interface MovieService {
     /**
      * search model
      */
-    void getSearchResults(String query, Activity activity, GetMoviesCallback getMoviesCalback);
+    void getSearchResults(String query, Activity activity, GetMoviesCallback getMoviesCallback);
 
     /**
      * genre model
@@ -151,5 +160,15 @@ public interface MovieService {
         void onSuccess(GenreResponse genreResponse);
         void onFailure(Throwable throwable);
     }
+
+    /**
+     * Get filtered movies
+     *
+     * @param filter
+     * @param pageNumber
+     * @param activity
+     * @param getMoviesCallback
+     */
+    void getMovies(Filter filter, String pageNumber, Activity activity, GetMoviesCallback getMoviesCallback);
 
 }

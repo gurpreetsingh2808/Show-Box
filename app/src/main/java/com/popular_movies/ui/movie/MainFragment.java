@@ -158,16 +158,18 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void setHorizontalAdapter(List<Movie> listMovies, RecyclerView recyclerView) {
-        List<Movie> movieDataList = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            movieDataList.add(listMovies.get(i));
-        }
-        adapterHorizontal = new MovieAdapterHorizontal(getContext(), movieDataList);
-        adapterHorizontal.setClickListener(this);
-        if (recyclerView.getAdapter() != null) {
-            recyclerView.swapAdapter(adapterHorizontal, false);
-        } else {
-            recyclerView.setAdapter(adapterHorizontal);
+        if(!listMovies.isEmpty()) {
+            List<Movie> movieDataList = new ArrayList<>();
+            for (int i = 0; i < 10; i++) {
+                movieDataList.add(listMovies.get(i));
+            }
+            adapterHorizontal = new MovieAdapterHorizontal(getContext(), movieDataList);
+            adapterHorizontal.setClickListener(this);
+            if (recyclerView.getAdapter() != null) {
+                recyclerView.swapAdapter(adapterHorizontal, false);
+            } else {
+                recyclerView.setAdapter(adapterHorizontal);
+            }
         }
     }
 

@@ -22,9 +22,12 @@
 
     <color name="black">#212121</color>
     <color name="pureBlack">#000</color>
-    <color name="black_transparency_60">#60000000</color>
+    <color name="black_transparency_30">#B332383D</color>
+    <color name="black_transparency_60">#48000000</color>
     <color name="transparent">#00000000</color>
     <color name="matteGrey">#707284</color>
+    <color name="darkGrey">#32383D</color>
+
     <!--<color name="blackGrey">#211B2A</color>-->
     <color name="blackGrey">#1A1E23</color>
 
@@ -33,16 +36,4 @@
     <color name="filters_buttons_selected">#e0e0e0</color>
     <color name="filters_buttons">#fff</color>
 
-
-    <array name="progress_colors">
-        <item>#2196F3</item>
-        <item>#E91E63</item>
-        <item>#9C27B0</item>
-        <item>#673AB7</item>
-        <item>#3F51B5</item>
-        <item>#F44336</item>
-        <item>#009688</item>
-        <item>#8BC34A</item>
-        <item>#FF5722</item>
-    </array>
 </resources>

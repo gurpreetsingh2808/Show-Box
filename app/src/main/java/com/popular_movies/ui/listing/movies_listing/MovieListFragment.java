@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.ArrayMap;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +38,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class MovieListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
@@ -50,6 +52,10 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
     //  progress bar
     @BindView(R.id.pbMoviesList)
     ProgressBar pbMoviesList;
+
+    @BindView(R.id.cvFilter)
+    CardView cvFilter;
+
 
     private String TAG = MovieListFragment.class.getSimpleName();
     public ArrayList<Movie> movieDataList = new ArrayList<>();
@@ -68,6 +74,11 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
 
     public MovieListFragment() {
 
+    }
+
+    @OnClick(R.id.cvFilter)
+    void moveToFilterActivity() {
+        FlowManager.moveToFilterActivity(getContext());
     }
 
     public static MovieListFragment getInstance(String title) {
@@ -93,15 +104,14 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
         rvMoviesList.setHasFixedSize(true);
         rvMoviesList.setNestedScrollingEnabled(false);
 
-        final MyFabFragment dialogFrag1 = MyFabFragment.newInstance();
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        dialogFrag1.setParentFab(fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+       /* final MyFabFragment dialogFrag1 = MyFabFragment.newInstance();
+        dialogFrag1.setParentFab(cvFilter);
+        cvFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogFrag1.show(getChildFragmentManager(), dialogFrag1.getTag());
             }
-        });
+        });*/
 
 /*
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);

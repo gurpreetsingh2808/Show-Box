@@ -4,6 +4,8 @@ import android.app.Activity;
 
 import com.popular_movies.domain.common.CreditsResponse;
 import com.popular_movies.domain.common.GenreResponse;
+import com.popular_movies.domain.filter.Filter;
+import com.popular_movies.domain.filter.FilterHelper;
 import com.popular_movies.domain.movie.MovieCollection;
 import com.popular_movies.domain.movie.MovieDetails;
 import com.popular_movies.domain.movie.MovieResponse;
@@ -45,23 +47,23 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void getPopularMovies(Activity activity, final GetMoviesCallback getPopularMoviesCardCalback) {
+    public void getPopularMovies(Activity activity, final GetMoviesCallback getMoviesCallback) {
         MovieResource movieResource = ResourceBuilder.buildResource(MovieResource.class, activity);
         Call<MovieResponse> call = movieResource.getPopularMovies();
         call.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 if (response.body() != null && response.isSuccessful())
-                    getPopularMoviesCardCalback.onSuccess(response.body());
+                    getMoviesCallback.onSuccess(response.body());
                 else
-                    getPopularMoviesCardCalback.onFailure(new Throwable("Error"));
+                    getMoviesCallback.onFailure(new Throwable("Error"));
             }
 
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
                 if (!call.isCanceled()) {
                     //SnackBarManager.renderFailureSnackBar(activity, null);
-                    getPopularMoviesCardCalback.onFailure(t);
+                    getMoviesCallback.onFailure(t);
                 }
             }
         });
@@ -308,6 +310,28 @@ public class MovieServiceImpl implements MovieService {
             public void onFailure(Call<GenreResponse> call, Throwable t) {
                 if (!call.isCanceled()) {
                     fetchGenresCallback.onFailure(t);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getMovies(Filter filter, String pageNumber, Activity activity, final GetMoviesCallback getMoviesCallback) {
+        MovieResource movieResource = ResourceBuilder.buildResource(MovieResource.class, activity);
+        Call<MovieResponse> call = movieResource.getMoviesWithFilter(FilterHelper.getFilterAsMap(filter), pageNumber);
+        call.enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                if (response.body() != null && response.isSuccessful())
+                    getMoviesCallback.onSuccess(response.body());
+                else
+                    getMoviesCallback.onFailure(new Throwable("Error"));
+            }
+
+            @Override
+            public void onFailure(Call<MovieResponse> call, Throwable t) {
+                if (!call.isCanceled()) {
+                    getMoviesCallback.onFailure(t);
                 }
             }
         });

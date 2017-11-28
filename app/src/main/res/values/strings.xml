@@ -68,7 +68,7 @@
     <string name="Collection.NotAvailable">No Collections Available</string>
     <string name="MovieDetails.Cast">Cast</string>
     <string name="notAvailable">Not available</string>
-<!--
+    <!--
     <string name="key_movie_type">KEY_MOVIE_TYPE</string>
     <string name="key_series_type">KEY_SERIES_TYPE</string>
     <string name="key_listing_type">KEY_LISTING_TYPE</string>
@@ -76,6 +76,32 @@
 
     <string name="key_listing_content_type">KEY_LISTING_CONTENT_TYPE</string>
     <string name="key_listing_sub_content_type">KEY_LISTING_SUB_CONTENT_TYPE</string>
+    <string name="filter">Filter</string>
+
+    <string name="Filter.Cast">Cast</string>
+    <string name="Filter.Rating">RATING</string>
+    <string name="Filter.Genre">GENRE</string>
+    <string name="Filter.Year">YEAR</string>
+    <string name="Filter.VoteAverage">VOTE AVERAGE</string>
+
+    <string name="Hint.Start">Start</string>
+    <string name="Hint.End">End</string>
+
+    <string name="Filter.SortBy">SORT BY</string>
+    <string name="Filter.SortByPopularity">Popularity</string>
+    <string name="Filter.SortByReleaseDate">Release date</string>
+    <string name="Filter.SortByRevenue">Revenue</string>
+    <string name="Filter.SortByTitle">Title</string>
+    <string name="Filter.SortByVoteCount">Vote count</string>
+    <string name="Filter.SortByVoteAverage">Vote Average</string>
+
+    <string name="FilterTag.Popularity">popularity.desc</string>
+    <string name="FilterTag.ReleaseDate">release_date.desc</string>
+    <string name="FilterTag.Revenue">revenue.desc</string>
+    <string name="FilterTag.Title">original_title.asc</string>
+    <string name="FilterTag.VoteAverage">vote_average.desc</string>
+    <string name="FilterTag.VoteCount">vote_count.desc</string>
+    <string name="Filter.Apply">APPLY</string>
 
 
 </resources>

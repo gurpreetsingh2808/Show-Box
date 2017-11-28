@@ -32,8 +32,8 @@ android {
         }
     }
     buildTypes.each {
-        it.buildConfigField 'String', 'TMDB_API_KEY', '\"'+getTmdbApiKey()+'\"'
-        it.buildConfigField 'String', 'TRAKT_API_KEY', '\"'+getTraktApiKey()+'\"'
+        it.buildConfigField 'String', 'TMDB_API_KEY', '\"' + getTmdbApiKey() + '\"'
+        it.buildConfigField 'String', 'TRAKT_API_KEY', '\"' + getTraktApiKey() + '\"'
         it.buildConfigField 'String', 'BASE_URL', '"http://api.themoviedb.org/3/"'
         it.buildConfigField 'String', 'BASE_URL_TRAKT', '"http://api.trakt.tv/"'
         it.buildConfigField 'String', 'TRAKT_API_VERSION', '"2"'
@@ -54,13 +54,13 @@ android {
     }
 }
 
-def getTmdbApiKey(){
+def getTmdbApiKey() {
     def Properties props = new Properties()
     props.load(new FileInputStream(new File('application.properties')))
     return props['TMDB_API_KEY']
 }
 
-def getTraktApiKey(){
+def getTraktApiKey() {
     def Properties props = new Properties()
     props.load(new FileInputStream(new File('application.properties')))
     return props['TRAKT_API_KEY']
@@ -87,6 +87,9 @@ dependencies {
     //  view injection
 
 
+    compile('com.google.android:flexbox:0.2.7') {
+        exclude group: 'com.android.support'
+    }
     compile 'me.relex:circleindicator:1.1.7@aar'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup:javapoet:1.2.0'
@@ -103,14 +106,11 @@ dependencies {
     compile 'com.github.florent37:diagonallayout:1.0.4'
     compile 'com.yarolegovich:discrete-scrollview:1.1.3'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'br.com.mauker.materialsearchview:materialsearchview:1.2.2'
+    compile 'org.projectlombok:lombok:1.16.18'
+    compile 'com.allattentionhere:fabulousfilter:0.0.4'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.3.0'
-    compile 'br.com.mauker.materialsearchview:materialsearchview:1.2.2'
-    compile "org.projectlombok:lombok:1.16.18"
-    compile 'com.allattentionhere:fabulousfilter:0.0.4'
-    compile ('com.google.android:flexbox:0.2.7'){
-        exclude group: 'com.android.support'
-    }
 }
 
 apply plugin: 'com.google.gms.google-services'

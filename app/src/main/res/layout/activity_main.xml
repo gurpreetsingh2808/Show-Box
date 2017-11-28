@@ -38,7 +38,7 @@
                         android:id="@+id/content_hamburger"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_hamburger" />
+                        app:srcCompat="@drawable/ic_nav" />
 
                     <TextView
                         android:id="@+id/tvToolbarTitleMain"

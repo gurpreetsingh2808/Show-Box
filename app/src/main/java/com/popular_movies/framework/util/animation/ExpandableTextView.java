@@ -36,7 +36,7 @@ public class ExpandableTextView {
     public void cycleTextViewExpansion(TextView tv){
         ObjectAnimator animation = ObjectAnimator.ofInt(tv, PROPERTY_MAX_LINES,
                 tv.getMaxLines() == COLLAPSE_MAX_LINES ? tv.getLineCount() : COLLAPSE_MAX_LINES);
-        tv.setEllipsize(TextUtils.TruncateAt.END);
+//        tv.setEllipsize(TextUtils.TruncateAt.END);
         animation.setDuration(200).start();
     }
 }

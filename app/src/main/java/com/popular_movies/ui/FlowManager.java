@@ -16,6 +16,7 @@ import com.popular_movies.domain.tv.TvShow;
 import com.popular_movies.domain.tv.seasons.Episode;
 import com.popular_movies.ui.content_details.DetailActivity;
 import com.popular_movies.ui.content_details.DetailContentType;
+import com.popular_movies.ui.filter.FilterActivity;
 import com.popular_movies.ui.listing.ListingActivity;
 import com.popular_movies.ui.listing.search_listing.SearchResultContentType;
 import com.popular_movies.util.constants.IntentKeys;
@@ -108,5 +109,14 @@ public class FlowManager {
         intent.putExtra(context.getString(R.string.key_title), searchTerm);
         intent.putExtra(context.getString(R.string.key_listing_sub_content_type), searchTerm);
         context.startActivity(intent);
+    }
+
+
+    public static void moveToFilterActivity(Context context) {
+            Intent intent = new Intent(context, FilterActivity.class);
+//            intent.putExtra(context.getString(R.string.key_listing_content_type), contentType);
+//            intent.putExtra(context.getString(R.string.key_listing_sub_content_type), subContentType);
+//            intent.putExtra(context.getString(R.string.key_title), title);
+            context.startActivity(intent);
     }
 }
